@@ -1,0 +1,2177 @@
+﻿<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mailxml_base="http://idealliance.org/maildat/Specs/md091/mailxml60a/base" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://idealliance.org/maildat/Specs/md091/mailxml60a/base" version="MAILxmlBase60a120108">
+  <xs:simpleType name="actionCodeType">
+    <xs:annotation>
+      <xs:documentation>Action Code for USPS</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="W"/>
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="U"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Additional In Home Range Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="additionalInHomeRangeType">
+    <xs:restriction base="mailxml_base:n01"/>
+  </xs:simpleType><!--=== Address Correction Move ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="addressCorrectionMoveType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="B"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Adjustment Status (postage statement) ===--><!--=== v5.0 dk CR 120 ===-->
+  <xs:simpleType name="adjustmentStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="X"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="T"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Adjustment Type (postage statement) ===--><!--=== v5.0 dk CR 120 ===-->
+  <xs:simpleType name="adjustmentType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="4"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Agency Cost Code  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="agencyCostCodeType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{5}|[0-9]{6}"/>
+      <!-- Must be numeric, can start with leading zeros and can be 5 or 6 digits long -->
+    </xs:restriction>
+  </xs:simpleType><!--=== appt Method type from TM === -->
+  <xs:simpleType name="apptMethodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Online"/>
+      <xs:enumeration value="Phone"/>
+      <xs:enumeration value="Webservices - Detail"/>
+      <xs:enumeration value="Webservices - No Detail"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Appt State Type from TM  ===-->
+  <xs:simpleType name="apptStateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Scheduled"/>
+      <xs:enumeration value="Arrived"/>
+      <xs:enumeration value="ApptValidated"/>
+      <xs:enumeration value="WaitingToBeUnloaded"/>
+      <xs:enumeration value="Unloading"/>
+      <xs:enumeration value="FinishedUnloading"/>
+      <xs:enumeration value="ResolvingProblems"/>
+      <xs:enumeration value="Rejected"/>
+      <xs:enumeration value="Closed"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  AppointmentStatusType ===--><!--=== v5.0 dk CR 148 ===--><!--=== V6.0 DK cOMMENT 5114 ===-->
+  <xs:simpleType name="apptStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Open"/>
+      <xs:enumeration value="Closed"/>
+      <xs:enumeration value="No Show"/>
+      <xs:enumeration value="Unscheduled"/>
+      <xs:enumeration value="Rejected"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== appt Type from TM  ===-->
+  <xs:simpleType name="apptTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pallet"/>
+      <xs:enumeration value="DropAndPick"/>
+      <xs:enumeration value="Speedline"/>
+      <xs:enumeration value="Bedload"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType B===--><!--                   --><!--      ======       --><!-- Barcode Rate Code  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="barcodeRateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Y"/>
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="O"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Bundle Detail Level Type ===--><!--=== v5.0 dk CR 130 ===--><!--=== v6.0 dk Comment SM12 ===-->
+  <xs:simpleType name="bundleDetailLevelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="E"/>
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="G"/>
+      <xs:enumeration value="H"/>
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="J"/>
+      <xs:enumeration value="K"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="O"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="Q"/>
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="T"/>
+      <xs:enumeration value="U"/>
+      <xs:enumeration value="V"/>
+      <xs:enumeration value="W"/>
+    </xs:restriction>
+  </xs:simpleType><!--   Bundle Level  Type  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="bundleLevelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="5"/>
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="M"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Bundle Record Status Type ===--><!--=== v5.0 dk CR 130 ===-->
+  <xs:simpleType name="bundleRecordStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="O"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="U"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Bundle Status Type (postage statement) ===--><!--=== v5.0 dk CR 130 ===-->
+  <xs:simpleType name="bundleStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value=" "/>
+      <xs:enumeration value="C"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType C===--><!--                   --><!--=== Chargeable Bundle Level ===--><!--=== v5.0 dk CR 177 ===-->
+  <xs:simpleType name="chargeableBundleLevelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="5"/>
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="M"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Chargeable Container Level ===--><!--=== v5.0 dk CR 177 ===-->
+  <xs:simpleType name="chargeableContainerLevelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="5"/>
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="M"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Chargeable Entry Level ===--><!--=== v5.0 dk CR 177 ===-->
+  <xs:simpleType name="chargeableEntryLevelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="J"/>
+      <xs:enumeration value="K"/>
+      <xs:enumeration value="O"/>
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="S"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Class Notification ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="classNotificationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="F"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Closeout Irregularities Type === CR 77 v2.1 dk from TM--><!--===v4.0 comment 14 move DUE and CAPC to exemptionCodeType ==--><!--=== v5.0 dk CR 162 ===--><!--     B = Broken Pallets
+        C = Container Counts dont match 8125
+        D = Damaged Mail
+        DR = Driver Refused to Assist
+        G = Good
+        IA = Improper Appt Type
+        IM = Improper Mail Class
+        I = Improper Mail Makeup
+        IF = Incorrect Mail Facility
+        L = Load Unsafe
+        M = Mailings not separated by 8125
+        MI = Miscellaneous
+        NP = Missing Paperwork
+        O = Other
+        OW = Overweight Pallets
+        NM = Package on BMC non-Machinable
+        P = Pallets Too Tall
+        VS = Vehicle Size
+        CP = Courtesy Pallet
+        CM = Containers do not match 8017
+        SM = Separations do not match 8017 --><!--=== V5.0 DK CR 162 ===-->
+  <xs:simpleType name="closeoutIrregularitiesType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="DR"/>
+      <xs:enumeration value="G"/>
+      <xs:enumeration value="IA"/>
+      <xs:enumeration value="IM"/>
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="IF"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="MI"/>
+      <xs:enumeration value="NP"/>
+      <xs:enumeration value="O"/>
+      <xs:enumeration value="OW"/>
+      <xs:enumeration value="NM"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="VS"/>
+      <xs:enumeration value="CP"/>
+      <xs:enumeration value="CM"/>
+      <xs:enumeration value="SM"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== communication Role from TM===-->
+  <xs:simpleType name="communicationRoleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="From"/>
+      <xs:enumeration value="To"/>
+      <xs:enumeration value="CC"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Component ID ===--><!--=== v5.0 dk ===-->
+  <xs:simpleType name="componentIDType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Component Weight ===--><!--=== v5.0 dk ===-->
+  <xs:simpleType name="componentWeightType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Component Weight Source ===--><!--=== v5.0 dk ===-->
+  <xs:simpleType name="componentWeightSourceType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Component Weight Status ===--><!--=== v5.0 dk ===-->
+  <xs:simpleType name="componentWeightStatusType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Container Bundle Status ===--><!--=== v5.0 dk CR 177 ===-->
+  <xs:simpleType name="containerBundleStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-1"/>
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== container 24 char bar code from PDR  ===-->
+  <xs:simpleType name="container24CharacterBarcodeType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Container Acceptance Date Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="containerAcceptanceDateType">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType><!--===  Container Barcode Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="containerBarcodeType">
+    <xs:restriction base="mailxml_base:s10"/>
+  </xs:simpleType><!--=== Container Charge Container Level===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="cccLevelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="5"/>
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="M"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Container Grouping Description ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="containerGroupingDescriptionType">
+    <xs:restriction base="mailxml_base:s09"/>
+  </xs:simpleType><!--===  Container Gross Weight Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="containerGrossWeightType">
+    <xs:restriction base="mailxml_base:s05"/>
+  </xs:simpleType><!--===  Container Height Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="containerHeightType">
+    <xs:restriction base="mailxml_base:n03"/>
+  </xs:simpleType><!--===  Container Level Type            ===--><!--===    CR 123 v3.0 DK to Sync with Mail.dat 8.2)
+        AJ= single piece             ===-->
+  <xs:simpleType name="containerLevelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="E"/>
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="G"/>
+      <xs:enumeration value="H"/>
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="J"/>
+      <xs:enumeration value="K"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="O"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="Q"/>
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="T"/>
+      <xs:enumeration value="U"/>
+      <xs:enumeration value="V"/>
+      <xs:enumeration value="W"/>
+      <xs:enumeration value="X"/>
+      <xs:enumeration value="Y"/>
+      <xs:enumeration value="Z"/>
+      <xs:enumeration value="AA"/>
+      <xs:enumeration value="AB"/>
+      <xs:enumeration value="AC"/>
+      <xs:enumeration value="AD"/>
+      <xs:enumeration value="AE"/>
+      <xs:enumeration value="AF"/>
+      <xs:enumeration value="AG"/>
+      <xs:enumeration value="AJ"/>
+      <xs:enumeration value="BA"/>
+      <xs:enumeration value="BB"/>
+      <xs:enumeration value="BC"/>
+      <xs:enumeration value="BD"/>
+      <xs:enumeration value="BE"/>
+      <xs:enumeration value="BF"/>
+      <xs:enumeration value="BG"/>
+      <xs:enumeration value="BH"/>
+      <xs:enumeration value="BI"/>
+      <xs:enumeration value="BJ"/>
+      <xs:enumeration value="BK"/>
+      <xs:enumeration value="BL"/>
+      <xs:enumeration value="BM"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Container Pickup Date Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="containerPickupDateType">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType><!--===  Container Pickup Time Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="containerPickupTimeType">
+    <xs:restriction base="xs:time"/>
+  </xs:simpleType><!--===  Container Ship Date Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="containerShipDateType">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType><!--===  Container Ship Time Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="containerShipTimeType">
+    <xs:restriction base="xs:time"/>
+  </xs:simpleType><!--=== contact type from TM===-->
+  <xs:simpleType name="contactType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AccountManager"/>
+      <xs:enumeration value="Carrier"/>
+      <xs:enumeration value="CrossDock"/>
+      <xs:enumeration value="CustomerService"/>
+      <xs:enumeration value="HelpDesk"/>
+      <xs:enumeration value="DropShipCoordinator"/>
+      <xs:enumeration value="ApptCoordinator"/>
+      <xs:enumeration value="Plant"/>
+      <xs:enumeration value="InboundFreightCoordinator"/>
+      <xs:enumeration value="SalesOffice"/>
+      <xs:enumeration value="TruckDriver"/>
+      <xs:enumeration value="Warehouse"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Container type from TM===--><!--=== Delete per CR 106, v3.0 dk ===-->
+  <xs:simpleType name="containerType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Sacks"/>
+      <xs:enumeration value="Bundles"/>
+      <xs:enumeration value="Trays"/>
+      <xs:enumeration value="Parcels"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Container Status from TM ===-->
+  <xs:simpleType name="containerStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Accepted"/>
+      <xs:enumeration value="OnHold"/>
+      <xs:enumeration value="Rejected"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="containerHeightSourceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="E"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== CPT Periodical Ad Percent ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="cptPeriodicalAdPercentageType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== CPT Periodical Ad Percent Basis ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="cptPeriodicalAdPercentageBasisType">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:totalDigits value="6"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== CPT Periodical Ad Percent Status ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="cptPeriodicalAdPercentageStatusType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== CQTdatabaseIDType from PDR ===-->
+  <xs:simpleType name="CQTdatabaseIDType">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:totalDigits value="8"/>
+      <xs:whiteSpace value="collapse"/>
+    </xs:restriction>
+  </xs:simpleType><!--===    Credit Debit Indicator Type      ===--><!--=== v5.0 dk CR 120 ===-->
+  <xs:simpleType name="creditDebitIndicator">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="D"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== cRIDType from PDR ===-->
+  <xs:simpleType name="CRIDType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType><!--===    CSA Template      ===--><!--=== v5.0 dk CR 198 ===--><!--
+        PVDS-PER = Periodicals Plant Verified Drop Shipment
+        DMU-C = DMU Verified Customer Transported
+        DMU-P = DMU Verified Postal Transported
+        BMEU = BMEU Verified
+        UPVDS-PER = Unscheduled Periodicals Plant Verified Drop Shipment
+        UDMU-C = Unscheduled DMU Verified Customer Transported
+        UDMU-P = Unscheduled DMU Verified Postal Transported
+        UBMEU = Unscheduled BMEU Verified
+        U = Unscheduled
+    -->
+  <xs:simpleType name="csaTemplateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PVDS-PER"/>
+      <xs:enumeration value="DMU-C"/>
+      <xs:enumeration value="DMU-P"/>
+      <xs:enumeration value="BMEU"/>
+      <xs:enumeration value="UPVDS-PER"/>
+      <xs:enumeration value="UDMU-C"/>
+      <xs:enumeration value="UDMU-P"/>
+      <xs:enumeration value="UBMEU"/>
+      <xs:enumeration value="U"/>
+    </xs:restriction>
+  </xs:simpleType><!--===    CSA Status      ===--><!--=== v5.0 dk CR 198 ===--><!--
+        ACT = Active
+        PEN = Pending
+        INACT = Inactive
+        INCOMP = Incomplete
+        PREAPP = Pre-Approval
+    -->
+  <xs:simpleType name="csaStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ACT"/>
+      <xs:enumeration value="PEN"/>
+      <xs:enumeration value="INACT"/>
+      <xs:enumeration value="INCOMP"/>
+      <xs:enumeration value="PREAPP"/>
+    </xs:restriction>
+  </xs:simpleType><!--      ======       --><!--===simpleType D ===--><!--                   --><!--      ======       --><!--=== Database Container ID Type ===-->
+  <xs:simpleType name="databaseContainerIDType">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:totalDigits value="6"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Day Frequency  ===-->
+  <xs:simpleType name="dayFrequencyType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Daily"/>
+      <xs:enumeration value="Monday"/>
+      <xs:enumeration value="Tuesday"/>
+      <xs:enumeration value="Wednesday"/>
+      <xs:enumeration value="Thursday"/>
+      <xs:enumeration value="Friday"/>
+      <xs:enumeration value="Saturday"/>
+      <xs:enumeration value="Sunday"/>
+    </xs:restriction>
+  </xs:simpleType><!--===    Days of Week      ===--><!--=== v5.0 dk CR 198 ===--><!--
+        MON = Monday
+        TUE = Tuesday
+        WED = Wednesday
+        THU = Thursday
+        FRI = Friday
+        SAT = Saturday
+        SUN = Sunday
+        MF = Monday through Friday
+        ALL = All Days
+        H   = Holidays
+        MS  = Monday thru Saturday
+    -->
+  <xs:simpleType name="daysOfWeekType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MON"/>
+      <xs:enumeration value="TUE"/>
+      <xs:enumeration value="WED"/>
+      <xs:enumeration value="THU"/>
+      <xs:enumeration value="FRI"/>
+      <xs:enumeration value="SAT"/>
+      <xs:enumeration value="SUN"/>
+      <xs:enumeration value="MF"/>
+      <xs:enumeration value="MS"/>
+      <xs:enumeration value="ALL"/>
+      <xs:enumeration value="H"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dayType">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:maxInclusive value="31"/>
+      <xs:minInclusive value="1"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Decimal datatypes  ===-->
+  <xs:simpleType name="dec03-2">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="3"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dec04-3">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="4"/>
+      <xs:fractionDigits value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dec18-6">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dec10-4">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="10"/>
+      <xs:fractionDigits value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dec18-8">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="8"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Deliverability Code ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="deliverabilityCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="K"/>
+      <xs:enumeration value="G"/>
+      <xs:enumeration value="W"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType E ===--><!--                   --><!--      ======       --><!--   Email  Type      -->
+  <xs:simpleType name="emailType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType><!--===  EMD 8125 ASN Barcode Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="eMD8125ASNBarcodeType">
+    <xs:restriction base="mailxml_base:s20"/>
+  </xs:simpleType><!--   Enclosed  By  Type  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="enclosedByType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SM"/>
+      <xs:enumeration value="BP"/>
+      <xs:enumeration value="PE"/>
+      <xs:enumeration value="PP"/>
+      <xs:enumeration value="ML"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Entry Discount Type   --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="entryDiscountType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="Q"/>
+      <xs:enumeration value="A"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Entry Facility Type   --><!--=== v5.0 dk ===--><!--=== V6.0a DK Errata RS_02 ===-->
+  <xs:simpleType name="entryFacilityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="O"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="Q"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Entry Point ED Postal Code Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="entryPointEDPostalCodeType">
+    <xs:restriction base="mailxml_base:s06"/>
+  </xs:simpleType><!--===  Entry Point ED Facility Type Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="entryPointEDFacilityTypeType">
+    <xs:restriction base="mailxml_base:s01"/>
+  </xs:simpleType><!--===  Entry Point AD Locale Key Type===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="entryPointADLocaleKeyType">
+    <xs:restriction base="mailxml_base:s09"/>
+  </xs:simpleType><!--===  Entry Point AD Postal Code Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="entryPointADPostalCodeType">
+    <xs:restriction base="mailxml_base:s09"/>
+  </xs:simpleType><!--  String XML entity for 2 characters --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="es2">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+      <xs:minLength value="2"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--  String XML entity for 3 characters --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="es3">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+      <xs:minLength value="3"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--  String XML entity for 4 characters --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="es4">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+      <xs:minLength value="4"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--  String XML entity for 5 characters --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="es5">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+      <xs:minLength value="5"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== es31 ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="es31">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="31"/>
+      <xs:minLength value="31"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== exemption Code Type === CR 77 v2.1 dk from TM --><!--=== V4.0 dk Comment 14 add DUE ===--><!-- APO = All Periodicals
+        APS = All Perishable
+        DUE = Delivery Unit Exemption
+        CAPC = Cancelled within two hours
+        HC = Holiday Contingency Constraint Change -->
+  <xs:simpleType name="exemptionCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="APO"/>
+      <xs:enumeration value="APS"/>
+      <xs:enumeration value="CAPC"/>
+      <xs:enumeration value="DUE"/>
+      <xs:enumeration value="HC"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType F ===--><!--                   --><!--      ======       --><!--===  FAST Content ID Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="fASTContentIDType">
+    <xs:restriction base="mailxml_base:s09"/>
+  </xs:simpleType><!--===  FAST Scheduler ID Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="fASTSchedulerIDType">
+    <xs:restriction base="mailxml_base:s12"/>
+  </xs:simpleType><!--=== Fee Notification ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="feeNotificationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Y"/>
+      <xs:enumeration value="N"/>
+    </xs:restriction>
+  </xs:simpleType><!--Flat Rate Indicator Type  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="flatRateIndicatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="E"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="M"/>
+    </xs:restriction>
+  </xs:simpleType><!--   Form Type --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="formType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PM"/>
+      <xs:enumeration value="FC"/>
+      <xs:enumeration value="SM"/>
+      <xs:enumeration value="BP"/>
+      <xs:enumeration value="PE"/>
+      <xs:enumeration value="PP"/>
+      <xs:enumeration value="ML"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Full Service Compliance Indicator ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="fullServiceComplianceIndicatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="F"/>
+      <xs:enumeration value=" "/>
+    </xs:restriction>
+  </xs:simpleType><!--===     Full Service Participation Indicator      ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="fspiType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="F"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType G ===--><!--                   --><!--      ======       --><!--=== gps System from TM===-->
+  <xs:simpleType name="gPSSystemType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ECEF"/>
+      <xs:enumeration value="HAE"/>
+      <xs:enumeration value="MSL"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType H ===--><!--                   --><!--===             ===--><!--===simpleType I ===--><!--                   --><!--      ======       --><!--=== ID Type from TM===--><!-- PT v2.1 new complex type for adding drivers license CR68-->
+  <xs:simpleType name="IDType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DriversLicense"/>
+      <xs:enumeration value="EmployeeID"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  IMCBType         ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="IMCBType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24"/>
+      <xs:minLength value="21"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== IMB Type ===--><!-- dk v5.0 ===-->
+  <xs:simpleType name="iMBType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{2}"/>
+      <xs:maxLength value="34"/>
+      <xs:minLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== IMB bar code ID from PDR  ===--><!--=== v6.0 dk standardized on &quot;iMB&quot;     ===-->
+  <xs:simpleType name="iMBarcodeIDType">
+    <xs:restriction base="mailxml_base:ns02"/>
+  </xs:simpleType><!--=== IMB Serial Number type from PDR  ===--><!--=== v6.0 dk standardized on &quot;iMB&quot;     ===-->
+  <xs:simpleType name="iMBSerialNumber6Type">
+    <xs:restriction base="mailxml_base:ns06"/>
+  </xs:simpleType><!--=== IMB Serial Number type from PDR  ===--><!--=== v6.0 dk standardized on &quot;iMB&quot;     ===-->
+  <xs:simpleType name="iMBSerialNumber9Type">
+    <xs:restriction base="mailxml_base:ns09"/>
+  </xs:simpleType><!--=== IMB Upper Serialization Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="iMBUpperSerializationType">
+    <xs:restriction base="mailxml_base:s18"/>
+  </xs:simpleType><!--=== IMB Lower Serialization Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="iMBLowerSerializationType">
+    <xs:restriction base="mailxml_base:s18"/>
+  </xs:simpleType><!--===  Internal Date Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="internalDateType">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType><!--   In County - Out County  Indicator -->
+  <xs:simpleType name="inOutCountyIndicatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="O"/>
+    </xs:restriction>
+  </xs:simpleType><!--   In County - Out County  Indicator --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="inCountyOutCountyIndicatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="O"/>
+    </xs:restriction>
+  </xs:simpleType><!--===    Int 04      ===--><!--=== v5.0 dk CR 130 ===-->
+  <xs:simpleType name="int04">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="4"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType J ===--><!--                   --><!--      ======       --><!--===  mail.dat element ===-->
+  <xs:simpleType name="jobIDType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType L ===--><!--                   --><!--      ======       --><!--=== Locale Key Type ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="localeKeyType">
+    <xs:restriction base="mailxml_base:s09"/>
+  </xs:simpleType>
+  <xs:simpleType name="inductionStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="N"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Logical Physical Container Indicator ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="logicalPhysicalContainerIndicatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="L"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType M ===--><!--                   --><!--      ======       --><!--=== Mail Agreement Type ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="mailAgreementTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="E"/>
+      <xs:enumeration value="F"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  mail.dat element ===-->
+  <xs:simpleType name="mailClassType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="4"/>
+      <xs:enumeration value="6"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  mail.dat Record Statuselement ===-->
+  <xs:simpleType name="maildatRecordStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="O"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="U"/>
+      <xs:enumeration value="o"/>
+      <xs:enumeration value="d"/>
+      <xs:enumeration value="i"/>
+      <xs:enumeration value="u"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== MailerID6 type from PDR  ===-->
+  <xs:simpleType name="mailerID6Type">
+    <xs:restriction base="mailxml_base:ns06"/>
+  </xs:simpleType><!--=== MailerID9 type from PDR  ===-->
+  <xs:simpleType name="mailerID9Type">
+    <xs:restriction base="mailxml_base:ns09"/>
+  </xs:simpleType><!--=== Mail Issue ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="mailIssueType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--   MailXML Container Type  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="mailXMLContainerType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="4"/>
+      <xs:enumeration value="5"/>
+      <xs:enumeration value="E"/>
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="O"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="T"/>
+      <xs:enumeration value="V"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="U"/>
+      <xs:enumeration value="Z"/>
+      <xs:enumeration value="W"/>
+      <xs:enumeration value="X"/>
+    </xs:restriction>
+  </xs:simpleType><!--  Mail.XML Presentation Category Type --><!-- v5.0 dk CR 182 -->
+  <xs:simpleType name="mailXmlPresentationCategoryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="S"/>
+    </xs:restriction>
+  </xs:simpleType><!--   MailXML Status Type --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="mailXMLStatusType">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="-1"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Metered Affixed Method Type   --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="meteredAffixedMethodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="M"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="monthType">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:maxInclusive value="12"/>
+      <xs:minInclusive value="1"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  mail.dat element ===-->
+  <xs:simpleType name="moveUpdateMethodType">
+    <xs:restriction base="xs:integer">
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="4"/>
+      <xs:enumeration value="5"/>
+      <xs:enumeration value="6"/>
+      <xs:enumeration value="7"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Move Update Type--><!--=== v5.0 dk ===-->
+  <xs:simpleType name="moveUpdateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ASE"/>
+      <xs:enumeration value="ACS"/>
+      <xs:enumeration value="ALT"/>
+      <xs:enumeration value="FAST"/>
+      <xs:enumeration value="MULT"/>
+      <xs:enumeration value="NCOA"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  mail.dat element     ===--><!--=== CR 84 v3.0 dk ===-->
+  <xs:simpleType name="MPUIDType">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:totalDigits value="5"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== MPU ID ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="mpuIDType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType N ===--><!--                   --><!--      ======       --><!--===  mail.dat elements for numeric strings ===-->
+  <xs:simpleType name="ns02">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{2}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ns03">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ns06">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{6}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ns08">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{8}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ns09">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{9}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ns10">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{10}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ns11">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{11}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ns13">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{13}"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Numeric string elements  ===-->
+  <xs:simpleType name="ns04">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{4}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ns05">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{5}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ns22">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{22}"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Number datatypes from mail.dat  ===-->
+  <xs:simpleType name="n01">
+    <xs:restriction base="xs:positiveInteger">
+      <xs:totalDigits value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="n02">
+    <xs:restriction base="xs:positiveInteger">
+      <xs:totalDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="n03">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:totalDigits value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="n04">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:totalDigits value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="n05">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:totalDigits value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="n06">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:totalDigits value="6"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== New Address ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="newAddressType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="G"/>
+      <xs:enumeration value="H"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="U"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType O ===--><!--                   --><!--      ======       --><!--=== Old Address ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="addressType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="G"/>
+      <xs:enumeration value="H"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="U"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== One Pass Planned Or Actual Flag ===--><!--=== V5.0 dk ===-->
+  <xs:simpleType name="onePassPlannedOrActualFlagType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="P"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType P ===--><!--                   --><!--      ======       --><!--===  mail.dat element ===-->
+  <xs:simpleType name="packageIDType">
+    <xs:restriction base="mailxml_base:s06"/>
+  </xs:simpleType><!--   Packaging Method  Type  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="packagingMethodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Pallet Handling Unit Type ===--><!--=== Added re CR 106 v3.0 dk ===-->
+  <xs:simpleType name="palletHandlingUnitType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Sacks"/>
+      <xs:enumeration value="Bundles"/>
+      <xs:enumeration value="MixedLengthTrays"/>
+      <xs:enumeration value="1' Tray"/>
+      <xs:enumeration value="2' Tray"/>
+      <xs:enumeration value="EMM Tray"/>
+      <xs:enumeration value="Flat Tub"/>
+      <xs:enumeration value="Parcels"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Pallet Type  from TM===--><!--=== Added per CR 106 v3.0 dk ===-->
+  <xs:simpleType name="palletType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pallet"/>
+      <xs:enumeration value="EIRS 61 â€“ Hamper, Large Canvas"/>
+      <xs:enumeration value="EIRS 61P â€“ Hamper, Large Plastic"/>
+      <xs:enumeration value="EIRS 66 â€“ General Purpose Mail Container w/Gate"/>
+      <xs:enumeration value="EIRS 68 â€“ Eastern Region Mail Container w/Web Door"/>
+      <xs:enumeration value="EIRS 84 â€“ Wire Container Rigid"/>
+      <xs:enumeration value="EIRS 84C â€“ Collapsible Wire Container"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Parent Container Ref ID Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="parentContainerRefIDType">
+    <xs:restriction base="mailxml_base:s06"/>
+  </xs:simpleType><!--=== Percentage Type ===--><!--=== v6.0 dk make 100.00 to 0.00 ===--><!--=== v5.0 dk ===--><!--=== v6.0 dk make 100.00 to 0.00 ===-->
+  <xs:simpleType name="percentageType">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="5"/>
+      <xs:fractionDigits value="2"/>
+      <xs:minInclusive value="0.00"/>
+      <xs:maxInclusive value="100.00"/>
+    </xs:restriction>
+  </xs:simpleType><!--  Periodical Statement Type Type--><!--=== v5.0 dk ===-->
+  <xs:simpleType name="periodicalStatementType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="N"/>
+      <!-- &lt;xs:enumeration value=&quot;M&quot;/&gt; -->
+    </xs:restriction>
+  </xs:simpleType><!-- Permit Type  --><!--=== v5.0 dk ===--><!--=== v6.0 dk RSS13 ===-->
+  <xs:simpleType name="permitTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PI"/>
+      <xs:enumeration value="MT"/>
+      <xs:enumeration value="PC"/>
+      <xs:enumeration value="BR"/>
+      <xs:enumeration value="PE"/>
+      <xs:enumeration value="GH"/>
+      <xs:enumeration value="OI"/>
+      <xs:enumeration value="OM"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== phone Number from TM ===-->
+  <xs:simpleType name="phoneNumberType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="25"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Pickup or Delivery Type from TM ===--><!--=== v3.0 dk ===-->
+  <xs:simpleType name="pickupOrDeliveryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pickup"/>
+      <xs:enumeration value="Delivery"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Planet Code Type PDR element ===--><!-- v5.0 dk                   ===-->
+  <xs:simpleType name="planetCodeType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{2}"/>
+      <xs:maxLength value="13"/>
+      <xs:minLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Postage Grouping ID Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="postageGroupingIDType">
+    <xs:restriction base="mailxml_base:s08"/>
+  </xs:simpleType><!-- Postage Payment Method Type   --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="postagePaymentMethodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="P"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== PostageStatement Line Number 1 ===--><!--=== v5.0 dk CR 177 ===-->
+  <xs:simpleType name="postageStatementLineNumber1Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="E26"/>
+      <xs:enumeration value="E27"/>
+      <xs:enumeration value="E28"/>
+      <xs:enumeration value="E29"/>
+      <xs:enumeration value="E30"/>
+      <xs:enumeration value="E31"/>
+      <xs:enumeration value="E32"/>
+      <xs:enumeration value="E33"/>
+      <xs:enumeration value="E34"/>
+      <xs:enumeration value="E35"/>
+      <xs:enumeration value="E36"/>
+      <xs:enumeration value="E37"/>
+      <xs:enumeration value="E38"/>
+      <xs:enumeration value="E39"/>
+      <xs:enumeration value="E40"/>
+      <xs:enumeration value="E41"/>
+      <xs:enumeration value="E42"/>
+      <xs:enumeration value="E43"/>
+      <xs:enumeration value="E44"/>
+      <xs:enumeration value="E45"/>
+      <xs:enumeration value="E46"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== PostageStatement Line Number 2 ===--><!--=== v5.0 dk CR 177 ===-->
+  <xs:simpleType name="postageStatementLineNumber2Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="E1"/>
+      <xs:enumeration value="E2"/>
+      <xs:enumeration value="E3"/>
+      <xs:enumeration value="E4"/>
+      <xs:enumeration value="E5"/>
+      <xs:enumeration value="E6"/>
+      <xs:enumeration value="E7"/>
+      <xs:enumeration value="E8"/>
+      <xs:enumeration value="E9"/>
+      <xs:enumeration value="E10"/>
+      <xs:enumeration value="E11"/>
+      <xs:enumeration value="E12"/>
+      <xs:enumeration value="E13"/>
+      <xs:enumeration value="E14"/>
+      <xs:enumeration value="E15"/>
+      <xs:enumeration value="E16"/>
+      <xs:enumeration value="E17"/>
+      <xs:enumeration value="E18"/>
+      <xs:enumeration value="E19"/>
+      <xs:enumeration value="E20"/>
+      <xs:enumeration value="E21"/>
+      <xs:enumeration value="E22"/>
+      <xs:enumeration value="E23"/>
+      <xs:enumeration value="E24"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== PostageStatement Line Number 3 ===--><!--=== v5.0 dk CR 177 ===-->
+  <xs:simpleType name="postageStatementLineNumber3Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="D1"/>
+      <xs:enumeration value="D2"/>
+      <xs:enumeration value="D3"/>
+      <xs:enumeration value="D4"/>
+      <xs:enumeration value="D5"/>
+      <xs:enumeration value="D6"/>
+      <xs:enumeration value="D7"/>
+      <xs:enumeration value="D8"/>
+      <xs:enumeration value="D9"/>
+      <xs:enumeration value="D10"/>
+      <xs:enumeration value="D11"/>
+      <xs:enumeration value="D12"/>
+      <xs:enumeration value="D13"/>
+      <xs:enumeration value="D14"/>
+      <xs:enumeration value="D15"/>
+      <xs:enumeration value="D16"/>
+      <xs:enumeration value="D17"/>
+    </xs:restriction>
+  </xs:simpleType><!--   Postage Statement Stage Type  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="postageStatementStateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FIN"/>
+      <xs:enumeration value="REV"/>
+      <xs:enumeration value="CAN"/>
+      <xs:enumeration value="UPD"/>
+      <xs:enumeration value="NAP"/>
+      <xs:enumeration value="CON"/>
+      <xs:enumeration value="ERR"/>
+      <xs:enumeration value="EST"/>
+      <xs:enumeration value="REW"/>
+      <xs:enumeration value="COM"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Postage Statement Status ===--><!--=== v5.0 dk ===--><!--===
+    &quot;UPD&quot; = UPD-USPS Processing Due
+    &quot;FIN&quot; = FIN-Finalized
+    &quot;UPDNOTFINALIZED&quot; = All UPD-UPD Statements (ignore begin date)
+    &quot;REW&quot; = REW-Returned for Rework
+    &quot;REV&quot; = REV-Reversed
+    &quot;CAN&quot; = CAN-Canceled
+    &quot;FAI&quot; = FAI-Failed Verification
+    &quot;PEN&quot; = PEN-Pending Verification Results
+    &quot;PAS&quot; = PAS-Passed Verification without Auto-Finalize
+    &quot;INC&quot; = INC-Incomplete
+    &quot;NAP&quot; = NAP-Not Available for Processing
+    &quot;EST&quot; = EST-Estimate of Postage
+    &quot;CON&quot; = CON-Consolidated
+    &quot;ERR&quot; = ERR-Failed on Submission
+    &quot;COMPLETE&quot; = Complete Jobs
+    &quot;AVW&quot; = AVW-DPV and/or Move Update Warnings
+    &quot;PAV&quot; = PAV-Pending DPV and Move Update Results
+    &quot;FPP&quot; = FPP-Finalized Pending Payment ===-->
+  <xs:simpleType name="postageStatementStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UPD"/>
+      <xs:enumeration value="FIN"/>
+      <xs:enumeration value="UPDNOTFINALIZED"/>
+      <xs:enumeration value="REW"/>
+      <xs:enumeration value="REV"/>
+      <xs:enumeration value="CAN"/>
+      <xs:enumeration value="FAI"/>
+      <xs:enumeration value="PEN"/>
+      <xs:enumeration value="PAS"/>
+      <xs:enumeration value="INC"/>
+      <xs:enumeration value="NAP"/>
+      <xs:enumeration value="EST"/>
+      <xs:enumeration value="CON"/>
+      <xs:enumeration value="ERR"/>
+      <xs:enumeration value="COMPLETE"/>
+      <xs:enumeration value="AVW"/>
+      <xs:enumeration value="PAV"/>
+      <xs:enumeration value="FPP"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Price Type Type--><!--=== v5.0 dk ===-->
+  <xs:simpleType name="priceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="retail"/>
+      <xs:enumeration value="discount"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Primary Secondary Indicator ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="primarySecondaryIndicatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="S"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  mail.dat element ===-->
+  <xs:simpleType name="processingCategoryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LT"/>
+      <xs:enumeration value="FL"/>
+      <xs:enumeration value="CD"/>
+      <xs:enumeration value="OS"/>
+      <xs:enumeration value="MP"/>
+      <xs:enumeration value="IR"/>
+      <xs:enumeration value="PF"/>
+      <xs:enumeration value="CM"/>
+      <xs:enumeration value="NP"/>
+      <xs:enumeration value="NA"/>
+      <xs:enumeration value="NB"/>
+    </xs:restriction>
+  </xs:simpleType><!--===    Processing Code      ===--><!--=== v5.0 dk CR 198 ===--><!--
+        S = Surface
+        MXDS = Mixed Surface
+        L = Locale
+        WKG = Working Mail
+        A = Air Separations
+        MXDA = Mixed Air
+        SP = Single-Piece
+    -->
+  <xs:simpleType name="processingCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="MXDS"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="WKG"/>
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="MXDA"/>
+      <xs:enumeration value="SP"/>
+    </xs:restriction>
+  </xs:simpleType><!--  PVDS  Container Type  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="pvdsContainerType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="T"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="K"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="O"/>
+    </xs:restriction>
+  </xs:simpleType><!--  PVDS  Container SubType  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="pvdsContainerSubType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="N"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType Q ===--><!--                   --><!--      ======       --><!--=== Qualification Report Class ===--><!--=== v5.0 dk CR 177 ===--><!--=== FirstClass, S
+    tandard, Periodical, PriorityMail,
+    ParcelPost, All ===-->
+  <xs:simpleType name="qualificationReportClassType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FC"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="PM"/>
+      <xs:enumeration value="PP"/>
+      <xs:enumeration value="A"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType R ===--><!--                   --><!--      ======       --><!-- Rate Category Type  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="rateCategoryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="AF"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="BF"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="DF"/>
+      <xs:enumeration value="E"/>
+      <xs:enumeration value="FB"/>
+      <xs:enumeration value="G"/>
+      <xs:enumeration value="GF"/>
+      <xs:enumeration value="H"/>
+      <xs:enumeration value="K"/>
+      <xs:enumeration value="KF"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="L1"/>
+      <xs:enumeration value="L2"/>
+      <xs:enumeration value="L3"/>
+      <xs:enumeration value="L4"/>
+      <xs:enumeration value="L5"/>
+      <xs:enumeration value="L6"/>
+      <xs:enumeration value="L7"/>
+      <xs:enumeration value="L8"/>
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="NG"/>
+      <xs:enumeration value="NK"/>
+      <xs:enumeration value="N5"/>
+      <xs:enumeration value="N6"/>
+      <xs:enumeration value="PI"/>
+      <xs:enumeration value="PM"/>
+      <xs:enumeration value="P7"/>
+      <xs:enumeration value="P8"/>
+      <xs:enumeration value="PE"/>
+      <xs:enumeration value="PQ"/>
+      <xs:enumeration value="PR"/>
+      <xs:enumeration value="PG"/>
+      <xs:enumeration value="PK"/>
+      <xs:enumeration value="P5"/>
+      <xs:enumeration value="P6"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="Z1"/>
+      <xs:enumeration value="Z2"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Rate Level Type   --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="rateLevelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SP"/>
+      <xs:enumeration value="5B"/>
+      <xs:enumeration value="3B"/>
+      <xs:enumeration value="AB"/>
+      <xs:enumeration value="PSRT"/>
+      <xs:enumeration value="5D"/>
+      <xs:enumeration value="3D"/>
+      <xs:enumeration value="BMC"/>
+      <xs:enumeration value="OBMC"/>
+      <xs:enumeration value="BP"/>
+      <xs:enumeration value="MP"/>
+      <xs:enumeration value="AD"/>
+      <xs:enumeration value="MD"/>
+      <xs:enumeration value="WS"/>
+      <xs:enumeration value="HD"/>
+      <xs:enumeration value="CR"/>
+      <xs:enumeration value="MB"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Rate Level Indicator Type   --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="rateLevelIndicatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="N"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Rate Type mail.dat ===--><!--=== common rate type values for enumerated use in  CPT , MPU) and TM uspsSummay )===--><!--=== CR 123 Added to support new values in maildat 8.2 dk v3.0 ===--><!--==
+        J = Priority Mail Flat â€“ Large Box
+        K = Priority Mail Flat â€“ Large Box APO/FPO
+        W = Science of Agriculture Limited Circulation
+        Y = Regular Limited Circulation    ===-->
+  <xs:simpleType name="rateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="T"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="X"/>
+      <xs:enumeration value="H"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="Z"/>
+      <xs:enumeration value="E"/>
+      <xs:enumeration value="G"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="4"/>
+      <xs:enumeration value="J"/>
+      <xs:enumeration value="K"/>
+      <xs:enumeration value="W"/>
+      <xs:enumeration value="Y"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="rateTypeType">
+    <xs:restriction base="mailxml_base:rateType">
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="D"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Reason Code Type ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="reasonCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="E"/>
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="Q"/>
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="U"/>
+      <xs:enumeration value="V"/>
+      <xs:enumeration value="X"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Recipient Type --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="recipientType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="4"/>
+      <xs:enumeration value="5"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Reservation Number Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="reservationNumberType">
+    <xs:restriction base="mailxml_base:s15"/>
+  </xs:simpleType><!--===  Role Type  ===--><!--=== CR 83 v3.0 dk ===--><!--=== v4.1 CR 152 added Logistics Provider and Carrier ===--><!--=== v5.0 dk added Data Brokering Agent ===--><!--=== v6.0A dk added Nixie, StartTheClock, ContainerVisibility, and DeliveryPointValidation ===-->
+  <xs:simpleType name="roleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Owner"/>
+      <xs:enumeration value="Confirm Subscriber"/>
+      <xs:enumeration value="Confirm Data Receiver"/>
+      <xs:enumeration value="ACS Data Receiver"/>
+      <xs:enumeration value="ACS Subscriber"/>
+      <xs:enumeration value="List Owner"/>
+      <xs:enumeration value="Mail Creator"/>
+      <xs:enumeration value="Addressor"/>
+      <xs:enumeration value="Comail"/>
+      <xs:enumeration value="CoMingler"/>
+      <xs:enumeration value="MLOCR"/>
+      <xs:enumeration value="Mail Owner"/>
+      <xs:enumeration value="Mail Agent"/>
+      <xs:enumeration value="Entry Point Planner"/>
+      <xs:enumeration value="Shipment Planner"/>
+      <xs:enumeration value="Consolidator"/>
+      <xs:enumeration value="Secondary Consolidator"/>
+      <xs:enumeration value="Appointment Management Receiver"/>
+      <xs:enumeration value="Consignee/Product Receiver"/>
+      <xs:enumeration value="Dispatcher"/>
+      <xs:enumeration value="Tracker CONFIRM-scan"/>
+      <xs:enumeration value="Tracker CONFIRM-payer"/>
+      <xs:enumeration value="Tracker Seed Source"/>
+      <xs:enumeration value="Tracker Piece-level-scan"/>
+      <xs:enumeration value="Tracker ASN-scan"/>
+      <xs:enumeration value="Tracker Induction-scan"/>
+      <xs:enumeration value="Tracker Planet-code"/>
+      <xs:enumeration value="ACS receiver"/>
+      <xs:enumeration value="ACS payer"/>
+      <xs:enumeration value="Seamless Acceptance"/>
+      <xs:enumeration value="Seamless Verification"/>
+      <xs:enumeration value="Security"/>
+      <xs:enumeration value="Logistics Provider"/>
+      <xs:enumeration value="Carrier"/>
+      <xs:enumeration value="Data Brokering Agent"/>
+      <xs:enumeration value="Nixie"/>
+      <xs:enumeration value="StartTheClock"/>
+      <xs:enumeration value="ContainerVisibility"/>
+      <xs:enumeration value="DeliveryPointValidation"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Responsible Transportation Party Type ===--><!--=== CR 93 v3.0 dk ===-->
+  <xs:simpleType name="responsibleTransportationPartyType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Shipper"/>
+      <xs:enumeration value="Consignee"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Routing Zip Code type from PDR  ===-->
+  <xs:simpleType name="RoutingZipCodeType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+      <xs:minLength value="0"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType S ===--><!--                   -->
+  <xs:simpleType name="s01">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s02">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  mail.dat string elements ===-->
+  <xs:simpleType name="s04">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s06">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s07">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== TM string Elements  ===-->
+  <xs:simpleType name="s03">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s05">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s08">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s09">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="9"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s10">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s11">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s12">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s15">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s16">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s18">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="18"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s20">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s22">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="22"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== V4.0 CR 137 dk ===-->
+  <xs:simpleType name="s25">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="25"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== V4.0 CR 137 dk ===-->
+  <xs:simpleType name="s28">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="28"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s30">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s31">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="31"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s37">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="37"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s40">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s45">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="45"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s50">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s60">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s64">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s66">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="66"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s72">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="72"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s80">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="80"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s255">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!-- CR78 v2.1 dk -->
+  <xs:simpleType name="s256">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="256"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s260">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="260"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--   Sacking Basis  Type  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="sackingBasisType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="4"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Scheduled Induction Date Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="scheduledInductionDateType">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType><!--===  Scheduled Induction Time Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="scheduledInductionTimeType">
+    <xs:restriction base="xs:time"/>
+  </xs:simpleType><!--===  Scheduled In Home Date Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="scheduledInHomeDateType">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType><!--=== Segment ID ===--><!--=== v5.0 dk CR 148 ===-->
+  <xs:simpleType name="segmentIDType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Service Level Indicator ===--><!--=== v5.0 dk ===--><!--=== F = Full service, B = basic, P = postnet and O = Other ===-->
+  <xs:simpleType name="serviceLevelIndicatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="F"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="O"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Service Code Type   --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="serviceCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CM"/>
+      <xs:enumeration value="COD"/>
+      <xs:enumeration value="COM"/>
+      <xs:enumeration value="DC"/>
+      <xs:enumeration value="IM"/>
+      <xs:enumeration value="PAL"/>
+      <xs:enumeration value="RD"/>
+      <xs:enumeration value="RM"/>
+      <xs:enumeration value="RR"/>
+      <xs:enumeration value="RRE"/>
+      <xs:enumeration value="RRM"/>
+      <xs:enumeration value="SC"/>
+      <xs:enumeration value="SH"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Service Type Code from PDR  ===-->
+  <xs:simpleType name="ServiceTypeCodeType">
+    <xs:restriction base="mailxml_base:ns03"/>
+  </xs:simpleType><!-- Sortation Level Type  --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="sortationLevelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CRD"/>
+      <xs:enumeration value="5DG"/>
+      <xs:enumeration value="CR5"/>
+      <xs:enumeration value="5DGS"/>
+      <xs:enumeration value="CR5S"/>
+      <xs:enumeration value="M5D"/>
+      <xs:enumeration value="M5DS"/>
+      <xs:enumeration value="MET"/>
+      <xs:enumeration value="3DG"/>
+      <xs:enumeration value="CR3"/>
+      <xs:enumeration value="3DGS"/>
+      <xs:enumeration value="ADC"/>
+      <xs:enumeration value="AADC"/>
+      <xs:enumeration value="MADC"/>
+      <xs:enumeration value="MAAD"/>
+      <xs:enumeration value="SCF"/>
+      <xs:enumeration value="PSCF"/>
+      <xs:enumeration value="BMC"/>
+      <xs:enumeration value="PBMC"/>
+      <xs:enumeration value="MBMC"/>
+      <xs:enumeration value="ASF"/>
+      <xs:enumeration value="OMX"/>
+      <xs:enumeration value="PADC"/>
+      <xs:enumeration value="DPC"/>
+      <xs:enumeration value="RDC"/>
+      <xs:enumeration value="MRDC"/>
+      <xs:enumeration value="SP"/>
+    </xs:restriction>
+  </xs:simpleType><!-- Special Service sub Code Type   --><!--=== v5.0 dk ===-->
+  <xs:simpleType name="serviceSubCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="E"/>
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="T"/>
+      <xs:enumeration value="B"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== State Codes from TM===-->
+  <xs:simpleType name="stateCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AL"/>
+      <xs:enumeration value="AK"/>
+      <xs:enumeration value="AS"/>
+      <xs:enumeration value="AZ"/>
+      <xs:enumeration value="AR"/>
+      <xs:enumeration value="CA"/>
+      <xs:enumeration value="CO"/>
+      <xs:enumeration value="CT"/>
+      <xs:enumeration value="DE"/>
+      <xs:enumeration value="DC"/>
+      <xs:enumeration value="FM"/>
+      <xs:enumeration value="FL"/>
+      <xs:enumeration value="GA"/>
+      <xs:enumeration value="GU"/>
+      <xs:enumeration value="HI"/>
+      <xs:enumeration value="IL"/>
+      <xs:enumeration value="IN"/>
+      <xs:enumeration value="IA"/>
+      <xs:enumeration value="ID"/>
+      <xs:enumeration value="KS"/>
+      <xs:enumeration value="KY"/>
+      <xs:enumeration value="LA"/>
+      <xs:enumeration value="MH"/>
+      <xs:enumeration value="MD"/>
+      <xs:enumeration value="MA"/>
+      <xs:enumeration value="M0"/>
+      <xs:enumeration value="MI"/>
+      <xs:enumeration value="MN"/>
+      <xs:enumeration value="MS"/>
+      <xs:enumeration value="MT"/>
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="NH"/>
+      <xs:enumeration value="NV"/>
+      <xs:enumeration value="NJ"/>
+      <xs:enumeration value="NM"/>
+      <xs:enumeration value="NY"/>
+      <xs:enumeration value="NC"/>
+      <xs:enumeration value="ND"/>
+      <xs:enumeration value="MP"/>
+      <xs:enumeration value="OH"/>
+      <xs:enumeration value="OR"/>
+      <xs:enumeration value="OK"/>
+      <xs:enumeration value="PW"/>
+      <xs:enumeration value="PA"/>
+      <xs:enumeration value="PR"/>
+      <xs:enumeration value="RI"/>
+      <xs:enumeration value="SC"/>
+      <xs:enumeration value="SD"/>
+      <xs:enumeration value="TN"/>
+      <xs:enumeration value="TX"/>
+      <xs:enumeration value="UT"/>
+      <xs:enumeration value="VT"/>
+      <xs:enumeration value="VI"/>
+      <xs:enumeration value="VA"/>
+      <xs:enumeration value="WA"/>
+      <xs:enumeration value="WV"/>
+      <xs:enumeration value="WI"/>
+      <xs:enumeration value="WY"/>
+    </xs:restriction>
+  </xs:simpleType><!--===Status Type from TM ===-->
+  <xs:simpleType name="statusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Accepted"/>
+      <xs:enumeration value="Amended"/>
+      <xs:enumeration value="Cancelled"/>
+      <xs:enumeration value="Counterproposal"/>
+      <xs:enumeration value="New"/>
+      <xs:enumeration value="NoAction"/>
+      <xs:enumeration value="Original"/>
+      <xs:enumeration value="PartiallyAccepted"/>
+      <xs:enumeration value="Pending"/>
+      <xs:enumeration value="Rejected"/>
+      <xs:enumeration value="Replaced"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Stop Designator Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="stopDesignatorType">
+    <xs:restriction base="mailxml_base:s02"/>
+  </xs:simpleType><!--=== Surcharge type ===--><!--=== v5.0 dk ===-->
+  <xs:simpleType name="surchargeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="D"/>
+    </xs:restriction>
+  </xs:simpleType><!--===simpleType T ===--><!--                   --><!--      ======       --><!--===  Total Weight Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="totalWeightType">
+    <xs:restriction base="mailxml_base:s05"/>
+  </xs:simpleType><!--===Trailer Length Type === from TM-->
+  <xs:simpleType name="trailerLengthType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="20ft"/>
+      <xs:enumeration value="40ft"/>
+      <xs:enumeration value="45ft"/>
+      <xs:enumeration value="48ft"/>
+      <xs:enumeration value="53ft"/>
+    </xs:restriction>
+  </xs:simpleType><!--===Transportation Method Type === from TM--><!--=== CR 94 v3.0 dk ===-->
+  <xs:simpleType name="transportationMethodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="USPS"/>
+      <xs:enumeration value="Mailer"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Trans Ship Bill of Lading Number Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="transShipBoLNumberType">
+    <xs:restriction base="mailxml_base:s05"/>
+  </xs:simpleType><!--===  Transport DUNS Number Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="transportDUNSNumberType">
+    <xs:restriction base="mailxml_base:s15"/>
+  </xs:simpleType><!--=== Tray Type ===--><!--=== Added re CR 106 v3.0 dk ===--><!--=== V6.0 dk standardized on &quot;ft&quot; for &quot;foot&quot; ===-->
+  <xs:simpleType name="trayType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MixedLengthTrays"/>
+      <xs:enumeration value="1ft Tray"/>
+      <xs:enumeration value="2ft Tray"/>
+      <xs:enumeration value="EMM Tray"/>
+      <xs:enumeration value="Flat Tub"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  Truck Dispatch Number Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="truckDispatchNumberType">
+    <xs:restriction base="mailxml_base:s10"/>
+  </xs:simpleType><!--      ======       --><!--===simpleType U ===--><!--                   --><!--      ======       --><!--=== Unit Load Type  from TM===-->
+  <xs:simpleType name="unitLoadType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CrossDockPallets"/>
+      <xs:enumeration value="WorkingPallets"/>
+      <xs:enumeration value="Trailers"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Unload State Type from TM===-->
+  <xs:simpleType name="unloadStateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Accept"/>
+      <xs:enumeration value="Reject"/>
+      <xs:enumeration value="Stage"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== uOM from TM===-->
+  <xs:simpleType name="uOMType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AirDryMetricTonne"/>
+      <xs:enumeration value="AirDryPercent"/>
+      <xs:enumeration value="AirDryShortTon"/>
+      <xs:enumeration value="Bale"/>
+      <xs:enumeration value="BoardFoot"/>
+      <xs:enumeration value="BookUnit"/>
+      <xs:enumeration value="Box"/>
+      <xs:enumeration value="Bundle"/>
+      <xs:enumeration value="C-Size"/>
+      <xs:enumeration value="Centimeter"/>
+      <xs:enumeration value="Cord"/>
+      <xs:enumeration value="CubicFoot"/>
+      <xs:enumeration value="CubicMeter"/>
+      <xs:enumeration value="Cubit"/>
+      <xs:enumeration value="Day"/>
+      <xs:enumeration value="DotsPerInch"/>
+      <xs:enumeration value="Foot"/>
+      <xs:enumeration value="Gallon"/>
+      <xs:enumeration value="Gram"/>
+      <xs:enumeration value="GramsPerSquareMeter"/>
+      <xs:enumeration value="Hour"/>
+      <xs:enumeration value="HundredBoardFeet"/>
+      <xs:enumeration value="HundredLinealFeet"/>
+      <xs:enumeration value="HundredPound"/>
+      <xs:enumeration value="HundredSquareFeet"/>
+      <xs:enumeration value="Inch"/>
+      <xs:enumeration value="Kilogram"/>
+      <xs:enumeration value="KilogramsPerDay"/>
+      <xs:enumeration value="KilogramsPerWeek"/>
+      <xs:enumeration value="KnownBreaks"/>
+      <xs:enumeration value="Layer"/>
+      <xs:enumeration value="Leaves"/>
+      <xs:enumeration value="LinearFoot"/>
+      <xs:enumeration value="LinesPerInch"/>
+      <xs:enumeration value="Load"/>
+      <xs:enumeration value="MagazineUnit"/>
+      <xs:enumeration value="Megabyte"/>
+      <xs:enumeration value="Meter"/>
+      <xs:enumeration value="MetricTon"/>
+      <xs:enumeration value="MetricTonsPerDay"/>
+      <xs:enumeration value="MetricTonsPerWeek"/>
+      <xs:enumeration value="Micron"/>
+      <xs:enumeration value="Millimeter"/>
+      <xs:enumeration value="Minute"/>
+      <xs:enumeration value="Month"/>
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Package"/>
+      <xs:enumeration value="Page"/>
+      <xs:enumeration value="PagesPerInch"/>
+      <xs:enumeration value="PalletUnit"/>
+      <xs:enumeration value="Percentage"/>
+      <xs:enumeration value="PerThousand"/>
+      <xs:enumeration value="Picas"/>
+      <xs:enumeration value="Piece"/>
+      <xs:enumeration value="PixelsPerInch"/>
+      <xs:enumeration value="Pound"/>
+      <xs:enumeration value="PoundsPerDay"/>
+      <xs:enumeration value="PoundsPerHour"/>
+      <xs:enumeration value="PoundsPerWeek"/>
+      <xs:enumeration value="PulpUnit"/>
+      <xs:enumeration value="Ream"/>
+      <xs:enumeration value="Reel"/>
+      <xs:enumeration value="Set"/>
+      <xs:enumeration value="Sheet"/>
+      <xs:enumeration value="ShortTon"/>
+      <xs:enumeration value="ShortTonsPerDay"/>
+      <xs:enumeration value="ShortTonsPerHour"/>
+      <xs:enumeration value="ShortTonsPerWeek"/>
+      <xs:enumeration value="Signature"/>
+      <xs:enumeration value="Skid"/>
+      <xs:enumeration value="SquareInch"/>
+      <xs:enumeration value="SquareFeet"/>
+      <xs:enumeration value="SquareMeter"/>
+      <xs:enumeration value="ThousandBoardFeet"/>
+      <xs:enumeration value="ThousandLinealFeet"/>
+      <xs:enumeration value="ThousandPieces"/>
+      <xs:enumeration value="ThousandSquareCentimeters"/>
+      <xs:enumeration value="ThousandSquareFeet"/>
+      <xs:enumeration value="ThousandSquareInch"/>
+      <xs:enumeration value="Ton"/>
+      <xs:enumeration value="TonsPerHour"/>
+      <xs:enumeration value="Unit"/>
+      <xs:enumeration value="UnknownBreaks"/>
+      <xs:enumeration value="Week"/>
+      <xs:enumeration value="Yard"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  mail.dat element Unique Container ID ===-->
+  <xs:simpleType name="uniqueContainerIDType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--===  UserInformationLine 1 Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="userInformationLine1Type">
+    <xs:restriction base="mailxml_base:s40"/>
+  </xs:simpleType><!--===  UserInformationLine 2 Type ===--><!--===  mail.dat element          ===-->
+  <xs:simpleType name="userInformationLine2Type">
+    <xs:restriction base="mailxml_base:s40"/>
+  </xs:simpleType><!--===  mail.dat element ===-->
+  <xs:simpleType name="userLicenseCodeType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+      <xs:minLength value="1"/>
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== USPS Pickup Type from TM===-->
+  <xs:simpleType name="uspsPickupType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Y"/>
+      <xs:enumeration value="N"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== simpleType V ===--><!--                   --><!--      ======       --><!--=== Verification Location Type ===--><!--=== CR 93 v3.0 dk ===-->
+  <xs:simpleType name="verificationLocationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BMEU"/>
+      <xs:enumeration value="DMU"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== simpleType W ===--><!--                   --><!--      ======       --><!--=== Week Frequency from TM ===-->
+  <xs:simpleType name="weekFrequencyType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Weekly"/>
+      <xs:enumeration value="Bi-Weekly"/>
+      <xs:enumeration value="First"/>
+      <xs:enumeration value="Second"/>
+      <xs:enumeration value="Third"/>
+      <xs:enumeration value="Fourth"/>
+      <xs:enumeration value="Fifth"/>
+      <xs:enumeration value="Sixth"/>
+    </xs:restriction>
+  </xs:simpleType><!--=== Weight Break ===--><!--=== v5.0 dk ===-->
+  <xs:simpleType name="weightBreakType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="H"/>
+      <xs:enumeration value="N"/>
+    </xs:restriction>
+  </xs:simpleType><!--      ======       --><!--===simpleType Y ===--><!--                   --><!--      ======       --><!--=== Yes No ===-->
+  <xs:simpleType name="yesNo">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Yes"/>
+      <xs:enumeration value="No"/>
+    </xs:restriction>
+  </xs:simpleType><!--      ======       --><!--=== simpleType Z ===--><!--                   --><!--      ======       --><!--=== Zipcode 3 or 5 ===--><!--=== v5.0 dk ===--><!--=== v6.0A dk Errata SM_03 ===-->
+  <xs:simpleType name="zipCodeThreeOrFiveDigit">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{3}|[0-9]{5} "/>
+    </xs:restriction>
+  </xs:simpleType><!-- Zone Type  --><!--=== v5.0 dk ===--><!--=== v6.0A dk Errata RS_3 ===--><!--    N    None
+        M    Mixed
+        LC    Local
+        1    Zone 1 and 2
+        3    Zone 3
+        4    Zone 4
+        5    Zone 5
+        6    Zone 6
+        7    Zone 7
+        8    Zone 8
+        ICD    In County DDU
+        IC    In County Other
+        DDU    Out County DDU
+        SCF    Out County DSCF
+        ADC    Out County DADC    -->
+  <xs:simpleType name="zoneType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="N"/>
+      <xs:enumeration value="M"/>
+      <xs:enumeration value="LC"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="3"/>
+      <xs:enumeration value="4"/>
+      <xs:enumeration value="5"/>
+      <xs:enumeration value="6"/>
+      <xs:enumeration value="7"/>
+      <xs:enumeration value="8"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="V"/>
+      <xs:enumeration value="ICD"/>
+      <xs:enumeration value="IC"/>
+      <xs:enumeration value="DDU"/>
+      <xs:enumeration value="SCF"/>
+      <xs:enumeration value="ADC"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

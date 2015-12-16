@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+ <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+   <!-- <xs:element name="Person" type="PersonType">
+  -->
+   <xs:element name="PersonType" type="PersonType">
+     <xs:annotation>
+      <xs:documentation>Denotes a person element.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+   <xs:complexType name="PersonType">
+     <xs:annotation>
+      <xs:documentation>Denotes a person type.</xs:documentation>
+    </xs:annotation>
+     <xs:attribute name="Name" type="xs:string" use="required">
+       <xs:annotation>
+        <xs:documentation>Denotes a person name.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+</xs:schema>

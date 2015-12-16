@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="4.3.0.0">
+
+  <xsd:element name="Organizations">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="Organization" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+      <xsd:attribute name="Version" type="xsd:string" use="optional" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Organization">
+    <xsd:complexType>
+      <xsd:attribute name="Id" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="MappingIds">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="MappingId" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+      <xsd:attribute name="Organization" type="xsd:string" use="optional" />
+      <xsd:attribute name="Version" type="xsd:string" use="optional" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="MappingId">
+    <xsd:complexType>
+      <xsd:attribute name="Id" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Address">
+    <xs:complexType>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="street" type="xs:string" use="required"/>
+      <xs:attribute name="zip" type="xs:string" use="required"/>
+      <xs:attribute name="city" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Addresses">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Address" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Client">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Addresses" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="clientName" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
