@@ -29,6 +29,9 @@ Options:
     /is[+]                              - Include Serialize method
     /is-                                - Do not include Serialize method (default)
     
+	/ee[+]                              - Enable Encoding when Serializing
+	/ee-                                - Disable Encoding when Serializing (default)
+
     /cl[+]                              - Include Clone method
     /cl-                                - Do not include Clone method (default)
     

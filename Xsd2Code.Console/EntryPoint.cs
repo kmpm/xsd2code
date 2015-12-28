@@ -322,6 +322,15 @@ namespace Xsd2Code
                         generatorParams.Serialization.Enabled = false;
                         break;
 
+                    case "/ee":
+                    case "/ee+":
+                        generatorParams.Serialization.EnableEncoding = true;
+                        break;
+                    
+                    case "/ee-":
+                        generatorParams.Serialization.EnableEncoding = false;
+                        break;
+
                     case "/lic":
                     case "/license":
                         DisplayLicense();
