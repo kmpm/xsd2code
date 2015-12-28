@@ -1499,7 +1499,9 @@ namespace Xsd2Code.Library.Extensions
             if (GeneratorContext.GeneratorParams.CustomUsings != null)
             {
                 foreach (var item in GeneratorContext.GeneratorParams.CustomUsings)
+                { 
                     code.Imports.Add(new CodeNamespaceImport(item.NameSpace));
+                }
             }
 
             // Tracking changes
