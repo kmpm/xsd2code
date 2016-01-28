@@ -73,7 +73,6 @@
     </Content>
     <Content Include="Resources\GenerateCodeFromXSDCommand.png" />
     <Content Include="Resources\GenerateCodeFromXSDCommandPackage.ico" />
-    <Content Include="stylesheet.css" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xsd2Code.ConfigurationForm\Xsd2Code.ConfigurationForm.csproj">
