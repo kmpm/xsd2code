@@ -185,7 +185,7 @@
             this.webBrowser.Name = "webBrowser";
             this.webBrowser.Size = new System.Drawing.Size(748, 732);
             this.webBrowser.TabIndex = 0;
-            this.webBrowser.Url = new System.Uri("http://xsd2code.codeplex.com/releases/", System.UriKind.Absolute);
+            this.webBrowser.Url = new System.Uri("https://github.com/kmpm/xsd2code", System.UriKind.Absolute);
             // 
             // FormOption
             // 
