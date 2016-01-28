@@ -840,7 +840,6 @@ namespace Xsd2Code.TestUnit
                     if (results.Errors.HasErrors)
                     {
                         result.Success = false;
-                        StringBuilder sb = new StringBuilder();
                         foreach (CompilerError error in results.Errors)
                         {
                             result.Messages.Add(MessageType.Error, error.ToString());
