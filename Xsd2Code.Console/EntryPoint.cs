@@ -388,7 +388,7 @@ namespace Xsd2Code
             var currentAssemblyName = currentAssembly.GetName();
 
             Console.WriteLine();
-            Console.WriteLine("Xsd2Code Version {0}", currentAssemblyName.Version);
+            Console.WriteLine("Open Xsd2Code Version {0}", currentAssemblyName.Version);
             Console.WriteLine("Code generation utility from XML schema files.");
             Console.WriteLine();
         }

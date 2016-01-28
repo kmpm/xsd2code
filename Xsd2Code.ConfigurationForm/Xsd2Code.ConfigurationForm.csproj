@@ -61,8 +61,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CreateVsixContainer>True</CreateVsixContainer>
-    <DeployExtension>True</DeployExtension>
+    <CreateVsixContainer>False</CreateVsixContainer>
+    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -100,7 +100,9 @@
     <None Include="Xsd2Code.ConfigurationForm.ico" />
   </ItemGroup>
   <ItemGroup>
-    <VSTemplate Include="Xsd2Code.ConfigurationForm.vstemplate" />
+    <VSTemplate Include="Xsd2Code.ConfigurationForm.vstemplate">
+      <SubType>Designer</SubType>
+    </VSTemplate>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xsd2Code.Library\Xsd2Code.Library.csproj">
