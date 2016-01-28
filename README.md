@@ -6,7 +6,7 @@ Aiming for VS2015 integration using VSIX.
 
 Goals
 =====
-- [x] Add encoding options to console
-- [x] Integrate with VS 2015 - VSIX
+- [x] Add encoding options to console. Issue #1
+- [x] Integrate with VS 2015 - VSIX. Issue #2
 - [ ] Rename. See issue #6
 - [ ] Compile and publish releases with some kind of logical versioning.
