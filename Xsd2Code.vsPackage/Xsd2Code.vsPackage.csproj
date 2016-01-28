@@ -67,7 +67,10 @@
     <VSCTCompile Include="GenerateCodeFromXSDCommandPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
-    <Content Include="index.html" />
+    <Content Include="LICENCE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\GenerateCodeFromXSDCommand.png" />
     <Content Include="Resources\GenerateCodeFromXSDCommandPackage.ico" />
     <Content Include="stylesheet.css" />

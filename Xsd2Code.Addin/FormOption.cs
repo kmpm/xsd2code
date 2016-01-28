@@ -123,7 +123,7 @@ namespace Xsd2Code.Addin
 
         private void linkToCodePlex_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(new ProcessStartInfo(linkToCodePlex.Text));
+            System.Diagnostics.Process.Start(new ProcessStartInfo(linkToSource.Text));
         }
 
 

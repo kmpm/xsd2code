@@ -4,6 +4,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F9908FD4-95AF-43DF-A6E3-C4A85F37EDCC}"
 	ProjectSection(SolutionItems) = preProject
+		LICENCE.txt = LICENCE.txt
 		Xsd2Code.vsmdi = Xsd2Code.vsmdi
 	EndProjectSection
 EndProject

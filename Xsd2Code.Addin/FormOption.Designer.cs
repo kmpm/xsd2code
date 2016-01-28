@@ -36,7 +36,7 @@
             this.btnSetAsDefault = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnGenerate = new System.Windows.Forms.Button();
-            this.linkToCodePlex = new System.Windows.Forms.LinkLabel();
+            this.linkToSource = new System.Windows.Forms.LinkLabel();
             this.chkOpenAfterGenerate = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
@@ -82,7 +82,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.linkToCodePlex);
+            this.panel1.Controls.Add(this.linkToSource);
             this.panel1.Controls.Add(this.chkOpenAfterGenerate);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(3, 546);
@@ -134,13 +134,13 @@
             // 
             // linkToCodePlex
             // 
-            this.linkToCodePlex.AutoSize = true;
-            this.linkToCodePlex.Location = new System.Drawing.Point(12, 5);
-            this.linkToCodePlex.Name = "linkToCodePlex";
-            this.linkToCodePlex.Size = new System.Drawing.Size(185, 13);
-            this.linkToCodePlex.TabIndex = 21;
-            this.linkToCodePlex.TabStop = true;
-            this.linkToCodePlex.Text = "http://www.codeplex.com/Xsd2Code";
+            this.linkToSource.AutoSize = true;
+            this.linkToSource.Location = new System.Drawing.Point(12, 5);
+            this.linkToSource.Name = "linkToCodePlex";
+            this.linkToSource.Size = new System.Drawing.Size(185, 13);
+            this.linkToSource.TabIndex = 21;
+            this.linkToSource.TabStop = true;
+            this.linkToSource.Text = "http://www.codeplex.com/Xsd2Code";
             // 
             // chkOpenAfterGenerate
             // 
@@ -208,7 +208,7 @@
         private System.Windows.Forms.Button btnSetAsDefault;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnGenerate;
-        private System.Windows.Forms.LinkLabel linkToCodePlex;
+        private System.Windows.Forms.LinkLabel linkToSource;
         private System.Windows.Forms.CheckBox chkOpenAfterGenerate;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.WebBrowser webBrowser;

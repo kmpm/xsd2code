@@ -4,6 +4,8 @@
     <Identity Id="Xsd2Code.vsPackage.Microsoft.22fdc475-f463-47f5-95e8-8c8990c4081c" Version="1.0" Language="en-US" Publisher="-----" />
     <DisplayName>Xsd2Code.vsPackage</DisplayName>
     <Description xml:space="preserve">Xsd2Code Visual Studio Extension</Description>
+    <MoreInfo>https://github.com/kmpm/xsd2code</MoreInfo>
+    <License>LICENCE.txt</License>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />
