@@ -769,6 +769,34 @@ namespace Xsd2Code.TestUnit
         //    return dvdCol;
         //}
 
+        [TestMethod]
+        public void Nillables()
+        {
+            lock (testLock)
+            {
+
+                // Get the code namespace for the schema.
+                string inputFilePath = GetInputFilePath("nillables.xsd", Resources.nillables);
+
+                var generatorParams = GetGeneratorParams(inputFilePath);
+                GetGeneratorParams(inputFilePath);
+
+                generatorParams.Miscellaneous.EnableSummaryComment = true;
+                generatorParams.TargetFramework = TargetFramework.Net35;
+                generatorParams.PropertyParams.AutomaticProperties = true;
+                generatorParams.EnableInitializeFields = true;
+                generatorParams.CollectionObjectType = CollectionType.List;
+
+
+                var xsdGen = new GeneratorFacade(generatorParams);
+                var result = xsdGen.Generate();
+
+                Assert.IsTrue(result.Success, result.Messages.ToString());
+                var compileResult = CompileCSFile(generatorParams.OutputFilePath);
+                Assert.IsTrue(compileResult.Success, compileResult.Messages.ToString());
+            }
+        }
+
 
         private static string GetInputFilePath(string resourceFileName, string fileContent)
         {

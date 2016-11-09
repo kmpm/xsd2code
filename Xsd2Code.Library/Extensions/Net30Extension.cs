@@ -193,13 +193,13 @@ namespace Xsd2Code.Library.Extensions
         /// <param name="ctor">CodeMemberMethod constructor</param>
         /// <param name="ns">CodeNamespace XSD</param>
         /// <param name="addedToConstructor">Indicates if create a new constructor</param>
-        protected override void ProcessFields(CodeTypeMember member, CodeMemberMethod ctor, CodeNamespace ns, ref bool addedToConstructor)
+        protected override void ProcessFields(CodeTypeMember member, CodeMemberMethod ctor, CodeNamespace ns, XmlSchemaElement memberFieldXml, ref bool addedToConstructor)
         {
             // Get now if filed is array before base.ProcessProperty call.
             var field = (CodeMemberField)member;
             bool isArray = field.Type.ArrayElementType != null;
 
-            base.ProcessFields(member, ctor, ns, ref addedToConstructor);
+            base.ProcessFields(member, ctor, ns, memberFieldXml, ref addedToConstructor);
 
             // Generate automatic properties.
             if (GeneratorContext.GeneratorParams.Language == GenerationLanguage.CSharp)
