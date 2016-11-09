@@ -291,6 +291,17 @@ namespace Xsd2Code.Library.Extensions
         /// <param name="type">Represents a type declaration for a class, structure, interface, or enumeration</param>
         protected virtual void ProcessClass(CodeNamespace codeNamespace, XmlSchema schema, CodeTypeDeclaration type)
         {
+            // find the corresponding item in the XSD
+            XmlSchemaComplexType classXml = null;
+            foreach (XmlSchemaComplexType item in schema.Items)
+            {
+                if (item.Name == type.Name)
+                {
+                    classXml = item;
+                    break;
+                }
+            }
+
             var addedToConstructor = false;
             var newCTor = false;
 
@@ -335,8 +346,21 @@ namespace Xsd2Code.Library.Extensions
                 var codeMember = member as CodeMemberField;
                 if (codeMember != null)
                 {
+                    XmlSchemaElement memberFieldXml = null;
+                    // find the corresponding item in the XSD
+                    foreach (XmlSchemaElement item in (classXml.Particle as XmlSchemaSequence).Items)
+                    {
+                        // we have to format the name the same way the importer does...
+                        string formatedElementName = Char.ToLowerInvariant(item.Name[0]) + item.Name.Substring(1) + "Field";
+                        if (formatedElementName == member.Name)
+                        {
+                            memberFieldXml = item;
+                            break;
+                        }
+                    }
+
                     MemberFieldsListFields.Add(codeMember.Name);
-                    this.ProcessFields(codeMember, ctor, codeNamespace, ref addedToConstructor);
+                    this.ProcessFields(codeMember, ctor, codeNamespace, memberFieldXml, ref addedToConstructor);
                 }
 
                 var codeMemberProperty = member as CodeMemberProperty;
@@ -1651,6 +1675,7 @@ namespace Xsd2Code.Library.Extensions
                                             CodeTypeMember member,
                                             CodeMemberMethod ctor,
                                             CodeNamespace ns,
+                                            XmlSchemaElement memberFieldXml,
                                             ref bool addedToConstructor)
         {
             var field = (CodeMemberField)member;
@@ -1703,7 +1728,7 @@ namespace Xsd2Code.Library.Extensions
                     }
                     else
                     {
-                        if (field.Type.BaseType != "System.Byte")
+                        if (field.Type.BaseType != "System.Byte" && !memberFieldXml.IsNillable)
                         {
                             ctor.Statements.Insert(0, this.CreateInstance(field.Name, field.Type));
                             addedToConstructor = true;
