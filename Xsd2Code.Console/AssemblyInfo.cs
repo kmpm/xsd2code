@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("XSD2Code")]
+[assembly: AssemblyTitle("Open Xsd2Code")]
 [assembly: AssemblyDescription("Schema class generator")]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct( "" )]
-[assembly: AssemblyCopyright("Pascal Cabanel")]
+[assembly: AssemblyProduct( "Open Xsd2Code" )]
+[assembly: AssemblyCopyright("2014, Pascal Cabanel")]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]		
 

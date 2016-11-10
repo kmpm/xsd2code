@@ -1,4 +1,4 @@
-﻿namespace Xsd2Code.Addin
+﻿namespace Xsd2Code.ConfigurationForm
 {
     partial class FormOption
     {
@@ -53,19 +53,21 @@
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(573, 625);
+            this.tabControl.Size = new System.Drawing.Size(764, 769);
             this.tabControl.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.propertyGrid);
             this.tabPage1.Controls.Add(this.panel1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(565, 599);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Size = new System.Drawing.Size(756, 740);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Options";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -74,9 +76,10 @@
             // 
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.propertyGrid.Location = new System.Drawing.Point(3, 3);
+            this.propertyGrid.Location = new System.Drawing.Point(4, 4);
+            this.propertyGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(559, 543);
+            this.propertyGrid.Size = new System.Drawing.Size(748, 670);
             this.propertyGrid.TabIndex = 21;
             // 
             // panel1
@@ -85,9 +88,10 @@
             this.panel1.Controls.Add(this.linkToCodePlex);
             this.panel1.Controls.Add(this.chkOpenAfterGenerate);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(3, 546);
+            this.panel1.Location = new System.Drawing.Point(4, 674);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(559, 50);
+            this.panel1.Size = new System.Drawing.Size(748, 62);
             this.panel1.TabIndex = 20;
             // 
             // panel2
@@ -96,16 +100,18 @@
             this.panel2.Controls.Add(this.btnCancel);
             this.panel2.Controls.Add(this.btnGenerate);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(306, 0);
+            this.panel2.Location = new System.Drawing.Point(411, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(253, 50);
+            this.panel2.Size = new System.Drawing.Size(337, 62);
             this.panel2.TabIndex = 22;
             // 
             // btnSetAsDefault
             // 
-            this.btnSetAsDefault.Location = new System.Drawing.Point(5, 18);
+            this.btnSetAsDefault.Location = new System.Drawing.Point(7, 22);
+            this.btnSetAsDefault.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSetAsDefault.Name = "btnSetAsDefault";
-            this.btnSetAsDefault.Size = new System.Drawing.Size(87, 23);
+            this.btnSetAsDefault.Size = new System.Drawing.Size(116, 28);
             this.btnSetAsDefault.TabIndex = 7;
             this.btnSetAsDefault.Text = "Set as default";
             this.btnSetAsDefault.UseVisualStyleBackColor = true;
@@ -114,9 +120,10 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(171, 18);
+            this.btnCancel.Location = new System.Drawing.Point(228, 22);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(77, 23);
+            this.btnCancel.Size = new System.Drawing.Size(103, 28);
             this.btnCancel.TabIndex = 6;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -124,9 +131,10 @@
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(94, 18);
+            this.btnGenerate.Location = new System.Drawing.Point(125, 22);
+            this.btnGenerate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(77, 23);
+            this.btnGenerate.Size = new System.Drawing.Size(103, 28);
             this.btnGenerate.TabIndex = 5;
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
@@ -135,21 +143,23 @@
             // linkToCodePlex
             // 
             this.linkToCodePlex.AutoSize = true;
-            this.linkToCodePlex.Location = new System.Drawing.Point(12, 5);
+            this.linkToCodePlex.Location = new System.Drawing.Point(16, 6);
+            this.linkToCodePlex.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.linkToCodePlex.Name = "linkToCodePlex";
-            this.linkToCodePlex.Size = new System.Drawing.Size(185, 13);
+            this.linkToCodePlex.Size = new System.Drawing.Size(225, 17);
             this.linkToCodePlex.TabIndex = 21;
             this.linkToCodePlex.TabStop = true;
-            this.linkToCodePlex.Text = "http://www.codeplex.com/Xsd2Code";
+            this.linkToCodePlex.Text = "https://github.com/kmpm/xsd2code";
             // 
             // chkOpenAfterGenerate
             // 
             this.chkOpenAfterGenerate.AutoSize = true;
             this.chkOpenAfterGenerate.Checked = true;
             this.chkOpenAfterGenerate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkOpenAfterGenerate.Location = new System.Drawing.Point(15, 21);
+            this.chkOpenAfterGenerate.Location = new System.Drawing.Point(20, 26);
+            this.chkOpenAfterGenerate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.chkOpenAfterGenerate.Name = "chkOpenAfterGenerate";
-            this.chkOpenAfterGenerate.Size = new System.Drawing.Size(156, 17);
+            this.chkOpenAfterGenerate.Size = new System.Drawing.Size(205, 21);
             this.chkOpenAfterGenerate.TabIndex = 5;
             this.chkOpenAfterGenerate.Text = "Open code after generation";
             this.chkOpenAfterGenerate.UseVisualStyleBackColor = true;
@@ -157,10 +167,11 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.webBrowser);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(565, 599);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(756, 740);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Download update";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -168,21 +179,23 @@
             // webBrowser
             // 
             this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(3, 3);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Location = new System.Drawing.Point(4, 4);
+            this.webBrowser.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(27, 25);
             this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(567, 593);
+            this.webBrowser.Size = new System.Drawing.Size(748, 732);
             this.webBrowser.TabIndex = 0;
-            this.webBrowser.Url = new System.Uri("http://xsd2code.codeplex.com/releases/", System.UriKind.Absolute);
+            this.webBrowser.Url = new System.Uri("https://github.com/kmpm/xsd2code", System.UriKind.Absolute);
             // 
             // FormOption
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(573, 625);
+            this.ClientSize = new System.Drawing.Size(764, 769);
             this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.MinimumSize = new System.Drawing.Size(460, 470);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(607, 569);
             this.Name = "FormOption";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

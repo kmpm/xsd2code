@@ -6,6 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Xsd2Code.Library;
 using Xsd2Code.Library.Helpers;
 using Xsd2Code.TestUnit.Properties;
+using Microsoft.CSharp;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
 
 namespace Xsd2Code.TestUnit
 {
@@ -663,7 +666,8 @@ namespace Xsd2Code.TestUnit
                 generatorParams.PropertyParams.AutomaticProperties = false;
                 generatorParams.Miscellaneous.EnableSummaryComment = true;
                 generatorParams.GenericBaseClass.Enabled = true;
-                generatorParams.GenericBaseClass.BaseClassName = "EntityObject";
+                generatorParams.GenericBaseClass.GenerateBaseClass = true;
+                //generatorParams.GenericBaseClass.BaseClassName = "EntityObject";
 
                 var xsdGen = new GeneratorFacade(generatorParams);
                 var result = xsdGen.Generate();
@@ -854,52 +858,23 @@ namespace Xsd2Code.TestUnit
             {
                 try
                 {
+
                     var outputPath = Path.ChangeExtension(file.FullName, ".dll");
                     result.Entity = outputPath;
-
-                    var args = new StringBuilder();
-                    args.Append(" /target:module /nologo /debug");
-                    args.Append(" /out:\"" + outputPath + "\"");
-                    args.Append(" \"" + filePath + "\"");
-
-                    var compilerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System),
-                                                    @"..\Microsoft.NET\Framework\v2.0.50727\csc.exe");
-
-                    var compilerFile = new FileInfo(compilerPath);
-
-                    Debug.WriteLine(string.Format("Executing:\r\n{0} {1}\r\n", compilerFile.FullName, args));
-
-                    var info = new ProcessStartInfo
-                                   {
-                                       ErrorDialog = false,
-                                       FileName = compilerFile.FullName,
-                                       Arguments = args.ToString(),
-                                       CreateNoWindow = true,
-                                       WindowStyle = ProcessWindowStyle.Minimized
-                                   };
-
-                    using (var process = new Process { StartInfo = info })
+                    var csc = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
+                    var parameters = new CompilerParameters(new[] { "mscorlib.dll", "System.dll", "System.Xml.dll", "WindowsBase.dll", "System.Runtime.Serialization.dll" }, outputPath, true);
+                    parameters.GenerateExecutable = false;
+                    CompilerResults results = csc.CompileAssemblyFromFile(parameters, filePath);
+                    if (results.Errors.HasErrors)
                     {
-                        process.ErrorDataReceived += (s, e) =>
-                                                         {
-                                                             result.Success = false;
-                                                             result.Messages.Add(MessageType.Error, "Error data received", e.Data);
-                                                         };
-
-                        process.Exited += (s, e) => { result.Success = process.ExitCode == 1 && File.Exists(outputPath); };
-
-                        process.OutputDataReceived += (s, e) => result.Messages.Add(MessageType.Debug, "Output data received", e.Data);
-
-                        if (!process.Start())
-                            throw new ApplicationException("Unablle to start process");
-
-                        var exited = process.WaitForExit((int)TimeSpan.FromSeconds(15).TotalMilliseconds);
-                        if (!exited)
+                        result.Success = false;
+                        foreach (CompilerError error in results.Errors)
                         {
-                            result.Success = false;
-                            result.Messages.Add(MessageType.Error, "Timeout", "Compile timeout occurred {0}", DateTime.Now - process.StartTime);
+                            result.Messages.Add(MessageType.Error, error.ToString());
                         }
+
                     }
+
                 }
                 catch (Exception ex)
                 {

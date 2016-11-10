@@ -14,7 +14,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Xsd2Code")]
+[assembly: AssemblyProduct("Open Xsd2Code")]
 [assembly: AssemblyCopyright("Pascal Cabanel")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
