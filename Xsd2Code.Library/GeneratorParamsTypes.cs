@@ -27,6 +27,11 @@ namespace Xsd2Code.Library
         List,
 
         /// <summary>
+        /// Generic HashSet
+        /// </summary>
+        HashSet,
+
+        /// <summary>
         /// Generic IList
         /// </summary>
         IList,

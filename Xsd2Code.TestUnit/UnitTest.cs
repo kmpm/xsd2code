@@ -165,6 +165,40 @@ namespace Xsd2Code.TestUnit
         }
 
         /// <summary>
+        /// Testing HashSet collection type.
+        /// </summary>
+        [TestMethod]
+        public void HashSet()
+        {
+            lock (testLock)
+            {
+
+                // Copy resource file to the run-time directory
+                var inputFilePath = GetInputFilePath("ArrayOfArray.xsd", Resources.ArrayOfArray);
+
+                var generatorParams = new GeneratorParams
+                {
+                    GenerateCloneMethod = true,
+                    InputFilePath = inputFilePath,
+                    NameSpace = "MyNameSpace",
+                    CollectionObjectType = CollectionType.HashSet,
+                    EnableDataBinding = true,
+                    Language = GenerationLanguage.CSharp,
+                    OutputFilePath = Path.ChangeExtension(inputFilePath, "HashSet.TestGenerated.cs")
+                };
+                generatorParams.PropertyParams.AutomaticProperties = true;
+                generatorParams.Serialization.Enabled = true;
+                var xsdGen = new GeneratorFacade(generatorParams);
+                var result = xsdGen.Generate();
+
+                Assert.IsTrue(result.Success, result.Messages.ToString());
+
+                var compileResult = CompileCSFile(generatorParams.OutputFilePath);
+                Assert.IsTrue(compileResult.Success, compileResult.Messages.ToString());
+            }
+        }
+
+        /// <summary>
         /// Stacks the over flow.
         /// </summary>
         [TestMethod]
@@ -862,7 +896,7 @@ namespace Xsd2Code.TestUnit
                     var outputPath = Path.ChangeExtension(file.FullName, ".dll");
                     result.Entity = outputPath;
                     var csc = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
-                    var parameters = new CompilerParameters(new[] { "mscorlib.dll", "System.dll", "System.Xml.dll", "WindowsBase.dll", "System.Runtime.Serialization.dll" }, outputPath, true);
+                    var parameters = new CompilerParameters(new[] { "mscorlib.dll", "System.dll", "System.Core.dll", "System.Xml.dll", "WindowsBase.dll", "System.Runtime.Serialization.dll" }, outputPath, true);
                     parameters.GenerateExecutable = false;
                     CompilerResults results = csc.CompileAssemblyFromFile(parameters, filePath);
                     if (results.Errors.HasErrors)

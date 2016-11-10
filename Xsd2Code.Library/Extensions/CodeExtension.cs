@@ -1572,6 +1572,7 @@ namespace Xsd2Code.Library.Extensions
             {
                 case CollectionType.IList:
                 case CollectionType.List:
+                case CollectionType.HashSet:
                     code.Imports.Add(new CodeNamespaceImport("System.Collections.Generic"));
                     break;
                 case CollectionType.ObservableCollection:
@@ -2204,6 +2205,10 @@ namespace Xsd2Code.Library.Extensions
             {
                 case CollectionType.List:
                     collectionType = new CodeTypeReference("List", new[] { new CodeTypeReference(codeType.BaseType) });
+                    break;
+
+                case CollectionType.HashSet:
+                    collectionType = new CodeTypeReference("HashSet", new[] { new CodeTypeReference(codeType.BaseType) });
                     break;
 
                 case CollectionType.IList:
