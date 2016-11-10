@@ -7,15 +7,15 @@
 namespace Xsd2Code.Library.Helpers
 {
     /// <summary>
-    /// Helper to find pseudo xml tag.
+    /// Helper to find pseudo XML tag.
     /// </summary>
     public static class XmlHelper
     {
         /// <summary>
-        /// Get value of pseudo xml tag
+        /// Get value of pseudo XML tag
         /// </summary>
-        /// <param name="xmlStream">xml data string</param>
-        /// <param name="tag">Tag name in xml</param>
+        /// <param name="xmlStream">XML data string</param>
+        /// <param name="tag">Tag name in XML</param>
         /// <returns>return tag value</returns>
         public static string ExtractStrFromXML(this string xmlStream, string tag)
         {
@@ -33,11 +33,11 @@ namespace Xsd2Code.Library.Helpers
         }
 
         /// <summary>
-        /// Insert tag in speudo xml string
+        /// Insert tag in pseudo XML string
         /// </summary>
-        /// <param name="tag">tag name of pseudo xml</param>
+        /// <param name="tag">tag name of pseudo XML</param>
         /// <param name="tagValue">value of tag</param>
-        /// <returns>return pseudo xml string</returns>
+        /// <returns>return pseudo XML string</returns>
         public static string InsertXMLFromStr(string tag, string tagValue)
         {
             return string.Format("<{0}>{1}</{0}>", tag, tagValue);

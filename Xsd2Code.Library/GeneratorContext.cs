@@ -50,7 +50,7 @@
         public const string DEFAULTENCODERTAG = "Encoder";
 
         /// <summary>
-        /// Indicate tag for order xml attribute
+        /// Indicate tag for order XML attribute
         /// </summary>
         public const string ORDERXMLATTRIBUTETAG = "OrderXMLAttrib";
 
@@ -60,7 +60,7 @@
         public const string GENERATESHOULDSERIALIZETAG = "GenerateShouldSerialize";
 
         /// <summary>
-        /// Tag for enable/disable virtuel property
+        /// Tag to enable/disable virtual properties
         /// </summary>
         public const string ENABLEVIRTUALPROPERTIESTAG = "VirtualProp";
 
@@ -105,7 +105,7 @@
         public const string DESERIALIZEMETHODNAMETAG = "DeserializeMethodName";
 
         /// <summary>
-        /// Disable debug in genetated code.
+        /// Disable debug in generated code.
         /// </summary>
         public const string DISABLEDEBUGTAG = "DisableDebug";
 
@@ -180,7 +180,7 @@
         public const string EXCLUDEINCLUDEDTYPESTAG = "ExcludeIncludedTypes";
 
         /// <summary>
-        ///  Enable/Disable Global initialisation of the fields in both Constructors, Lazy Properties. Maximum override
+        ///  Enable/Disable Global initialization of the fields in both Constructors, Lazy Properties. Maximum override
         /// </summary>
         public const string ENABLEINITIALIZEFIELDSTAG = "EnableInitializeFields";
 

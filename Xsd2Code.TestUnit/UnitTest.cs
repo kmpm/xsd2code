@@ -239,7 +239,7 @@ namespace Xsd2Code.TestUnit
 
                 //try to deserialize
 
-                //generate doc conformant to schema
+                //generate doc conformal to schema
 
                 ArrayOfMyElement toDeserialize;
                 if (!ArrayOfMyElement.LoadFromFile("ReproSampleFile.xml", out toDeserialize, out ex))
@@ -290,7 +290,7 @@ namespace Xsd2Code.TestUnit
 
                 Assert.IsTrue(result.Success, result.Messages.ToString());
 
-                // Create new dvd collection and save it to file
+                // Create new DVD collection and save it to file
                 var dvd = new DvdCollection();
                 dvd.Dvds.Add(new dvd { Title = "Matrix יא?" });
                 var newitem = new dvd();
@@ -299,15 +299,15 @@ namespace Xsd2Code.TestUnit
                 var originalXml = dvd.Serialize();
                 dvd.SaveToFile(@"c:\temp\dvd.xml");
 
-                // Load data fom file and serialize it again.                                                                                                                                                               
+                // Load data from file and serialize it again.                                                                                                                                                               
 
                 var loadedDvdCollection = DvdCollection.LoadFromFile(@"c:\temp\dvd.xml");
                 var finalXml = loadedDvdCollection.Serialize();
 
-                // Then comprate two xml string
+                // Then compare two XML string
                 if (!originalXml.Equals(finalXml))
                 {
-                    Assert.Fail("Xml value are not equals");
+                    Assert.Fail("XML values are not equals");
                 }
                 Exception exp;
                 DvdCollection deserialiseDvd;
@@ -509,7 +509,7 @@ namespace Xsd2Code.TestUnit
             }
         }
         /// <summary>
-        /// Alows the debug.
+        /// Allows the debug.
         /// </summary>
         [TestMethod]
         public void AlowDebug()
@@ -584,8 +584,8 @@ namespace Xsd2Code.TestUnit
 
         //    DvdCollection dvdColFromXml;
         //    Exception exception;
-        //    bool sucess = DvdCollection.Deserialize(dvdColStr1, out dvdColFromXml, out exception);
-        //    if (sucess)
+        //    bool success = DvdCollection.Deserialize(dvdColStr1, out dvdColFromXml, out exception);
+        //    if (success)
         //    {
         //        string dvdColStr2 = dvdColFromXml.Serialize();
         //        if (!dvdColStr1.Equals(dvdColStr2))

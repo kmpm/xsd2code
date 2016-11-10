@@ -217,9 +217,9 @@ namespace Xsd2Code.Library.Extensions
         }
         #endregion
 
-        #region protedted methods
+        #region protected methods
         /// <summary>
-        /// Generate defenition of the Clone() method
+        /// Generate definition of the Clone() method
         /// </summary>
         /// <param name="type">Represents a type declaration for a class, structure, interface, or enumeration</param>
         /// <returns>return CodeDom clone method</returns>
@@ -287,7 +287,7 @@ namespace Xsd2Code.Library.Extensions
         /// Processes the class.
         /// </summary>
         /// <param name="codeNamespace">The code namespace.</param>
-        /// <param name="schema">The input xsd schema.</param>
+        /// <param name="schema">The input XSD schema.</param>
         /// <param name="type">Represents a type declaration for a class, structure, interface, or enumeration</param>
         protected virtual void ProcessClass(CodeNamespace codeNamespace, XmlSchema schema, CodeTypeDeclaration type)
         {
@@ -381,7 +381,7 @@ namespace Xsd2Code.Library.Extensions
                 if (GeneratorContext.GeneratorParams.GenerateCloneMethod)
                     this.CreateCloneMethod(type);
 
-                // Add plublic ObjectChangeTracker property
+                // Add public ObjectChangeTracker property
                 if (GeneratorContext.GeneratorParams.TrackingChanges.Enabled)
                     this.CreateChangeTrackerProperty(type);
             }
@@ -393,10 +393,10 @@ namespace Xsd2Code.Library.Extensions
         }
 
         /// <summary>
-        /// Retrieves the xml type corresponding to the given type name
+        /// Retrieves the XML type corresponding to the given type name
         /// </summary>
         /// <param name="name">The name of the type to look for</param>
-        /// <param name="schema">The schema in which to look for the xml type. Included schemas will be searched too</param>
+        /// <param name="schema">The schema in which to look for the XML type. Included schemas will be searched too</param>
         /// <param name="visitedSchemas">To keep track of the already visited schema (avoid cyclic includes)</param>
         /// <returns></returns>
         private XmlSchemaAnnotated FindTypeInSchema(string name, XmlSchema schema, List<XmlSchema> visitedSchemas)
@@ -421,7 +421,7 @@ namespace Xsd2Code.Library.Extensions
             {
                 var schemaInc = item as XmlSchemaInclude;
 
-                // avoid to follow cyclic refrence
+                // avoid to follow cyclic reference
                 if ((schemaInc == null) || visitedSchemas.Exists(loc => schemaInc.Schema == loc))
                     continue;
                 visitedSchemas.Add(schemaInc.Schema);
@@ -617,7 +617,7 @@ namespace Xsd2Code.Library.Extensions
         /// <summary>
         /// Gets the serialize CodeDOM method.
         /// </summary>
-        /// <param name="type">The type object to serilize.</param>
+        /// <param name="type">The type object to serialize.</param>
         /// <returns>return the CodeDOM serialize method</returns>
         protected virtual CodeMemberMethod CreateSerializeMethod(CodeTypeDeclaration type)
         {
@@ -750,7 +750,7 @@ namespace Xsd2Code.Library.Extensions
         /// <summary>
         /// Gets the serialize CodeDOM method.
         /// </summary>
-        /// <param name="type">The type object to serilize.</param>
+        /// <param name="type">The type object to serialize.</param>
         /// <returns>return the CodeDOM serialize method</returns>
         protected virtual CodeMemberMethod GetOverrideSerializeMethod(CodeTypeDeclaration type)
         {
@@ -889,7 +889,7 @@ namespace Xsd2Code.Library.Extensions
             // ---------------------
             var tryStatmanentsCol = new CodeStatementCollection();
 
-            // Call Desrialize method
+            // Call Deserialize method
             var deserializeInvoke =
                 new CodeMethodInvokeExpression(
                       new CodeMethodReferenceExpression(null, GeneratorContext.GeneratorParams.Serialization.DeserializeMethodName),
@@ -967,7 +967,7 @@ namespace Xsd2Code.Library.Extensions
         /// Gets the save to file code DOM method.
         /// </summary>
         /// <returns>
-        /// return the save to file code DOM method statment
+        /// return the save to file code DOM method statement
         /// </returns>
         protected virtual CodeMemberMethod GetSaveToFileMethod()
         {
@@ -1087,7 +1087,7 @@ namespace Xsd2Code.Library.Extensions
         /// </summary>
         /// <param name="type">CodeTypeDeclaration type.</param>
         /// <returns>
-        /// return the save to file code DOM method statment
+        /// return the save to file code DOM method statement
         /// </returns>
         protected virtual CodeMemberMethod[] GetOverrideSaveToFileMethods(CodeTypeDeclaration type)
         {
@@ -1165,7 +1165,7 @@ namespace Xsd2Code.Library.Extensions
             saveToFileMethod.Comments.AddRange(
                 CodeDomHelper.GetSummaryComment(string.Format("Serializes current {0} object into file", type.Name)));
 
-            saveToFileMethod.Comments.Add(CodeDomHelper.GetParamComment("fileName", "full path of outupt xml file"));
+            saveToFileMethod.Comments.Add(CodeDomHelper.GetParamComment("fileName", "full path of output XML file"));
             saveToFileMethod.Comments.Add(CodeDomHelper.GetParamComment("exception", "output Exception value if failed"));
             saveToFileMethod.Comments.Add(CodeDomHelper.GetReturnComment("true if can serialize and save into file; otherwise, false"));
 
@@ -1423,7 +1423,7 @@ namespace Xsd2Code.Library.Extensions
 
             loadFromFileMethod.Comments.AddRange(
                 CodeDomHelper.GetSummaryComment(
-                    string.Format("Deserializes xml markup from file into an {0} object", type.Name)));
+                    string.Format("Deserializes XML markup from file into an {0} object", type.Name)));
 
             loadFromFileMethod.Comments.Add(CodeDomHelper.GetParamComment("fileName", "string xml file to load and deserialize"));
             loadFromFileMethod.Comments.Add(CodeDomHelper.GetParamComment("obj", string.Format("Output {0} object", type.Name)));
@@ -1605,12 +1605,12 @@ namespace Xsd2Code.Library.Extensions
         }
 
         /// <summary>
-        /// Recursive search of elemement.
+        /// Recursive search of element.
         /// </summary>
         /// <param name="type">Element to search</param>
         /// <param name="xmlElement">Current element</param>
         /// <param name="currentElementName">Name of the current element.</param>
-        /// <param name="hierarchicalElmtName">The hierarchical Elmt Name.</param>
+        /// <param name="hierarchicalElmtName">The hierarchical element Name.</param>
         /// <returns>
         /// return found XmlSchemaElement or null value
         /// </returns>
@@ -1735,8 +1735,8 @@ namespace Xsd2Code.Library.Extensions
             // ---------------------------------------
             if (GeneratorContext.GeneratorParams.EnableInitializeFields && GeneratorContext.GeneratorParams.CollectionObjectType != CollectionType.Array)
             {
-                bool finded;
-                CodeTypeDeclaration declaration = this.FindTypeInNamespace(field.Type.BaseType, ns, out finded);
+                bool found;
+                CodeTypeDeclaration declaration = this.FindTypeInNamespace(field.Type.BaseType, ns, out found);
                 XmlSchemaElement fieldXmlElement = FindElement(xmlType, field.Name);
                 if ((fieldXmlElement == null || !fieldXmlElement.IsNillable) && 
                     (thisIsCollectionType ||
@@ -1859,7 +1859,7 @@ namespace Xsd2Code.Library.Extensions
 
 
         /// <summary>
-        /// Collections the initilializer statement.
+        /// Collections the initializer statement.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="type">The type.</param>
@@ -1886,20 +1886,20 @@ namespace Xsd2Code.Library.Extensions
         }
 
         /// <summary>
-        /// Recherche le CodeTypeDeclaration d'un objet en fonction de son type de base (nom de classe)
+        /// Finds the CodeTypeDeclaration of an object by using its base type (class name)
         /// </summary>
         /// <param name="typeName">Search name</param>
-        /// <param name="ns">Seach into</param>
-        /// <param name="finded">if set to <c>true</c> [finded].</param>
+        /// <param name="ns">the namespace to search into</param>
+        /// <param name="found">if set to <c>true</c> [found].</param>
         /// <returns>CodeTypeDeclaration found</returns>
-        protected virtual CodeTypeDeclaration FindTypeInNamespace(string typeName, CodeNamespace ns, out bool finded)
+        protected virtual CodeTypeDeclaration FindTypeInNamespace(string typeName, CodeNamespace ns, out bool found)
         {
-            finded = false;
+            found = false;
             foreach (CodeTypeDeclaration declaration in ns.Types)
             {
                 if (declaration.Name == typeName)
                 {
-                    finded = true;
+                    found = true;
                     return declaration;
                 }
             }
@@ -1910,7 +1910,7 @@ namespace Xsd2Code.Library.Extensions
         /// Property process
         /// </summary>
         /// <param name="type">Represents a type declaration for a class, structure, interface, or enumeration</param>
-        /// <param name="ns">The ns.</param>
+        /// <param name="ns">The namespace</param>
         /// <param name="member">Type members include fields, methods, properties, constructors and nested types</param>
         /// <param name="xmlElement">Represent the root element in schema</param>
         /// <param name="schema">XML Schema</param>
@@ -2087,15 +2087,15 @@ namespace Xsd2Code.Library.Extensions
         /// Determines whether [is complex type] [the specified code type reference].
         /// </summary>
         /// <param name="codeTypeReference">The code type reference.</param>
-        /// <param name="ns">The ns.</param>
-        /// <param name="finded">if set to <c>true</c> [finded].</param>
+        /// <param name="ns">The namespace</param>
+        /// <param name="found">if set to <c>true</c> [found].</param>
         /// <returns>
         /// true if type is complex type (class, List, etc.)"/&gt;
         /// </returns>
-        protected bool IsComplexType(CodeTypeReference codeTypeReference, CodeNamespace ns, out bool finded)
+        protected bool IsComplexType(CodeTypeReference codeTypeReference, CodeNamespace ns, out bool found)
         {
-            CodeTypeDeclaration declaration = this.FindTypeInNamespace(codeTypeReference.BaseType, ns, out finded);
-            if (!finded)
+            CodeTypeDeclaration declaration = this.FindTypeInNamespace(codeTypeReference.BaseType, ns, out found);
+            if (!found)
             {
                 return false;
             }
@@ -2190,7 +2190,7 @@ namespace Xsd2Code.Library.Extensions
         /// Get CodeTypeReference for collection
         /// </summary>
         /// <param name="codeType">The code Type.</param>
-        /// <returns>return array of or genereric collection</returns>
+        /// <returns>return array of or generic collection</returns>
         protected virtual CodeTypeReference GetCollectionType(CodeTypeReference codeType)
         {
             CodeTypeReference collectionType = codeType;
@@ -2246,7 +2246,7 @@ namespace Xsd2Code.Library.Extensions
         }
 
         /// <summary>
-        /// Search defaut constructor. If not exist, create a new ctor.
+        /// Search default constructor. If not exist, create a new ctor.
         /// </summary>
         /// <param name="type">CodeTypeDeclaration type</param>
         /// <param name="newCTor">Indicates if new constructor</param>
