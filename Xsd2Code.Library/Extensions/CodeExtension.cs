@@ -291,17 +291,7 @@ namespace Xsd2Code.Library.Extensions
         /// <param name="type">Represents a type declaration for a class, structure, interface, or enumeration</param>
         protected virtual void ProcessClass(CodeNamespace codeNamespace, XmlSchema schema, CodeTypeDeclaration type)
         {
-            // find the corresponding item in the XSD
-            XmlSchemaComplexType classXml = null;
-            foreach (XmlSchemaComplexType item in schema.Items)
-            {
-                if (item.Name == type.Name)
-                {
-                    classXml = item;
-                    break;
-                }
-            }
-
+            XmlSchemaAnnotated xmlType = FindTypeInSchema(type.Name, schema, new List<XmlSchema>());
             var addedToConstructor = false;
             var newCTor = false;
 
@@ -346,21 +336,8 @@ namespace Xsd2Code.Library.Extensions
                 var codeMember = member as CodeMemberField;
                 if (codeMember != null)
                 {
-                    XmlSchemaElement memberFieldXml = null;
-                    // find the corresponding item in the XSD
-                    foreach (XmlSchemaElement item in (classXml.Particle as XmlSchemaSequence).Items)
-                    {
-                        // we have to format the name the same way the importer does...
-                        string formatedElementName = Char.ToLowerInvariant(item.Name[0]) + item.Name.Substring(1) + "Field";
-                        if (formatedElementName == member.Name)
-                        {
-                            memberFieldXml = item;
-                            break;
-                        }
-                    }
-
                     MemberFieldsListFields.Add(codeMember.Name);
-                    this.ProcessFields(codeMember, ctor, codeNamespace, memberFieldXml, ref addedToConstructor);
+                    this.ProcessFields(codeMember, ctor, codeNamespace, xmlType, ref addedToConstructor);
                 }
 
                 var codeMemberProperty = member as CodeMemberProperty;
@@ -413,6 +390,47 @@ namespace Xsd2Code.Library.Extensions
             {
                 GeneratePropertyNameSpecified(type);
             }
+        }
+
+        /// <summary>
+        /// Retrieves the xml type corresponding to the given type name
+        /// </summary>
+        /// <param name="name">The name of the type to look for</param>
+        /// <param name="schema">The schema in which to look for the xml type. Included schemas will be searched too</param>
+        /// <param name="visitedSchemas">To keep track of the already visited schema (avoid cyclic includes)</param>
+        /// <returns></returns>
+        private XmlSchemaAnnotated FindTypeInSchema(string name, XmlSchema schema, List<XmlSchema> visitedSchemas)
+        {
+            foreach (var item in schema.Items)
+            {
+                var xmlType = item as XmlSchemaType;
+                if (xmlType != null)
+                {
+                    if (xmlType.Name == name)
+                        return xmlType;
+                }
+                var xmlElement = item as XmlSchemaElement;
+                if (xmlElement != null)
+                {
+                    if (xmlElement.Name == name)
+                        return xmlElement;
+                }
+            }
+            // If not found search in schema inclusion
+            foreach (var item in schema.Includes)
+            {
+                var schemaInc = item as XmlSchemaInclude;
+
+                // avoid to follow cyclic refrence
+                if ((schemaInc == null) || visitedSchemas.Exists(loc => schemaInc.Schema == loc))
+                    continue;
+                visitedSchemas.Add(schemaInc.Schema);
+                var includeTypes = this.FindTypeInSchema(name, schemaInc.Schema, visitedSchemas);
+                visitedSchemas.Remove(schemaInc.Schema);
+
+                if (includeTypes != null) return includeTypes;
+            }
+            return null;
         }
 
         /// <summary>
@@ -1675,7 +1693,7 @@ namespace Xsd2Code.Library.Extensions
                                             CodeTypeMember member,
                                             CodeMemberMethod ctor,
                                             CodeNamespace ns,
-                                            XmlSchemaElement memberFieldXml,
+                                            XmlSchemaAnnotated xmlType,
                                             ref bool addedToConstructor)
         {
             var field = (CodeMemberField)member;
@@ -1718,9 +1736,11 @@ namespace Xsd2Code.Library.Extensions
             {
                 bool finded;
                 CodeTypeDeclaration declaration = this.FindTypeInNamespace(field.Type.BaseType, ns, out finded);
-                if (thisIsCollectionType ||
+                XmlSchemaElement fieldXmlElement = FindElement(xmlType, field.Name);
+                if ((fieldXmlElement == null || !fieldXmlElement.IsNillable) && 
+                    (thisIsCollectionType ||
                     (((declaration != null) && declaration.IsClass)
-                     && ((declaration.TypeAttributes & TypeAttributes.Abstract) != TypeAttributes.Abstract)))
+                     && ((declaration.TypeAttributes & TypeAttributes.Abstract) != TypeAttributes.Abstract))))
                 {
                     if (GeneratorContext.GeneratorParams.PropertyParams.EnableLazyLoading)
                     {
@@ -1728,7 +1748,7 @@ namespace Xsd2Code.Library.Extensions
                     }
                     else
                     {
-                        if (field.Type.BaseType != "System.Byte" && !memberFieldXml.IsNillable)
+                        if (field.Type.BaseType != "System.Byte")
                         {
                             ctor.Statements.Insert(0, this.CreateInstance(field.Name, field.Type));
                             addedToConstructor = true;
@@ -1736,6 +1756,42 @@ namespace Xsd2Code.Library.Extensions
                     }
                 }
             }
+        }
+
+        private string GetFieldNameFromElementName(string name)
+        {
+            // if we use the ref attribute, the name attribute will be null
+            return name == null ? null : Char.ToLowerInvariant(name[0]) + name.Substring(1) + "Field";
+        }
+
+        private XmlSchemaElement FindElement(XmlSchemaAnnotated xmlType, string name)
+        {
+            XmlSchemaComplexType xmlComplexType = xmlType as XmlSchemaComplexType;
+            if (xmlComplexType != null)
+            {
+                foreach (var item in xmlComplexType.Attributes)
+                {
+                    XmlSchemaElement xmlElement = item as XmlSchemaElement;
+                    if (xmlElement != null && GetFieldNameFromElementName(xmlElement.Name) == name)
+                    {
+                        return xmlElement;
+                    }
+                }
+                XmlSchemaSequence xmlSequence = xmlComplexType.Particle as XmlSchemaSequence;
+                if (xmlSequence != null)
+                {
+                    foreach (var item in xmlSequence.Items)
+                    {
+                        XmlSchemaElement xmlElement = item as XmlSchemaElement;
+                        // can this occur ?
+                        if (xmlElement != null && GetFieldNameFromElementName(xmlElement.Name) == name /*|| GetFieldNameFromElementName(xmlElement.RefName.Name) == name*/)
+                        {
+                            return xmlElement;
+                        }
+                    }
+                }
+            }
+            return null;
         }
 
         /// <summary>
