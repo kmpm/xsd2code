@@ -1732,7 +1732,7 @@ namespace Xsd2Code.Library.Extensions
             {
                 bool found;
                 CodeTypeDeclaration declaration = this.FindTypeInNamespace(field.Type.BaseType, ns, out found);
-                XmlSchemaElement fieldXmlElement = FindByName< XmlSchemaElement>(xmlType, GetFieldNameFromElementName(field.Name));
+                XmlSchemaElement fieldXmlElement = FindByName< XmlSchemaElement>(xmlType, field.Name, GetFieldNameFromElementName);
                 if ((fieldXmlElement == null || !fieldXmlElement.IsNillable) && 
                     (thisIsCollectionType ||
                     (((declaration != null) && declaration.IsClass)
@@ -1754,13 +1754,38 @@ namespace Xsd2Code.Library.Extensions
             }
         }
 
+        /// <summary>
+        /// Get the field name from the elemnt name (lowercase first character and add "Field" at the end)
+        /// </summary>
+        /// <param name="name">The element name</param>
+        /// <returns></returns>
         private string GetFieldNameFromElementName(string name)
         {
             // if we use the ref attribute, the name attribute will be null
             return name == null ? null : Char.ToLowerInvariant(name[0]) + name.Substring(1) + "Field";
         }
 
+        /// <summary>
+        /// Find the element using its name
+        /// </summary>
+        /// <typeparam name="T">a class derivating from XmlSchemaObject and containing a "Name" field</typeparam>
+        /// <param name="xmlType">The xml of the type containing the element</param>
+        /// <param name="name">The name of the element</param>
+        /// <returns></returns>
         private T FindByName<T>(XmlSchemaAnnotated xmlType, string name) where T : XmlSchemaObject
+        {
+            return FindByName<T>(xmlType, name, (val => val));
+        }
+
+        /// <summary>
+        /// Find the element using its name
+        /// </summary>
+        /// <typeparam name="T">a class derivating from XmlSchemaObject and containing a "Name" field</typeparam>
+        /// <param name="xmlType">The xml of the type containing the element</param>
+        /// <param name="name">The name of the element</param>
+        /// <param name="xmlNameTransformMethod">The method to use to transform the xml name when looking for the element (useful for fields) </param>
+        /// <returns></returns>
+        private T FindByName<T>(XmlSchemaAnnotated xmlType, string name, Func<string, string> xmlNameTransformMethod) where T : XmlSchemaObject
         {
             XmlSchemaComplexType xmlComplexType = xmlType as XmlSchemaComplexType;
             if (xmlComplexType != null)
@@ -1768,12 +1793,12 @@ namespace Xsd2Code.Library.Extensions
                 foreach (var item in xmlComplexType.Attributes)
                 {
                     XmlSchemaElement xmlElement = item as XmlSchemaElement;
-                    if (xmlElement != null && xmlElement.Name == name)
+                    if (xmlElement != null && xmlNameTransformMethod(xmlElement.Name) == name)
                     {
                         return xmlElement as T;
                     }
                     XmlSchemaAttribute xmlAttribute = item as XmlSchemaAttribute;
-                    if (xmlAttribute != null && xmlAttribute.Name == name)
+                    if (xmlAttribute != null && xmlNameTransformMethod(xmlAttribute.Name) == name)
                     {
                         return xmlAttribute as T;
                     }
@@ -1785,12 +1810,12 @@ namespace Xsd2Code.Library.Extensions
                     {
                         XmlSchemaElement xmlElement = item as XmlSchemaElement;
                         // can this occur ?
-                        if (xmlElement != null && xmlElement.Name == name)
+                        if (xmlElement != null && xmlNameTransformMethod(xmlElement.Name) == name)
                         {
                             return xmlElement as T;
                         }
                         XmlSchemaAttribute xmlAttribute = item as XmlSchemaAttribute;
-                        if (xmlAttribute != null && xmlAttribute.Name == name)
+                        if (xmlAttribute != null && xmlNameTransformMethod(xmlAttribute.Name) == name)
                         {
                             return xmlAttribute as T;
                         }
