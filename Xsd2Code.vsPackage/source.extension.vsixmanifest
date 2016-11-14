@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="Open.Xsd2Code.22fdc475-f463-47f5-95e8-8c8990c4081c" Version="1.0.2" Language="en-US" Publisher="-----" />
+    <Identity Id="Open.Xsd2Code.22fdc475-f463-47f5-95e8-8c8990c4081c" Version="1.0.3" Language="en-US" Publisher="-----" />
     <DisplayName>Open Xsd2Code</DisplayName>
     <Description xml:space="preserve">Open Xsd2Code - Visual Studio Extension</Description>
     <MoreInfo>https://github.com/kmpm/xsd2code</MoreInfo>
