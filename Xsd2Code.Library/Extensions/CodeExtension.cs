@@ -315,10 +315,9 @@ namespace Xsd2Code.Library.Extensions
 
             // Generate WCF DataContract
             this.CreateDataContractAttribute(type, schema);
-
-            XmlSchemaElement currentElement = null;
+            
             if (GeneratorContext.GeneratorParams.Miscellaneous.EnableSummaryComment)
-                currentElement = this.CreateSummaryCommentFromSchema(type, schema, currentElement);
+                this.GetAnnotatedElementFromSchema(type, schema, xmlType);
 
             foreach (CodeTypeMember member in type.Members)
             {
@@ -344,7 +343,7 @@ namespace Xsd2Code.Library.Extensions
                 if (codeMemberProperty != null)
                 {
                     PropertiesListFields.Add(codeMemberProperty.Name);
-                    this.ProcessProperty(type, codeNamespace, codeMemberProperty, currentElement, schema);
+                    this.ProcessProperty(type, codeNamespace, codeMemberProperty, xmlType, schema);
                 }
             }
 
@@ -527,21 +526,19 @@ namespace Xsd2Code.Library.Extensions
 
 
         /// <summary>
-        /// Creates the summary comment from schema.
+        /// Get the annotated element corresponding to the given type declaration
         /// </summary>
         /// <param name="codeTypeDeclaration">The code type declaration.</param>
         /// <param name="schema">The input XML schema.</param>
         /// <param name="currentElement">The current element.</param>
         /// <returns>returns the element found otherwise null</returns>
-        protected virtual XmlSchemaElement CreateSummaryCommentFromSchema(CodeTypeDeclaration codeTypeDeclaration, XmlSchema schema, XmlSchemaElement currentElement)
+        protected virtual void GetAnnotatedElementFromSchema(CodeTypeDeclaration codeTypeDeclaration, XmlSchema schema, XmlSchemaAnnotated xmlSchemaAnnotated)
         {
-            var xmlSchemaElement = this.SearchElementInSchema(codeTypeDeclaration, schema, new List<XmlSchema>());
-            if (xmlSchemaElement != null)
+            if (xmlSchemaAnnotated != null)
             {
-                currentElement = xmlSchemaElement;
-                if (xmlSchemaElement.Annotation != null)
+                if (xmlSchemaAnnotated.Annotation != null)
                 {
-                    foreach (var item in xmlSchemaElement.Annotation.Items)
+                    foreach (var item in xmlSchemaAnnotated.Annotation.Items)
                     {
                         var xmlDoc = item as XmlSchemaDocumentation;
                         if (xmlDoc == null) continue;
@@ -549,8 +546,6 @@ namespace Xsd2Code.Library.Extensions
                     }
                 }
             }
-
-            return currentElement;
         }
 
         /// <summary>
@@ -1737,7 +1732,7 @@ namespace Xsd2Code.Library.Extensions
             {
                 bool found;
                 CodeTypeDeclaration declaration = this.FindTypeInNamespace(field.Type.BaseType, ns, out found);
-                XmlSchemaElement fieldXmlElement = FindElement(xmlType, field.Name);
+                XmlSchemaElement fieldXmlElement = FindByName< XmlSchemaElement>(xmlType, GetFieldNameFromElementName(field.Name));
                 if ((fieldXmlElement == null || !fieldXmlElement.IsNillable) && 
                     (thisIsCollectionType ||
                     (((declaration != null) && declaration.IsClass)
@@ -1765,7 +1760,7 @@ namespace Xsd2Code.Library.Extensions
             return name == null ? null : Char.ToLowerInvariant(name[0]) + name.Substring(1) + "Field";
         }
 
-        private XmlSchemaElement FindElement(XmlSchemaAnnotated xmlType, string name)
+        private T FindByName<T>(XmlSchemaAnnotated xmlType, string name) where T : XmlSchemaObject
         {
             XmlSchemaComplexType xmlComplexType = xmlType as XmlSchemaComplexType;
             if (xmlComplexType != null)
@@ -1773,9 +1768,14 @@ namespace Xsd2Code.Library.Extensions
                 foreach (var item in xmlComplexType.Attributes)
                 {
                     XmlSchemaElement xmlElement = item as XmlSchemaElement;
-                    if (xmlElement != null && GetFieldNameFromElementName(xmlElement.Name) == name)
+                    if (xmlElement != null && xmlElement.Name == name)
                     {
-                        return xmlElement;
+                        return xmlElement as T;
+                    }
+                    XmlSchemaAttribute xmlAttribute = item as XmlSchemaAttribute;
+                    if (xmlAttribute != null && xmlAttribute.Name == name)
+                    {
+                        return xmlAttribute as T;
                     }
                 }
                 XmlSchemaSequence xmlSequence = xmlComplexType.Particle as XmlSchemaSequence;
@@ -1785,9 +1785,14 @@ namespace Xsd2Code.Library.Extensions
                     {
                         XmlSchemaElement xmlElement = item as XmlSchemaElement;
                         // can this occur ?
-                        if (xmlElement != null && GetFieldNameFromElementName(xmlElement.Name) == name /*|| GetFieldNameFromElementName(xmlElement.RefName.Name) == name*/)
+                        if (xmlElement != null && xmlElement.Name == name)
                         {
-                            return xmlElement;
+                            return xmlElement as T;
+                        }
+                        XmlSchemaAttribute xmlAttribute = item as XmlSchemaAttribute;
+                        if (xmlAttribute != null && xmlAttribute.Name == name)
+                        {
+                            return xmlAttribute as T;
                         }
                     }
                 }
@@ -1914,48 +1919,15 @@ namespace Xsd2Code.Library.Extensions
         /// <param name="member">Type members include fields, methods, properties, constructors and nested types</param>
         /// <param name="xmlElement">Represent the root element in schema</param>
         /// <param name="schema">XML Schema</param>
-        protected virtual void ProcessProperty(CodeTypeDeclaration type, CodeNamespace ns, CodeTypeMember member, XmlSchemaElement xmlElement, XmlSchema schema)
+        protected virtual void ProcessProperty(CodeTypeDeclaration type, CodeNamespace ns, CodeTypeMember member, XmlSchemaAnnotated xmlAnnotated, XmlSchema schema)
         {
             if (GeneratorContext.GeneratorParams.Miscellaneous.EnableSummaryComment)
             {
-                if (xmlElement != null)
+                if (xmlAnnotated != null)
                 {
-                    var xmlComplexType = xmlElement.ElementSchemaType as XmlSchemaComplexType;
-                    bool foundInAttributes = false;
-                    if (xmlComplexType != null)
-                    {
-                        // Search property in attributes for summary comment generation
-                        foreach (XmlSchemaObject attribute in xmlComplexType.Attributes)
-                        {
-                            var xmlAttrib = attribute as XmlSchemaAttribute;
-                            if (xmlAttrib != null)
-                            {
-                                if (member.Name.Equals(xmlAttrib.QualifiedName.Name))
-                                {
-                                    this.CreateCommentFromAnnotation(xmlAttrib.Annotation, member.Comments);
-                                    foundInAttributes = true;
-                                }
-                            }
-                        }
-
-                        // Search property in XmlSchemaElement for summary comment generation
-                        if (!foundInAttributes)
-                        {
-                            var xmlSequence = xmlComplexType.ContentTypeParticle as XmlSchemaSequence;
-                            if (xmlSequence != null)
-                            {
-                                foreach (XmlSchemaObject item in xmlSequence.Items)
-                                {
-                                    var currentItem = item as XmlSchemaElement;
-                                    if (currentItem != null)
-                                    {
-                                        if (member.Name.Equals(currentItem.QualifiedName.Name))
-                                            this.CreateCommentFromAnnotation(currentItem.Annotation, member.Comments);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    XmlSchemaAnnotated xmlElement = FindByName< XmlSchemaAnnotated>(xmlAnnotated, member.Name);
+                    if (xmlElement != null && xmlElement.Annotation!=null)
+                    this.CreateCommentFromAnnotation(xmlElement.Annotation, member.Comments);
                 }
             }
 

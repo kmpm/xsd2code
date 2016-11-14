@@ -150,12 +150,12 @@ namespace Xsd2Code.Library.Extensions
         /// <param name="member">Type members include fields, methods, properties, constructors and nested types</param>
         /// <param name="xmlElement">Represent the root element in schema</param>
         /// <param name="schema">XML Schema</param>
-        protected override void ProcessProperty(CodeTypeDeclaration type, CodeNamespace ns, CodeTypeMember member, XmlSchemaElement xmlElement, XmlSchema schema)
+        protected override void ProcessProperty(CodeTypeDeclaration type, CodeNamespace ns, CodeTypeMember member, XmlSchemaAnnotated xmlAnnotated, XmlSchema schema)
         {
             // Get now if property is array before base.ProcessProperty call.
             var prop = (CodeMemberProperty)member;
 
-            base.ProcessProperty(type, ns, member, xmlElement, schema);
+            base.ProcessProperty(type, ns, member, xmlAnnotated, schema);
 
             int i = 0;
             // Generate automatic properties.
