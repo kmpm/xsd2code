@@ -9,6 +9,7 @@ using Xsd2Code.TestUnit.Properties;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Xsd2Code.TestUnit
 {
@@ -35,7 +36,7 @@ namespace Xsd2Code.TestUnit
         /// </summary>
         private static string OutputFolder
         {
-            get { return @"c:\temp\"; } // Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\"; }
+            get { return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),"testtemp"); }
         }
 
         /// <summary>
@@ -263,11 +264,12 @@ namespace Xsd2Code.TestUnit
                 newitem.Actor.Add(new Actor { firstname = "Jamés à&", nationality = "Us" });
                 dvd.Dvds.Add(newitem);
                 var originalXml = dvd.Serialize();
-                dvd.SaveToFile(@"c:\temp\dvd.xml");
+                var dvdFile = Path.Combine(OutputFolder, "dvd.xml");
+                dvd.SaveToFile(dvdFile);
 
                 // Load data fom file and serialize it again.                                                                                                                                                               
 
-                var loadedDvdCollection = DvdCollection.LoadFromFile(@"c:\temp\dvd.xml");
+                var loadedDvdCollection = DvdCollection.LoadFromFile(dvdFile);
                 var finalXml = loadedDvdCollection.Serialize();
 
                 // Then comprate two xml string
@@ -277,58 +279,24 @@ namespace Xsd2Code.TestUnit
                 }
                 Exception exp;
                 DvdCollection deserialiseDvd;
-                dvd.SaveToFile(@"c:\temp\dvdASCII.xml", Encoding.ASCII);
-                if (!DvdCollection.LoadFromFile(@"c:\temp\dvdASCII.xml", Encoding.ASCII, out deserialiseDvd, out exp))
-                 {
-                    Assert.Fail("LoadFromFile failed on ASCII encoding ");
-                 }
-                else
-                {
-                    if (!deserialiseDvd.Dvds[0].Title.Equals("Matrix ???"))
-                   {
-                        Assert.Fail("LoadFromFile failed on ASCII encoding ");
-                    }
-                }
 
-                dvd.SaveToFile(@"c:\temp\dvdUTF8.xml", Encoding.UTF8);
-                if (!DvdCollection.LoadFromFile(@"c:\temp\dvdUTF8.xml", Encoding.UTF8, out deserialiseDvd, out exp))
+                var testEncodings = new [] {
+                  Encoding.ASCII, Encoding.UTF8, Encoding.Unicode, Encoding.UTF32
+                };
+                foreach (var encoding in testEncodings)
                 {
-                    Assert.Fail("LoadFromFile failed on UTF8 encoding "); 
+                  var encodedFile = Path.Combine(OutputFolder, "dvd" + encoding.EncodingName + ".xml");
+                  dvd.SaveToFile(encodedFile, encoding);
+                  if (!DvdCollection.LoadFromFile(encodedFile, encoding, out deserialiseDvd, out exp))
+                  {
+                    Assert.Fail("LoadFromFile failed on {0} encoding", encoding.EncodingName);
+                  }
+                  else if (!deserialiseDvd.Dvds[0].Title.Equals("Matrix éà?"))
+                  {
+                   Assert.Fail("LoadFromFile failed on {0} encoding", encoding.EncodingName);
+                  }                
                 }
-                else
-                {
-                    if (!deserialiseDvd.Dvds[0].Title.Equals("Matrix éà?"))
-                    {
-                        Assert.Fail("LoadFromFile failed on UTF8 encoding ");
-                    }
-                }
-
-                dvd.SaveToFile(@"c:\temp\dvdUnicode.xml", Encoding.Unicode);
-                if (!DvdCollection.LoadFromFile(@"c:\temp\dvdUnicode.xml", Encoding.Unicode, out deserialiseDvd, out exp))
-                {
-                    Assert.Fail("LoadFromFile failed on Unicode encoding ");
-                }
-                else
-                {
-                    if (!deserialiseDvd.Dvds[0].Title.Equals("Matrix éà?"))
-                    {
-                        Assert.Fail("LoadFromFile failed on Unicode encoding ");
-                    }
-                }
-
-                dvd.SaveToFile(@"c:\temp\dvdUTF32.xml", Encoding.UTF32);
-                if (!DvdCollection.LoadFromFile(@"c:\temp\dvdUTF32.xml", Encoding.UTF32, out deserialiseDvd, out exp))
-                {
-                    Assert.Fail("LoadFromFile failed on UTF32 encoding ");
-                }
-                else
-                {
-                    if (!deserialiseDvd.Dvds[0].Title.Equals("Matrix éà?"))
-                    {
-                        Assert.Fail("LoadFromFile failed on UTF32 encoding ");
-                    }
-                }
-
+                
                 var compileResult = CompileCSFile(generatorParams.OutputFilePath);
                 Assert.IsTrue(compileResult.Success, compileResult.Messages.ToString());
 
@@ -667,7 +635,7 @@ namespace Xsd2Code.TestUnit
                 generatorParams.Miscellaneous.EnableSummaryComment = true;
                 generatorParams.GenericBaseClass.Enabled = true;
                 generatorParams.GenericBaseClass.GenerateBaseClass = true;
-                //generatorParams.GenericBaseClass.BaseClassName = "EntityObject";
+                generatorParams.GenericBaseClass.BaseClassName = "EntityObject";
 
                 var xsdGen = new GeneratorFacade(generatorParams);
                 var result = xsdGen.Generate();
@@ -676,6 +644,29 @@ namespace Xsd2Code.TestUnit
 
                 var compileResult = CompileCSFile(generatorParams.OutputFilePath);
                 Assert.IsTrue(compileResult.Success, compileResult.Messages.ToString());
+                
+                // check if autogeneration-parameters are written to file
+                var lastGenerationParamsFile = Path.ChangeExtension(inputFilePath, "xsd.xsd2code");
+                if (File.Exists(lastGenerationParamsFile)) {
+                    if (File.GetLastWriteTime(lastGenerationParamsFile) > File.GetLastWriteTime(generatorParams.OutputFilePath))
+                    {
+                        File.Delete(lastGenerationParamsFile);
+                        File.Copy(generatorParams.OutputFilePath, lastGenerationParamsFile);
+                    }
+                } else {
+                    File.Copy(generatorParams.OutputFilePath, lastGenerationParamsFile);
+                }
+
+                var autogenParams = GeneratorParams.LoadFromFile(inputFilePath);
+                Assert.AreEqual(autogenParams.TargetFramework, generatorParams.TargetFramework);
+                Assert.AreEqual(autogenParams.GenerateDataContracts, generatorParams.GenerateDataContracts);
+                Assert.AreEqual(autogenParams.EnableDataBinding, generatorParams.EnableDataBinding);
+                Assert.AreEqual(autogenParams.PropertyParams.AutomaticProperties, generatorParams.PropertyParams.AutomaticProperties);
+                Assert.AreEqual(autogenParams.Miscellaneous.EnableSummaryComment, generatorParams.Miscellaneous.EnableSummaryComment);
+                Assert.AreEqual(autogenParams.GenericBaseClass.Enabled, generatorParams.GenericBaseClass.Enabled);
+                Assert.AreEqual(autogenParams.GenericBaseClass.GenerateBaseClass, generatorParams.GenericBaseClass.GenerateBaseClass);
+                Assert.AreEqual(autogenParams.GenericBaseClass.BaseClassName, generatorParams.GenericBaseClass.BaseClassName);
+                File.Delete(lastGenerationParamsFile);
             }
         }
 
@@ -774,12 +765,17 @@ namespace Xsd2Code.TestUnit
         {
             lock (fileLock)
             {
-                using (var sw = new StreamWriter(OutputFolder + resourceFileName, false))
+              if (!Directory.Exists(OutputFolder))
+              {
+                Directory.CreateDirectory(OutputFolder);
+              }
+
+              using (var sw = new StreamWriter(Path.Combine(OutputFolder, resourceFileName), false))
                 {
                     sw.Write(fileContent);
                 }
 
-                return OutputFolder + resourceFileName;
+                return Path.Combine(OutputFolder, resourceFileName);
             }
         }
 
