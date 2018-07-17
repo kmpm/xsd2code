@@ -157,7 +157,6 @@ namespace Xsd2Code.Library.Extensions
 
             base.ProcessProperty(type, ns, member, xmlAnnotated, schema);
 
-            int i = 0;
             // Generate automatic properties.
             if (GeneratorContext.GeneratorParams.Language == GenerationLanguage.CSharp)
             {

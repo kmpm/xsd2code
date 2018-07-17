@@ -821,64 +821,53 @@ namespace Xsd2Code.Library
         /// <returns>XML string value</returns>
         public string ToXmlTag()
         {
-            var optionsLine = new StringBuilder();
-
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.NAMESPACETAG, this.NameSpace));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.COLLECTIONTAG, this.CollectionObjectType.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.CODETYPETAG, this.Language.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.ENABLEDATABINDINGTAG, this.EnableDataBinding.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.ENABLELAZYLOADINGTAG, this.PropertyParams.EnableLazyLoading.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.ENABLETRACKINGCHANGESTAG, this.TrackingChanges.Enabled.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.GENERATETRACKINGCLASSESTAG, this.TrackingChanges.GenerateTrackingClasses.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.HIDEPRIVATEFIELDTAG, this.Miscellaneous.HidePrivateFieldInIde.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.ENABLESUMMARYCOMMENTTAG, this.Miscellaneous.EnableSummaryComment.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.ENABLEVIRTUALPROPERTIESTAG, this.PropertyParams.EnableVirtualProperties.ToString()));
-
-            if (!string.IsNullOrEmpty(this.CollectionBase))
-                optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.COLLECTIONBASETAG, this.CollectionBase));
-
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.INCLUDESERIALIZEMETHODTAG, this.Serialization.Enabled.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.USEGENERICBASECLASSTAG, this.GenericBaseClass.Enabled.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.GENERATEBASECLASSTAG, this.GenericBaseClass.GenerateBaseClass.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.GENERATECLONEMETHODTAG, this.GenerateCloneMethod.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.GENERATEDATACONTRACTSTAG, this.GenerateDataContracts.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.CODEBASETAG, this.TargetFramework.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.SERIALIZEMETHODNAMETAG, this.Serialization.SerializeMethodName));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.DESERIALIZEMETHODNAMETAG, this.Serialization.DeserializeMethodName));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.SAVETOFILEMETHODNAMETAG, this.Serialization.SaveToFileMethodName));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.LOADFROMFILEMETHODNAMETAG, this.Serialization.LoadFromFileMethodName));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.GENERATEXMLATTRIBUTESTAG, this.Serialization.GenerateXmlAttributes.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.ORDERXMLATTRIBUTETAG, this.Serialization.GenerateOrderXmlAttributes.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.ENABLEENCODINGTAG, this.Serialization.EnableEncoding.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.AUTOMATICPROPERTIESTAG, this.PropertyParams.AutomaticProperties.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.GENERATESHOULDSERIALIZETAG, this.PropertyParams.GenerateShouldSerializeProperty.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.DISABLEDEBUGTAG, this.Miscellaneous.DisableDebug.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.GENERATEPROPERTYNAMESPECIFIEDTAG, this.PropertyParams.GeneratePropertyNameSpecified.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.DEFAULTENCODERTAG, this.Serialization.DefaultEncoder.ToString()));
-
-            var customUsingsStr = new StringBuilder();
-            if (this.CustomUsings != null)
-            {
-                foreach (NamespaceParam usingStr in this.CustomUsings.Where(usingStr => usingStr.NameSpace.Length > 0))
-                {
-                    customUsingsStr.Append(usingStr.NameSpace + ";");
-                }
-
-                // remove last ";"
-                if (customUsingsStr.Length > 0)
-                {
-                    if (customUsingsStr[customUsingsStr.Length - 1] == ';')
-                        customUsingsStr = customUsingsStr.Remove(customUsingsStr.Length - 1, 1);
-                }
-
-                optionsLine.Append(XmlHelper.InsertXMLFromStr(
-                                                              GeneratorContext.CUSTOMUSINGSTAG,
-                                                              customUsingsStr.ToString()));
+            // order does not matter, but would be nice to have same order as in parsing method 'LoadFromFile'
+            var tagsAndValues = new Dictionary<string, object> {
+                { GeneratorContext.NAMESPACETAG, this.NameSpace },
+                { GeneratorContext.COLLECTIONTAG, this.CollectionObjectType },
+                { GeneratorContext.COLLECTIONBASETAG, this.CollectionBase },
+                { GeneratorContext.CODETYPETAG, this.Language },
+                { GeneratorContext.ENABLEDATABINDINGTAG, this.EnableDataBinding },
+                { GeneratorContext.ENABLELAZYLOADINGTAG, this.PropertyParams.EnableLazyLoading },
+                { GeneratorContext.HIDEPRIVATEFIELDTAG, this.Miscellaneous.HidePrivateFieldInIde },
+                { GeneratorContext.ENABLESUMMARYCOMMENTTAG, this.Miscellaneous.EnableSummaryComment },
+                { GeneratorContext.ENABLETRACKINGCHANGESTAG, this.TrackingChanges.Enabled },
+                { GeneratorContext.GENERATETRACKINGCLASSESTAG, this.TrackingChanges.GenerateTrackingClasses },
+                { GeneratorContext.ENABLEVIRTUALPROPERTIESTAG, this.PropertyParams.EnableVirtualProperties },
+                { GeneratorContext.INCLUDESERIALIZEMETHODTAG, this.Serialization.Enabled },
+                { GeneratorContext.ENABLEENCODINGTAG, this.Serialization.EnableEncoding },
+                { GeneratorContext.DEFAULTENCODERTAG, this.Serialization.DefaultEncoder },
+                { GeneratorContext.USEGENERICBASECLASSTAG, this.GenericBaseClass.Enabled },
+                { GeneratorContext.BASECLASSNAMETAG, this.GenericBaseClass.BaseClassName },
+                { GeneratorContext.GENERATEBASECLASSTAG, this.GenericBaseClass.GenerateBaseClass },
+                { GeneratorContext.GENERATECLONEMETHODTAG, this.GenerateCloneMethod },
+                { GeneratorContext.GENERATEDATACONTRACTSTAG, this.GenerateDataContracts },
+                { GeneratorContext.CODEBASETAG, this.TargetFramework },
+                { GeneratorContext.SERIALIZEMETHODNAMETAG, this.Serialization.SerializeMethodName },
+                { GeneratorContext.DESERIALIZEMETHODNAMETAG, this.Serialization.DeserializeMethodName },
+                { GeneratorContext.SAVETOFILEMETHODNAMETAG, this.Serialization.SaveToFileMethodName },
+                { GeneratorContext.LOADFROMFILEMETHODNAMETAG, this.Serialization.LoadFromFileMethodName },
+                { GeneratorContext.GENERATEXMLATTRIBUTESTAG, this.Serialization.GenerateXmlAttributes },
+                { GeneratorContext.ORDERXMLATTRIBUTETAG, this.Serialization.GenerateOrderXmlAttributes },
+                { GeneratorContext.AUTOMATICPROPERTIESTAG, this.PropertyParams.AutomaticProperties },
+                { GeneratorContext.GENERATESHOULDSERIALIZETAG, this.PropertyParams.GenerateShouldSerializeProperty },
+                { GeneratorContext.DISABLEDEBUGTAG, this.Miscellaneous.DisableDebug },
+                { GeneratorContext.GENERATEPROPERTYNAMESPECIFIEDTAG, this.PropertyParams.GeneratePropertyNameSpecified },
+                { GeneratorContext.EXCLUDEINCLUDEDTYPESTAG, this.Miscellaneous.ExcludeIncludedTypes },
+                { GeneratorContext.ENABLEINITIALIZEFIELDSTAG, this.EnableInitializeFields }
+            };
+            if (this.CustomUsings != null) {
+                tagsAndValues.Add(GeneratorContext.CUSTOMUSINGSTAG,  string.Join(";", 
+                    this.CustomUsings.Select(x=>x.NameSpace).Where(usingNamespace => !string.IsNullOrEmpty(usingNamespace)).ToArray()));
             }
-
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.EXCLUDEINCLUDEDTYPESTAG, this.Miscellaneous.ExcludeIncludedTypes.ToString()));
-            optionsLine.Append(XmlHelper.InsertXMLFromStr(GeneratorContext.ENABLEINITIALIZEFIELDSTAG, this.EnableInitializeFields.ToString()));
-
+            
+            var optionsLine = new StringBuilder();
+            foreach (var pair in tagsAndValues) {
+                var stringVal = Convert.ToString(pair.Value);
+                if (!string.IsNullOrEmpty(stringVal)) {
+                    optionsLine.Append(XmlHelper.InsertXMLFromStr(pair.Key, stringVal));
+                }
+            }
             return optionsLine.ToString();
         }
 
@@ -1021,19 +1010,19 @@ namespace Xsd2Code.Library
                     }
 
                     //Start appending
-                    if ((line.ToUpper().Contains("<" + GeneratorContext.AUTOGENERATEDTAG.ToUpper() + ">")))
+                    if (line.ToUpper().Contains("<" + GeneratorContext.AUTOGENERATEDTAG.ToUpper() + ">"))
                     {
                         appendLine = true;
                     }
 
                     //No matter what Append this line
-                    if ((appendLine == true))
+                    if (appendLine == true)
                     {
                         options.Append(line).AppendLine();
                     }
 
                     //if this line contains the Closing tag exit
-                    if ((line.ToUpper().Contains("</" + GeneratorContext.AUTOGENERATEDTAG.ToUpper() + ">")))
+                    if (line.ToUpper().Contains("</" + GeneratorContext.AUTOGENERATEDTAG.ToUpper() + ">"))
                     {
                         break;
                     }
