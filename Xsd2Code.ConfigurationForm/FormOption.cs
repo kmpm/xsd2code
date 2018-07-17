@@ -49,13 +49,14 @@ namespace Xsd2Code.ConfigurationForm
 
         #region Method
 
-        /// <summary>
-        /// Analyse file to find generation option.
-        /// </summary>
-        /// <param name="xsdFilePath">The XSD file path.</param>
-        /// <param name="languageIdentifier">The language identifier.</param>
-        /// <param name="defaultNamespace">The default namespace.</param>
-        public void Init(string xsdFilePath, string languageIdentifier, string defaultNamespace, TargetFramework framework)
+      /// <summary>
+      /// Analyse file to find generation option.
+      /// </summary>
+      /// <param name="xsdFilePath">path of the xsd-file, which is the central input for the code generation.</param>
+      /// <param name="languageIdentifier">The language identifier (uuid), identifies VC or C#.</param>
+      /// <param name="defaultNamespace">The default namespace for generated classes.</param>
+      /// <param name="framework">.NET Framework version to be used for generated code</param>
+      public void Init(string xsdFilePath, string languageIdentifier, string defaultNamespace, TargetFramework framework)
         {            
             string outputFile;
             this.generatorParams = GeneratorParams.LoadFromFile(xsdFilePath, out outputFile);
@@ -68,6 +69,7 @@ namespace Xsd2Code.ConfigurationForm
                     case "{B5E9BD33-6D3E-4B5D-925E-8A43B79820B4}":
                         this.generatorParams.Language = GenerationLanguage.VisualBasic;
                         break;
+                    case "{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}":
                     default:
                         this.generatorParams.Language = GenerationLanguage.CSharp;
                         break;
