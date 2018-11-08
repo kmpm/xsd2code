@@ -99,7 +99,7 @@ namespace Xsd2Code.Library
         /// <summary>
         /// Processes the code generation.
         /// </summary>
-        /// <returns>true if sucess or false.</returns>
+        /// <returns>true if success or false.</returns>
         public Result<string> Generate(GeneratorParams generatorParams)
         {
             GeneratorContext.GeneratorParams = generatorParams;
@@ -111,7 +111,7 @@ namespace Xsd2Code.Library
         /// <summary>
         /// Processes the code generation.
         /// </summary>
-        /// <returns>true if sucess or false.</returns>
+        /// <returns>true if success or false.</returns>
         public Result<string> Generate()
         {
             var outputFileName = GeneratorContext.GeneratorParams.OutputFilePath;
@@ -141,7 +141,7 @@ namespace Xsd2Code.Library
         /// Processes the specified file name.
         /// </summary>
         /// <param name="outputFilePath">The output file path.</param>
-        /// <returns>true if sucess else false</returns>
+        /// <returns>true if success else false</returns>
         private Result Process(string outputFilePath)
         {
             #region Change CurrentDir for include schema resolution.
@@ -235,7 +235,7 @@ namespace Xsd2Code.Library
                     {
                         string line;
 
-                        //DCM TODO Will refactor this to Not perform this last loop after verification that it works.
+                        //DCM TODO Will refract this to Not perform this last loop after verification that it works.
                         while ((line = streamReader.ReadLine()) != null)
                         {
                             outputStream.WriteLine(line);

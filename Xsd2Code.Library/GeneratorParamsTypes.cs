@@ -27,6 +27,11 @@ namespace Xsd2Code.Library
         List,
 
         /// <summary>
+        /// Generic HashSet
+        /// </summary>
+        HashSet,
+
+        /// <summary>
         /// Generic IList
         /// </summary>
         IList,
@@ -61,7 +66,7 @@ namespace Xsd2Code.Library
         None,
 
         /// <summary>
-        /// PropertyNameSpecified whill be generate for all properties
+        /// PropertyNameSpecified will be generate for all properties
         /// </summary>
         All
     }

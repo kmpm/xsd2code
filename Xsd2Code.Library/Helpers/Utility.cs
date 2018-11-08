@@ -219,7 +219,7 @@ namespace Xsd2Code.Library.Helpers
         /// </summary>
         /// <param name="p">string to transform</param>
         /// <param name="defaultIfNull">if string is null use this default</param>
-        /// <returns>booean result</returns>
+        /// <returns>boolean result</returns>
         public static bool ToBoolean(string p, bool defaultIfNull)
         {
             if (string.IsNullOrEmpty(p)) return defaultIfNull;
@@ -238,7 +238,7 @@ namespace Xsd2Code.Library.Helpers
         /// String to boolean static method 
         /// </summary>
         /// <param name="p">string to transform</param>
-        /// <returns>booean result</returns>
+        /// <returns>boolean result</returns>
         public static bool ToBoolean(string p)
         {
             return ToBoolean(p, false);

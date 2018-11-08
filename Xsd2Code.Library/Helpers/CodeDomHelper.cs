@@ -98,27 +98,27 @@ namespace Xsd2Code.Library.Helpers
         }
 
         /// <summary>
-        /// Getr return true statment
+        /// Get the true return statement
         /// </summary>
-        /// <returns>statment of return code</returns>
+        /// <returns>statement of return code</returns>
         internal static CodeMethodReturnStatement GetReturnTrue()
         {
             return new CodeMethodReturnStatement(new CodePrimitiveExpression(true));
         }
 
         /// <summary>
-        /// Get return false startment
+        /// Get return false statement
         /// </summary>
-        /// <returns>statment of return code</returns>
+        /// <returns>statement of return code</returns>
         internal static CodeMethodReturnStatement GetReturnFalse()
         {
             return new CodeMethodReturnStatement(new CodePrimitiveExpression(false));
         }
 
         /// <summary>
-        /// Return catch statments
+        /// Return catch statements
         /// </summary>
-        /// <returns>CodeCatchClause statments</returns>
+        /// <returns>CodeCatchClause statements</returns>
         internal static CodeCatchClause[] GetCatchClause()
         {
             var catchStatmanents = new CodeStatement[2];
@@ -140,7 +140,7 @@ namespace Xsd2Code.Library.Helpers
         /// <summary>
         /// Gets the throw clause.
         /// </summary>
-        /// <returns>return catch...throw statment</returns>
+        /// <returns>return catch...throw statement</returns>
         internal static CodeCatchClause[] GetThrowClause()
         {
             var catchStatmanents = new CodeStatementCollection();
@@ -157,7 +157,7 @@ namespace Xsd2Code.Library.Helpers
         /// <summary>
         /// Codes the STMT col to array.
         /// </summary>
-        /// <param name="statmentCollection">The statment collection.</param>
+        /// <param name="statmentCollection">The statement collection.</param>
         /// <returns>return CodeStmtColToArray</returns>
         internal static CodeStatement[] CodeStmtColToArray(CodeStatementCollection statmentCollection)
         {
@@ -170,7 +170,7 @@ namespace Xsd2Code.Library.Helpers
         /// Get return CodeCommentStatement comment
         /// </summary>
         /// <param name="text">Return text comment</param>
-        /// <returns>return return comment statment</returns>
+        /// <returns>returns return comment statement</returns>
         internal static CodeCommentStatement GetReturnComment(string text)
         {
             var comments = new CodeCommentStatement(string.Format("<returns>{0}</returns>", text), true);
@@ -194,7 +194,7 @@ namespace Xsd2Code.Library.Helpers
         }
 
         /// <summary>
-        /// Get param comment statment
+        /// Get param comment statement
         /// </summary>
         /// <param name="paramName">Param Name</param>
         /// <param name="text">param summary</param>
@@ -457,7 +457,7 @@ namespace Xsd2Code.Library.Helpers
         /// <param name="type">The type.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="propertyType">Type of the property.</param>
-        /// <param name="isXmlIgnone">if set to <c>true</c> [is XML ignone].</param>
+        /// <param name="isXmlIgnone">if set to <c>true</c> [is XML ignore].</param>
         internal static void CreateBasicProperty(CodeTypeDeclaration type, string propertyName, Type propertyType, bool isXmlIgnone)
         {
             var field = new CodeMemberField()

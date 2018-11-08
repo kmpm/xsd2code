@@ -25,6 +25,54 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element name="age" type="age">
+        <xs:annotation>
+          <xs:documentation>
+            Gets or sets the age of the actor
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="Tdate">
+    <xs:annotation>
+      <xs:documentation>Represents a Tdate</xs:documentation>
+    </xs:annotation>
+   
+      <xs:attribute name="year" type="xs:int" use="required">
+        <xs:annotation>
+          <xs:documentation>
+            Gets or sets the year of the date
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    <xs:attribute name="month" type="xs:int" use="required">
+        <xs:annotation>
+          <xs:documentation>
+            Gets or sets the month of the date
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    <xs:attribute name="day" type="xs:int" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          Gets or sets the day of the date
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+    <xs:simpleType name="age">
+      <xs:annotation>
+        <xs:documentation>
+          Represents an age
+        </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:int">
+        <xs:minInclusive value="0"/>
+        <xs:maxInclusive value="100"/>
+      </xs:restriction>
+    </xs:simpleType>
+
 </xs:schema>

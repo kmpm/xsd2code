@@ -4,7 +4,7 @@
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
     <Identity Id="Open.Xsd2Code.22fdc475-f463-47f5-95e8-8c8990c4081c"
-              Version="1.1"
+              Version="1.2"
               Language="en-US"
               Publisher="-----" />
     <DisplayName>Open Xsd2Code</DisplayName>

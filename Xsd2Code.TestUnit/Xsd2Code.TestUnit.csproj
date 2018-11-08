@@ -132,6 +132,9 @@
     <None Include="xsd\mailxml_base_120108.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="xsd\nillables.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="xsd\PersonTypeAnnotation.xsd">
       <SubType>Designer</SubType>
     </None>

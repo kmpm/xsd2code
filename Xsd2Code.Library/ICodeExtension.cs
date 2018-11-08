@@ -9,7 +9,7 @@ namespace Xsd2Code
     using System;
 
     /// <summary>
-    /// Extention interface
+    /// Extension interface
     /// </summary>
     public interface ICodeExtension
     {
