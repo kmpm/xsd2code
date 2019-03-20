@@ -184,6 +184,11 @@
         /// </summary>
         public const string ENABLEINITIALIZEFIELDSTAG = "EnableInitializeFields";
 
+        /// <summary>
+        /// Tag for enable/disable generation of separate files
+        /// </summary>
+        public const string GENERATESEPARATEFILES = "GenerateSeparateFiles";
+
         #region Fields
 
         /// <summary>

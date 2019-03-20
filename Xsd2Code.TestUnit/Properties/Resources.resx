@@ -163,4 +163,10 @@
   <data name="nillables" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\xsd\nillables.xsd;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="TVShow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\xsd\tvshow.xsd;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="AnimatedShow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\xsd\animatedshow.xsd;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

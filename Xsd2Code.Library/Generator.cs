@@ -1,13 +1,11 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
+using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using Xsd2Code.Library.Extensions;
 using Xsd2Code.Library.Helpers;
-using System.Xml;
-using System.Linq;
 
 namespace Xsd2Code.Library
 {
@@ -61,15 +59,15 @@ namespace Xsd2Code.Library
                                                       bool generateCloneMethod, TargetFramework targetFramework)
         {
             var generatorParams = new GeneratorParams
-                                      {
-                                          CollectionObjectType = collectionType,
-                                          EnableDataBinding = enableDataBinding,
-                                          Language = language,
-                                          CustomUsings = customUsings,
-                                          CollectionBase = collectionBase,
-                                          GenerateCloneMethod = generateCloneMethod,
-                                          TargetFramework = targetFramework
-                                      };
+            {
+                CollectionObjectType = collectionType,
+                EnableDataBinding = enableDataBinding,
+                Language = language,
+                CustomUsings = customUsings,
+                CollectionBase = collectionBase,
+                GenerateCloneMethod = generateCloneMethod,
+                TargetFramework = targetFramework
+            };
 
             generatorParams.Miscellaneous.HidePrivateFieldInIde = hidePrivate;
             generatorParams.Miscellaneous.EnableSummaryComment = enableSummaryComment;
@@ -92,6 +90,7 @@ namespace Xsd2Code.Library
             var ns = new CodeNamespace();
 
             XmlReader reader = null;
+            var schemaSet = new XmlSchemaSet();
             try
             {
 
@@ -108,9 +107,12 @@ namespace Xsd2Code.Library
 
                 reader = XmlReader.Create(generatorParams.InputFilePath);
                 xsd = XmlSchema.Read(reader, new ValidationEventHandler(Validate));
+                schemaSet.ValidationEventHandler += new ValidationEventHandler(Validate);
 
-                var schemaSet = new XmlSchemaSet();
+
+                schemaSet.XmlResolver = new XmlUrlResolver();
                 schemaSet.Add(xsd);
+
                 schemaSet.Compile();
 
                 foreach (XmlSchema schema in schemaSet.Schemas())
@@ -146,7 +148,8 @@ namespace Xsd2Code.Library
                 #region Execute extensions
 
                 var getExtensionResult = GeneratorFactory.GetCodeExtension(generatorParams);
-                if (!getExtensionResult.Success) return new Result<CodeNamespace>(ns, false, getExtensionResult.Messages);
+                if (!getExtensionResult.Success)
+                    return new Result<CodeNamespace>(ns, false, getExtensionResult.Messages);
 
                 var ext = getExtensionResult.Entity;
                 ext.Process(ns, xsd);
@@ -157,7 +160,7 @@ namespace Xsd2Code.Library
             }
             catch (Exception e)
             {
-                return new Result<CodeNamespace>(ns, false, e.Message, MessageType.Error);
+                return new Result<CodeNamespace>(ns, false, MessageType.Error, e.Message);
             }
             finally
             {
@@ -168,8 +171,11 @@ namespace Xsd2Code.Library
 
         private static void Validate(Object sender, ValidationEventArgs e)
         {
+            if (e.Severity == XmlSeverityType.Warning)
+                Console.Write("WARNING: " + e.Message);
             if (e.Severity == XmlSeverityType.Error)
                 throw new Exception("Schema validation failed:\n" + e.Message);
+
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using Xsd2Code.Library.Extensions;
 using Xsd2Code.Library.Helpers;
-using System.Reflection;
 using Xsd2Code.Library.Properties;
 
 namespace Xsd2Code.Library
@@ -55,17 +53,16 @@ namespace Xsd2Code.Library
                 }
                 catch (Exception ex)
                 {
-                    return new Result<ICodeExtension>(null, false, ex.Message, MessageType.Error);
+                    return new Result<ICodeExtension>(null, false, MessageType.Error, ex.Message);
                 }
             }
 
-            return new Result<ICodeExtension>(null, false,
+            return new Result<ICodeExtension>(null, false, MessageType.Error,
                                               string.Format(Resources.UnsupportedTargetFramework,
-                                                            generatorParams.TargetFramework),
-                                              MessageType.Error);
+                                                            generatorParams.TargetFramework));
         }
 
-        internal static  ICodeExtension GetExtention(TargetFramework target)
+        internal static ICodeExtension GetExtention(TargetFramework target)
         {
             switch (target)
             {

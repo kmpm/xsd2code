@@ -5,6 +5,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Globalization;
 using Microsoft.VisualStudio.Shell;
@@ -189,8 +190,8 @@ namespace Xsd2Code.vsPackage
             {
                 if (result == DialogResult.OK)
                 {
-                    Result<string> generateResult = gen.Generate();
-                    string outputFileName = generateResult.Entity;
+                    Result<List<string>> generateResult = gen.Generate();
+                    List<string> outputFileNames = generateResult.Entity;
 
                     if (!generateResult.Success)
                         MessageBox.Show(generateResult.Messages.ToString(), "XSD2Code", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -198,7 +199,7 @@ namespace Xsd2Code.vsPackage
                     {
                         if (!found)
                         {
-                            projElmts = proitem.Collection.AddFromFile(outputFileName);
+                            projElmts = proitem.Collection.AddFromFile(gen.GeneratorParams.OutputFilePath);
                         }
 
                         if (frm.OpenAfterGeneration)

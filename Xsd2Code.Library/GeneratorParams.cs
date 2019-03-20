@@ -336,12 +336,12 @@ namespace Xsd2Code.Library
         private GenericBaseClassParams genericBaseClassField;
 
         /// <summary>
-        /// Indicate if use tracking change algrithm.
+        /// Indicate if use tracking change algorithm.
         /// </summary>
         private TrackingChangesParams trackingChangesField;
 
         /// <summary>
-        /// Serilisation params
+        /// Serialisation params
         /// </summary>
         private SerializeParams serializeFiledField;
 
@@ -359,13 +359,13 @@ namespace Xsd2Code.Library
         /// Indicate if implement INotifyPropertyChanged
         /// </summary>
         private PropertyParams propertyParamsField;
-        #endregion
 
         /// <summary>
         /// Indicate the target framework
         /// </summary>
         private TargetFramework targetFrameworkField = default(TargetFramework);
 
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GeneratorParams"/> class.
@@ -382,6 +382,9 @@ namespace Xsd2Code.Library
             this.Miscellaneous.ExcludeIncludedTypes = false;
             this.TrackingChanges.PropertyChanged += TrackingChangesPropertyChanged;
             this.Serialization.DefaultEncoder = DefaultEncoder.UTF8;
+            this.GenerateSeparateFiles = false;
+            this.OtherOutputFilesPaths = new List<string>();
+
         }
 
         /// <summary>
@@ -428,6 +431,14 @@ namespace Xsd2Code.Library
         /// <value>The input file path.</value>
         [Browsable(false)]
         public string InputFilePath { get; set; }
+
+        /// <summary>
+        /// Gets the output other files paths (included or imported).
+        /// </summary>
+        /// <value>The output file path.</value>
+        [Browsable(false)]
+        public List<string> OtherOutputFilesPaths { get; }
+
 
         /// <summary>
         /// Gets or sets collection type to use for code generation
@@ -655,6 +666,17 @@ namespace Xsd2Code.Library
         [DefaultValue(true)]
         [Description("Enable/Disable Global initialization of the fields in both Constructors, Lazy Properties. Maximum override")]
         public bool EnableInitializeFields { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to generate the code in one file or one file per type
+        /// </summary>
+        [Category("Code")]
+        [DefaultValue(false)]
+        [Description("Generated in separate files")]
+        public bool GenerateSeparateFiles
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Loads from file.

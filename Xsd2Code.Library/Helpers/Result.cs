@@ -20,7 +20,7 @@ namespace Xsd2Code.Library.Helpers
         /// Result class constructor
         /// </summary>
         public Result() : this(false)
-        {}
+        { }
 
         /// <summary>
         /// Result class constructor
@@ -78,7 +78,7 @@ namespace Xsd2Code.Library.Helpers
         {
             get
             {
-                if (this.messages == null) 
+                if (this.messages == null)
                     this.messages = new MessageCollection();
                 return this.messages;
             }
@@ -105,7 +105,7 @@ namespace Xsd2Code.Library.Helpers
         /// Default constructor
         ///</summary>
         public Result()
-        {}
+        { }
 
         /// <summary>
         /// Result class constructor
@@ -114,7 +114,7 @@ namespace Xsd2Code.Library.Helpers
         /// <param name="success">parameter value</param>
         public Result(TEntity entity, bool success)
             : this(entity, success, null)
-        {}
+        { }
 
         /// <summary>
         /// Result class constructor
@@ -135,7 +135,7 @@ namespace Xsd2Code.Library.Helpers
         /// <param name="success">parameter value</param>
         /// <param name="message">parameter value</param>
         /// <param name="MessageType">parameter value</param>
-        public Result(TEntity entity, bool success, string message, MessageType MessageType)
+        public Result(TEntity entity, bool success, MessageType MessageType, string message)
             : this(entity, success)
         {
             var messageItem = new Message(MessageType, message);
