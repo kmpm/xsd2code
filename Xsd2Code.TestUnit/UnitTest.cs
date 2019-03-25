@@ -856,7 +856,7 @@ namespace Xsd2Code.TestUnit
         }
 
         [TestMethod]
-        public void Includes()
+        public void MultipleGenerationWithSeparateFiles()
         {
             lock (testLock)
             {

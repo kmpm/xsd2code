@@ -90,7 +90,6 @@ namespace Xsd2Code.Library
             var ns = new CodeNamespace();
 
             XmlReader reader = null;
-            var schemaSet = new XmlSchemaSet();
             try
             {
 
@@ -107,8 +106,10 @@ namespace Xsd2Code.Library
 
                 reader = XmlReader.Create(generatorParams.InputFilePath);
                 xsd = XmlSchema.Read(reader, new ValidationEventHandler(Validate));
-                schemaSet.ValidationEventHandler += new ValidationEventHandler(Validate);
 
+
+                var schemaSet = new XmlSchemaSet();
+                schemaSet.ValidationEventHandler += new ValidationEventHandler(Validate);
 
                 schemaSet.XmlResolver = new XmlUrlResolver();
                 schemaSet.Add(xsd);
@@ -175,7 +176,6 @@ namespace Xsd2Code.Library
                 Console.Write("WARNING: " + e.Message);
             if (e.Severity == XmlSeverityType.Error)
                 throw new Exception("Schema validation failed:\n" + e.Message);
-
         }
     }
 }
