@@ -189,6 +189,11 @@
         /// </summary>
         public const string GENERATESEPARATEFILES = "GenerateSeparateFiles";
 
+        /// <summary>
+        /// Tag for the base file name used for the output file(s)
+        /// </summary>
+        public const string OUTPUTFILEPATH = "OutputFilePath";
+
         #region Fields
 
         /// <summary>

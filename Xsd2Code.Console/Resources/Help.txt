@@ -17,6 +17,7 @@ Options:
     /n[s] <Namespace>                   - Generated code CLR namespace. Default: file name without extension
     /l[anguage] <Language>              - Generated code language (CS|VB|CPP). Default: CS
     /pl[atform] <Platform>              - Generated code target platform (Net20|Net30|Net35|Silverlight20). Default: Net20
+	/gsf[generateseparatefiles]         - Generate code in separate files (one for each type)
     /c[ollection] <Collection Base>     - Collection base (Array|BindingList|List|ObservableCollection|DefinedType). Default: List
     /cu[customusings] <Custom Usings>   - Comma-separated of custom usings definition (E.g "Xsd2Code.Library,System.Xml.Linq")
     /sm <Serialize>                     - Serialize method name. Default: Serialize

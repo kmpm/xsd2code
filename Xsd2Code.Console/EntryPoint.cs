@@ -23,7 +23,7 @@ namespace Xsd2Code
     internal class EntryPoint
     {
         [STAThread]
-        static private void Main(string[] args)
+        private static void Main(string[] args)
         {
             // Display hekp when no parameters have been specified
             if (args.Length < 1)
@@ -120,6 +120,14 @@ namespace Xsd2Code
                             Console.WriteLine("Warning: /cb /codebase is obsolete please use /pl[atform] <Platform> - Generated code target platform (Net20|Net30|Net35|Silverlight20). Default: Net20");
                             generatorParams.TargetFramework = Utility.ToEnum<TargetFramework>(args[i + 1]);
                             i++;
+                        }
+                        break;
+
+                    case "/gsf":
+                    case "/generateseparatefiles":
+                        if (i < args.Length - 1)
+                        {
+                            generatorParams.GenerateSeparateFiles = true;
                         }
                         break;
 
@@ -326,7 +334,7 @@ namespace Xsd2Code
                     case "/ee+":
                         generatorParams.Serialization.EnableEncoding = true;
                         break;
-                    
+
                     case "/ee-":
                         generatorParams.Serialization.EnableEncoding = false;
                         break;
@@ -382,7 +390,7 @@ namespace Xsd2Code
             Console.WriteLine();
         }
 
-        static private void DisplayApplicationInfo()
+        private static void DisplayApplicationInfo()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
             var currentAssemblyName = currentAssembly.GetName();
@@ -396,7 +404,7 @@ namespace Xsd2Code
         /// <summary>
         /// Display contents of the help file ~/Resources/Help.txt
         /// </summary>
-        static private void DisplayHelp()
+        private static void DisplayHelp()
         {
             Console.WriteLine();
             Console.WriteLine(Resources.Help);
@@ -406,7 +414,7 @@ namespace Xsd2Code
         /// <summary>
         /// Display contents of the help file ~/Resources/Help.txt
         /// </summary>
-        static private void DisplayLicense()
+        private static void DisplayLicense()
         {
             Console.WriteLine();
             Console.WriteLine(Resources.License);

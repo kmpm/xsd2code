@@ -2,33 +2,33 @@
 <PackageManifest Version="2.0.0"
                  xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="Open.Xsd2Code.22fdc475-f463-47f5-95e8-8c8990c4081c" Version="1.1.0" Language="en-US" Publisher="-----" />
-    <DisplayName>Open Xsd2Code</DisplayName>
-    <Description xml:space="preserve">Open Xsd2Code - Visual Studio Extension</Description>
-    <MoreInfo>https://github.com/kmpm/xsd2code</MoreInfo>
-    <License>LICENCE.txt</License>
-  </Metadata>
-  <Installation>
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0,15.0]" />
-  </Installation>
-  <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP"
-                DisplayName="Microsoft .NET Framework"
-                d:Source="Manual"
-                Version="[4.5,)" />
-    <Dependency Id="Microsoft.VisualStudio.MPF.14.0"
-                DisplayName="Visual Studio MPF 14.0"
-                d:Source="Installed"
-                Version="[14.0]" />
-  </Dependencies>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.VsPackage"
-           d:Source="Project"
-           d:ProjectName="%CurrentProject%"
-           Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-  </Assets>
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.LanguageServices" Version="[15.0.26109.1,16.0)" DisplayName="C# et Visual Basic" />
-  </Prerequisites>
+    <Metadata>
+        <Identity Id="Open.Xsd2Code.22fdc475-f463-47f5-95e8-8c8990c4081c" Version="1.1.0" Language="en-US" Publisher="-----" />
+        <DisplayName>Open Xsd2Code</DisplayName>
+        <Description xml:space="preserve">Open Xsd2Code - Visual Studio Extension</Description>
+        <MoreInfo>https://github.com/kmpm/xsd2code</MoreInfo>
+        <License>LICENCE.txt</License>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0,15.0]" />
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP"
+                    DisplayName="Microsoft .NET Framework"
+                    d:Source="Manual"
+                    Version="[4.5,)" />
+        <Dependency Id="Microsoft.VisualStudio.MPF.14.0"
+                    DisplayName="Visual Studio MPF 14.0"
+                    d:Source="Installed"
+                    Version="[14.0]" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage"
+               d:Source="Project"
+               d:ProjectName="%CurrentProject%"
+               Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+    </Assets>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.LanguageServices" Version="[15.0.26109.1,16.0)" DisplayName="C# et Visual Basic" />
+    </Prerequisites>
 </PackageManifest>
