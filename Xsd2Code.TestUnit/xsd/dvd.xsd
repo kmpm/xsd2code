@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--Created with Liquid XML Studio Designer Edition (http://www.liquid-technologies.com)-->
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" id="Dvd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns="http://tempuri.org/Movies"
+           targetNamespace="http://tempuri.org/Movies"
+           attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+            id="Dvd"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:include schemaLocation="Actor.xsd" />
   <xs:element name="DvdCollection">
     <xs:complexType>
@@ -23,17 +28,17 @@
       <xs:element name="Title" type="xs:string" default="DefaultTitle" nillable="true">
         <xs:annotation>
           <xs:documentation>
-              Gets or sets the title of dvd.
-            </xs:documentation>
+            Gets or sets the title of dvd.
+          </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="Style" type="Styles" default="Action" />
       <xs:element ref="Actor" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>
-              Represent the actor list
-              The list include Firstname and last name of the actor.
-            </xs:documentation>
+            Represent the actor list
+            The list include Firstname and last name of the actor.
+          </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="PublishYear" type="xs:int" />

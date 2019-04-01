@@ -72,11 +72,29 @@ namespace Xsd2Code.TestUnit.Properties {
         ///    &lt;/xs:annotation&gt;
         ///    &lt;xs:complexType&gt;
         ///      &lt;xs:sequence&gt;
-        ///        &lt;xs:element name=&quot;f [rest of string was truncated]&quot;;.
+        ///        &lt;xs:element name=&quot;n [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Actor {
             get {
                 return ResourceManager.GetString("Actor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;xs:schema xmlns:mstns=&quot;http://tempuri.org/Gender.xsd&quot; attributeFormDefault=&quot;unqualified&quot; elementFormDefault=&quot;qualified&quot; id=&quot;TVShow&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;xs:include schemaLocation=&quot;Actor.xsd&quot; /&gt;
+        ///  &lt;xs:import schemaLocation=&quot;Gender.xsd&quot; namespace=&quot;http://tempuri.org/Gender.xsd&quot;/&gt;
+        ///
+        ///  &lt;xs:complexType name=&quot;TVShow&quot;&gt;
+        ///    &lt;xs:sequence&gt;
+        ///
+        ///      &lt;xs:element name=&quot;Title&quot; type=&quot;xs:string&quot; default=&quot;DefaultTitle&quot; nillable=&quot;true&quot;&gt;
+        ///        &lt;xs:ann [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AnimatedShow {
+            get {
+                return ResourceManager.GetString("AnimatedShow", resourceCulture);
             }
         }
         
@@ -317,6 +335,24 @@ namespace Xsd2Code.TestUnit.Properties {
         internal static string TestAnnotations {
             get {
                 return ResourceManager.GetString("TestAnnotations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;xs:schema xmlns:mstns=&quot;http://tempuri.org/Gender.xsd&quot; attributeFormDefault=&quot;unqualified&quot; elementFormDefault=&quot;qualified&quot; id=&quot;TVShow&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;xs:include schemaLocation=&quot;Actor.xsd&quot; /&gt;
+        ///  &lt;xs:import schemaLocation=&quot;Gender.xsd&quot; namespace=&quot;http://tempuri.org/Gender.xsd&quot;/&gt;
+        ///  
+        ///   &lt;xs:complexType name=&quot;TVShow&quot;&gt;
+        ///      &lt;xs:sequence&gt;
+        ///        
+        ///        &lt;xs:element name=&quot;Title&quot; type=&quot;xs:string&quot; default=&quot;DefaultTitle&quot; nillable=&quot;true&quot;&gt;
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string TVShow {
+            get {
+                return ResourceManager.GetString("TVShow", resourceCulture);
             }
         }
     }

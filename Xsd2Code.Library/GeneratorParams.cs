@@ -284,9 +284,9 @@ namespace Xsd2Code.Library
         public string BaseClassName { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the name of Serialize method.
+        /// Generate a base class
         /// </summary>
-        [DefaultValue("true"), Description("Generate base class code inside [ShemaName].designer.cs file")]
+        [DefaultValue("true"), Description("Generate base class code inside the output file")]
         public bool GenerateBaseClass { get; set; }
 
         public override string ToString()
@@ -336,12 +336,12 @@ namespace Xsd2Code.Library
         private GenericBaseClassParams genericBaseClassField;
 
         /// <summary>
-        /// Indicate if use tracking change algrithm.
+        /// Indicate if use tracking change algorithm.
         /// </summary>
         private TrackingChangesParams trackingChangesField;
 
         /// <summary>
-        /// Serilisation params
+        /// Serialisation params
         /// </summary>
         private SerializeParams serializeFiledField;
 
@@ -359,18 +359,23 @@ namespace Xsd2Code.Library
         /// Indicate if implement INotifyPropertyChanged
         /// </summary>
         private PropertyParams propertyParamsField;
-        #endregion
 
         /// <summary>
         /// Indicate the target framework
         /// </summary>
         private TargetFramework targetFrameworkField = default(TargetFramework);
 
+        /// <summary>
+        /// Indicate the output language
+        /// </summary>
+        private GenerationLanguage language;
+
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GeneratorParams"/> class.
         /// </summary>
-        public GeneratorParams()
+        public GeneratorParams(string inputXsdFile = "")
         {
             this.Serialization.LoadFromFileMethodName = "LoadFromFile";
             this.Serialization.SaveToFileMethodName = "SaveToFile";
@@ -382,6 +387,8 @@ namespace Xsd2Code.Library
             this.Miscellaneous.ExcludeIncludedTypes = false;
             this.TrackingChanges.PropertyChanged += TrackingChangesPropertyChanged;
             this.Serialization.DefaultEncoder = DefaultEncoder.UTF8;
+            this.GenerateSeparateFiles = false;
+            this.OutputFilePath = string.IsNullOrEmpty(inputXsdFile) ? "" : Path.ChangeExtension(inputXsdFile, ".designer.cs");
         }
 
         /// <summary>
@@ -413,13 +420,30 @@ namespace Xsd2Code.Library
         /// </summary>
         [Category("Code")]
         [Description("Language")]
-        public GenerationLanguage Language { get; set; }
+        public GenerationLanguage Language
+        {
+            get
+            {
+                return language;
+            }
+            set
+            {
+                language = value;
+                if (!string.IsNullOrEmpty(OutputFilePath))
+                {
+                    if (value == GenerationLanguage.CSharp)
+                        OutputFilePath = Path.ChangeExtension(OutputFilePath, ".cs");
+                    if (value == GenerationLanguage.VisualBasic)
+                        OutputFilePath = Path.ChangeExtension(OutputFilePath, ".vb");
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the output file path.
         /// </summary>
         /// <value>The output file path.</value>
-        [Browsable(false)]
+        [Category("Code")]
         public string OutputFilePath { get; set; }
 
         /// <summary>
@@ -657,6 +681,17 @@ namespace Xsd2Code.Library
         public bool EnableInitializeFields { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to generate the code in one file or one file per type
+        /// </summary>
+        [Category("Code")]
+        [DefaultValue(false)]
+        [Description("Generated in separate files")]
+        public bool GenerateSeparateFiles
+        {
+            get; set;
+        }
+
+        /// <summary>
         /// Loads from file.
         /// </summary>
         /// <param name="xsdFilePath">The XSD file path.</param>
@@ -672,9 +707,10 @@ namespace Xsd2Code.Library
         /// </summary>
         /// <param name="xsdFilePath">The XSD file path.</param>
         /// <param name="outputFile">The output file.</param>
+        /// <param name="previousOutputFile">An optional previous output file (useful to read the previous parameters)</param>
         /// <returns>GeneratorParams instance</returns>
 
-        public static GeneratorParams LoadFromFile(string xsdFilePath, out string outputFile)
+        public static GeneratorParams LoadFromFile(string xsdFilePath, out string outputFile, string previousOutputFile = null)
         {
             var parameters = new GeneratorParams();
 
@@ -701,10 +737,17 @@ namespace Xsd2Code.Library
                 //Load from the output files if one of them exist
                 foreach (GenerationLanguage language in Enum.GetValues(typeof(GenerationLanguage)))
                 {
+                    if (!string.IsNullOrEmpty(previousOutputFile))
+                    {
+                        if (File.Exists(previousOutputFile))
+                        {
+                            configFile = previousOutputFile;
+                            break;
+                        }
+                    }
                     string fileName = Utility.GetOutputFilePath(xsdFilePath, language);
                     if (File.Exists(fileName))
                     {
-                        outputFile = fileName;
                         configFile = fileName;
                         break;
                     }
@@ -749,6 +792,8 @@ namespace Xsd2Code.Library
                 parameters.CollectionObjectType = Utility.ToEnum<CollectionType>(optionLine.ExtractStrFromXML(GeneratorContext.COLLECTIONTAG));
                 parameters.Language = Utility.ToEnum<GenerationLanguage>(optionLine.ExtractStrFromXML(GeneratorContext.CODETYPETAG));
                 parameters.EnableDataBinding = Utility.ToBoolean(optionLine.ExtractStrFromXML(GeneratorContext.ENABLEDATABINDINGTAG));
+                parameters.GenerateSeparateFiles = Utility.ToBoolean(optionLine.ExtractStrFromXML(GeneratorContext.GENERATESEPARATEFILES));
+                parameters.OutputFilePath = optionLine.ExtractStrFromXML(GeneratorContext.OUTPUTFILEPATH);
                 parameters.PropertyParams.EnableLazyLoading = Utility.ToBoolean(optionLine.ExtractStrFromXML(GeneratorContext.ENABLELAZYLOADINGTAG));
                 parameters.Miscellaneous.HidePrivateFieldInIde = Utility.ToBoolean(optionLine.ExtractStrFromXML(GeneratorContext.HIDEPRIVATEFIELDTAG));
                 parameters.Miscellaneous.EnableSummaryComment = Utility.ToBoolean(optionLine.ExtractStrFromXML(GeneratorContext.ENABLESUMMARYCOMMENTTAG));
@@ -827,6 +872,8 @@ namespace Xsd2Code.Library
                 { GeneratorContext.COLLECTIONTAG, this.CollectionObjectType },
                 { GeneratorContext.COLLECTIONBASETAG, this.CollectionBase },
                 { GeneratorContext.CODETYPETAG, this.Language },
+                { GeneratorContext.GENERATESEPARATEFILES, this.GenerateSeparateFiles },
+                { GeneratorContext.OUTPUTFILEPATH, this.OutputFilePath },
                 { GeneratorContext.ENABLEDATABINDINGTAG, this.EnableDataBinding },
                 { GeneratorContext.ENABLELAZYLOADINGTAG, this.PropertyParams.EnableLazyLoading },
                 { GeneratorContext.HIDEPRIVATEFIELDTAG, this.Miscellaneous.HidePrivateFieldInIde },
@@ -856,15 +903,18 @@ namespace Xsd2Code.Library
                 { GeneratorContext.EXCLUDEINCLUDEDTYPESTAG, this.Miscellaneous.ExcludeIncludedTypes },
                 { GeneratorContext.ENABLEINITIALIZEFIELDSTAG, this.EnableInitializeFields }
             };
-            if (this.CustomUsings != null) {
-                tagsAndValues.Add(GeneratorContext.CUSTOMUSINGSTAG,  string.Join(";", 
-                    this.CustomUsings.Select(x=>x.NameSpace).Where(usingNamespace => !string.IsNullOrEmpty(usingNamespace)).ToArray()));
+            if (this.CustomUsings != null)
+            {
+                tagsAndValues.Add(GeneratorContext.CUSTOMUSINGSTAG, string.Join(";",
+                    this.CustomUsings.Select(x => x.NameSpace).Where(usingNamespace => !string.IsNullOrEmpty(usingNamespace)).ToArray()));
             }
-            
+
             var optionsLine = new StringBuilder();
-            foreach (var pair in tagsAndValues) {
+            foreach (var pair in tagsAndValues)
+            {
                 var stringVal = Convert.ToString(pair.Value);
-                if (!string.IsNullOrEmpty(stringVal)) {
+                if (!string.IsNullOrEmpty(stringVal))
+                {
                     optionsLine.Append(XmlHelper.InsertXMLFromStr(pair.Key, stringVal));
                 }
             }

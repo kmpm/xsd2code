@@ -80,6 +80,7 @@
     <Compile Include="xsd\dvd.designer.cs" />
     <Compile Include="xsd\Gender.cs">
       <DependentUpon>Gender.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="xsd\hexBinary.designer.cs" />
     <Compile Include="xsd\Hierarchical.cs">
@@ -110,12 +111,20 @@
       <SubType>
       </SubType>
     </Content>
-    <Content Include="xsd\Actor.xsd" />
+    <Content Include="xsd\Actor.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="xsd\Circular.xsd" />
+    <None Include="xsd\AnimatedShow.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="xsd\dvd.xsx">
       <DependentUpon>dvd.xsd</DependentUpon>
     </None>
-    <Content Include="xsd\Gender.xsd" />
+    <Content Include="xsd\Gender.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="xsd\Hierarchical.xsd" />
     <Content Include="xsd\ReproSchema.xsd" />
     <Content Include="xsd\StackOverFlow.xsd" />
@@ -143,6 +152,10 @@
     </None>
     <None Include="xsd\TestOptionalElement.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="xsd\TVShow.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="xsd\XMLSchema.xsd">
       <SubType>Designer</SubType>

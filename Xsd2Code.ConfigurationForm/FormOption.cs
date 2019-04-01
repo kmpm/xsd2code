@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using Xsd2Code.Library;
-using System.Diagnostics;
 
 namespace Xsd2Code.ConfigurationForm
 {
@@ -29,9 +29,9 @@ namespace Xsd2Code.ConfigurationForm
         {
             get
             {
-                return chkOpenAfterGenerate.Checked;   
+                return chkOpenAfterGenerate.Checked;
             }
-        }      
+        }
 
         #endregion
 
@@ -49,21 +49,22 @@ namespace Xsd2Code.ConfigurationForm
 
         #region Method
 
-      /// <summary>
-      /// Analyse file to find generation option.
-      /// </summary>
-      /// <param name="xsdFilePath">path of the xsd-file, which is the central input for the code generation.</param>
-      /// <param name="languageIdentifier">The language identifier (uuid), identifies VC or C#.</param>
-      /// <param name="defaultNamespace">The default namespace for generated classes.</param>
-      /// <param name="framework">.NET Framework version to be used for generated code</param>
-      public void Init(string xsdFilePath, string languageIdentifier, string defaultNamespace, TargetFramework framework)
-        {            
+        /// <summary>
+        /// Analyse file to find generation option.
+        /// </summary>
+        /// <param name="xsdFilePath">path of the xsd-file, which is the central input for the code generation.</param>
+        /// <param name="languageIdentifier">The language identifier (uuid), identifies VC or C#.</param>
+        /// <param name="defaultNamespace">The default namespace for generated classes.</param>
+        /// <param name="framework">.NET Framework version to be used for generated code</param>
+        /// <param name="previousOutputFile">A previous outputfile for the xsd-file to find the parameters from</param>
+        public void Init(string xsdFilePath, string languageIdentifier, string defaultNamespace, TargetFramework framework, string previousOutputFile = null)
+        {
             string outputFile;
-            this.generatorParams = GeneratorParams.LoadFromFile(xsdFilePath, out outputFile);
+            this.generatorParams = GeneratorParams.LoadFromFile(xsdFilePath, out outputFile, previousOutputFile);
 
             if (this.generatorParams == null)
             {
-                this.generatorParams = new GeneratorParams();
+                this.generatorParams = new GeneratorParams(xsdFilePath);
                 switch (languageIdentifier)
                 {
                     case "{B5E9BD33-6D3E-4B5D-925E-8A43B79820B4}":
@@ -100,7 +101,7 @@ namespace Xsd2Code.ConfigurationForm
         private void btnGenerate_Click(object sender, EventArgs e)
         {
             var result = this.generatorParams.Validate();
-            if(!result.Success)
+            if (!result.Success)
             {
                 MessageBox.Show(result.Messages.ToString());
                 return;
@@ -118,7 +119,7 @@ namespace Xsd2Code.ConfigurationForm
         /// <param name="sender">Object sender</param>
         /// <param name="e">EventArgs param</param>
         private void FormOption_KeyPress(object sender, KeyPressEventArgs e)
-        {            
+        {
             int ascii = Convert.ToInt16(e.KeyChar);
             if (ascii == 27) this.Close();
         }
@@ -130,5 +131,5 @@ namespace Xsd2Code.ConfigurationForm
 
 
 
-   }
+    }
 }

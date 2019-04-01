@@ -1,14 +1,14 @@
+using Microsoft.CSharp;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Xsd2Code.Library;
 using Xsd2Code.Library.Helpers;
 using Xsd2Code.TestUnit.Properties;
-using Microsoft.CSharp;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace Xsd2Code.TestUnit
@@ -98,12 +98,12 @@ namespace Xsd2Code.TestUnit
                 // Copy resource file to the run-time directory
                 string inputFilePath = GetInputFilePath("CircularClassReference.xsd", Resources.CircularClassReference);
                 var generatorParams = new GeneratorParams
-                                          {
-                                              InputFilePath = inputFilePath,
-                                              TargetFramework = TargetFramework.Net20,
-                                              OutputFilePath = GetOutputFilePath(inputFilePath)
+                {
+                    InputFilePath = inputFilePath,
+                    TargetFramework = TargetFramework.Net20,
+                    OutputFilePath = GetOutputFilePath(inputFilePath)
 
-                                          };
+                };
                 generatorParams.PropertyParams.AutomaticProperties = true;
                 generatorParams.Serialization.Enabled = false;
                 generatorParams.GenericBaseClass.Enabled = false;
@@ -144,15 +144,15 @@ namespace Xsd2Code.TestUnit
                 var inputFilePath = GetInputFilePath("ArrayOfArray.xsd", Resources.ArrayOfArray);
 
                 var generatorParams = new GeneratorParams
-                                          {
-                                              GenerateCloneMethod = true,
-                                              InputFilePath = inputFilePath,
-                                              NameSpace = "MyNameSpace",
-                                              CollectionObjectType = CollectionType.Array,
-                                              EnableDataBinding = true,
-                                              Language = GenerationLanguage.CSharp,
-                                              OutputFilePath = Path.ChangeExtension(inputFilePath, ".TestGenerated.cs")
-                                          };
+                {
+                    GenerateCloneMethod = true,
+                    InputFilePath = inputFilePath,
+                    NameSpace = "MyNameSpace",
+                    CollectionObjectType = CollectionType.Array,
+                    EnableDataBinding = true,
+                    Language = GenerationLanguage.CSharp,
+                    OutputFilePath = Path.ChangeExtension(inputFilePath, ".TestGenerated.cs")
+                };
                 generatorParams.PropertyParams.AutomaticProperties = true;
                 generatorParams.Serialization.Enabled = true;
                 var xsdGen = new GeneratorFacade(generatorParams);
@@ -432,12 +432,12 @@ namespace Xsd2Code.TestUnit
                 Assert.IsTrue(result.Success, result.Messages.ToString());
 
                 var genderRoot = new Root
-                                     {
-                                         GenderAttribute = ksgender.female,
-                                         GenderAttributeSpecified = true,
-                                         GenderElement = ksgender.female,
-                                         GenderIntAttribute = "toto"
-                                     };
+                {
+                    GenderAttribute = ksgender.female,
+                    GenderAttributeSpecified = true,
+                    GenderElement = ksgender.female,
+                    GenderIntAttribute = "toto"
+                };
                 Exception ex;
                 genderRoot.SaveToFile(Path.Combine(OutputFolder, "gender.xml"), out ex);
                 if (ex != null) throw ex;
@@ -480,7 +480,7 @@ namespace Xsd2Code.TestUnit
         /// Allows the debug.
         /// </summary>
         [TestMethod]
-        public void AlowDebug()
+        public void AllowDebug()
         {
             lock (testLock)
             {
@@ -657,13 +657,13 @@ namespace Xsd2Code.TestUnit
 
                 string outputFilePath = Path.ChangeExtension(inputFilePath, ".baseClass.cs");
                 var generatorParams = new GeneratorParams
-                                          {
-                                              InputFilePath = inputFilePath,
-                                              TargetFramework = TargetFramework.Net30,
-                                              GenerateDataContracts = true,
-                                              EnableDataBinding = true,
-                                              OutputFilePath = outputFilePath
-                                          };
+                {
+                    InputFilePath = inputFilePath,
+                    TargetFramework = TargetFramework.Net30,
+                    GenerateDataContracts = true,
+                    EnableDataBinding = true,
+                    OutputFilePath = outputFilePath
+                };
 
                 generatorParams.PropertyParams.AutomaticProperties = false;
                 generatorParams.Miscellaneous.EnableSummaryComment = true;
@@ -822,6 +822,103 @@ namespace Xsd2Code.TestUnit
             }
         }
 
+        [TestMethod]
+        public void SeparateFiles()
+        {
+            lock (testLock)
+            {
+
+                // Get the code namespace for the schema.
+                string tvShowInputFilePath = GetInputFilePath("TVShow.xsd", Resources.TVShow);
+                // copy included/imported files to the test folder
+                GetInputFilePath("Actor.xsd", Resources.Actor);
+                GetInputFilePath("Gender.xsd", Resources.Gender);
+
+                var tvShowGeneratorParams = GetGeneratorParams(tvShowInputFilePath);
+                GetGeneratorParams(tvShowInputFilePath);
+
+                tvShowGeneratorParams.Miscellaneous.EnableSummaryComment = true;
+                tvShowGeneratorParams.TargetFramework = TargetFramework.Net35;
+                tvShowGeneratorParams.PropertyParams.AutomaticProperties = true;
+                tvShowGeneratorParams.EnableInitializeFields = true;
+                tvShowGeneratorParams.CollectionObjectType = CollectionType.List;
+                tvShowGeneratorParams.GenerateSeparateFiles = true;
+                tvShowGeneratorParams.OutputFilePath = Path.ChangeExtension(tvShowGeneratorParams.InputFilePath, ".separate.cs");
+
+                var tvShowXsdGen = new GeneratorFacade(tvShowGeneratorParams);
+                var tvShowResult = tvShowXsdGen.Generate();
+                List<string> tvShowOutputFiles = tvShowResult.Entity;
+                Assert.IsTrue(tvShowResult.Success, tvShowResult.Messages.ToString());
+                // compile TV show
+                var compileResult = CompileCSFile(tvShowOutputFiles.ToArray());
+                Assert.IsTrue(compileResult.Success, compileResult.Messages.ToString());
+            }
+        }
+
+        [TestMethod]
+        public void MultipleGenerationWithSeparateFiles()
+        {
+            lock (testLock)
+            {
+
+                // Get the code namespace for the schema.
+                string tvShowInputFilePath = GetInputFilePath("TVShow.xsd", Resources.TVShow);
+                // copy included/imported files to the test folder
+                GetInputFilePath("Actor.xsd", Resources.Actor);
+                GetInputFilePath("Gender.xsd", Resources.Gender);
+
+                var tvShowGeneratorParams = GetGeneratorParams(tvShowInputFilePath);
+                GetGeneratorParams(tvShowInputFilePath);
+
+                tvShowGeneratorParams.Miscellaneous.EnableSummaryComment = true;
+                tvShowGeneratorParams.TargetFramework = TargetFramework.Net35;
+                tvShowGeneratorParams.PropertyParams.AutomaticProperties = true;
+                tvShowGeneratorParams.EnableInitializeFields = true;
+                tvShowGeneratorParams.GenerateSeparateFiles = true;
+                tvShowGeneratorParams.CollectionObjectType = CollectionType.List;
+                tvShowGeneratorParams.OutputFilePath = Path.Combine(Path.GetDirectoryName(tvShowInputFilePath), "includes.cs");
+
+                var tvShowXsdGen = new GeneratorFacade(tvShowGeneratorParams);
+                var tvShowResult = tvShowXsdGen.Generate();
+                List<string> tvShowOutputFiles = tvShowResult.Entity;
+                Assert.IsTrue(tvShowResult.Success, tvShowResult.Messages.ToString());
+
+                // Get the code namespace for the schema.
+                string inputFilePath = GetInputFilePath("AnimatedShow.xsd", Resources.AnimatedShow);
+
+                var animatedShowGeneratorParams = GetGeneratorParams(inputFilePath);
+                GetGeneratorParams(inputFilePath);
+
+                animatedShowGeneratorParams.Miscellaneous.EnableSummaryComment = true;
+                animatedShowGeneratorParams.TargetFramework = TargetFramework.Net35;
+                animatedShowGeneratorParams.PropertyParams.AutomaticProperties = true;
+                animatedShowGeneratorParams.EnableInitializeFields = true;
+                animatedShowGeneratorParams.GenerateSeparateFiles = true;
+                animatedShowGeneratorParams.CollectionObjectType = CollectionType.List;
+                // using the same base file name to check if multiple generations with common imports/includes can successfully compile
+                animatedShowGeneratorParams.OutputFilePath = Path.Combine(Path.GetDirectoryName(tvShowInputFilePath), "includes.cs");
+
+                var animatedShowXsdGen = new GeneratorFacade(animatedShowGeneratorParams);
+                var animatedShowResult = animatedShowXsdGen.Generate();
+                List<string> animatedShowOutputFiles = animatedShowResult.Entity;
+                Assert.IsTrue(animatedShowResult.Success, animatedShowResult.Messages.ToString());
+
+                // compile TV show
+                var compileResult = CompileCSFile(tvShowOutputFiles.ToArray());
+                Assert.IsTrue(compileResult.Success, compileResult.Messages.ToString());
+                // compile Animated show
+                compileResult = CompileCSFile(animatedShowOutputFiles.ToArray());
+                Assert.IsTrue(compileResult.Success, compileResult.Messages.ToString());
+
+                // compile Animated show and tv show at the same time
+                List<string> filesToCompile = new List<string>();
+                filesToCompile.AddRange(tvShowOutputFiles.ToArray());
+                filesToCompile.AddRange(animatedShowOutputFiles.ToArray());
+                compileResult = CompileCSFile(filesToCompile.ToArray());
+                Assert.IsTrue(compileResult.Success, compileResult.Messages.ToString());
+            }
+        }
+
 
         private static string GetInputFilePath(string resourceFileName, string fileContent)
         {
@@ -844,16 +941,16 @@ namespace Xsd2Code.TestUnit
         private static GeneratorParams GetGeneratorParams(string inputFilePath)
         {
             var generatorParams = new GeneratorParams
-                       {
-                           InputFilePath = inputFilePath,
-                           NameSpace = CodeGenerationNamespace,
-                           TargetFramework = TargetFramework.Net20,
-                           CollectionObjectType = CollectionType.ObservableCollection,
-                           EnableDataBinding = true,
-                           GenerateDataContracts = true,
-                           GenerateCloneMethod = true,
-                           OutputFilePath = GetOutputFilePath(inputFilePath)
-                       };
+            {
+                InputFilePath = inputFilePath,
+                NameSpace = CodeGenerationNamespace,
+                TargetFramework = TargetFramework.Net20,
+                CollectionObjectType = CollectionType.ObservableCollection,
+                EnableDataBinding = true,
+                GenerateDataContracts = true,
+                GenerateCloneMethod = true,
+                OutputFilePath = GetOutputFilePath(inputFilePath)
+            };
             generatorParams.Miscellaneous.HidePrivateFieldInIde = true;
             generatorParams.Miscellaneous.DisableDebug = true;
             generatorParams.Serialization.Enabled = true;
@@ -865,7 +962,7 @@ namespace Xsd2Code.TestUnit
         /// </summary>
         /// <param name="inputFilePath">input file path</param>
         /// <returns></returns>
-        static private string GetOutputFilePath(string inputFilePath)
+        private static string GetOutputFilePath(string inputFilePath)
         {
             return Path.ChangeExtension(inputFilePath, ".TestGenerated.cs");
         }
@@ -875,26 +972,33 @@ namespace Xsd2Code.TestUnit
         /// </summary>
         /// <param name="filePath">CS file path</param>
         /// <returns></returns>
-        static private Result<string> CompileCSFile(string filePath)
+        private static Result<string> CompileCSFile(params string[] filesPaths)
         {
             var result = new Result<string>(null, true);
-            var file = new FileInfo(filePath);
-            if (!file.Exists)
+            string firstFileName = null;
+            foreach (string filePath in filesPaths)
             {
-                result.Success = false;
-                result.Messages.Add(MessageType.Error, "Input file \"{0}\" does not exist", filePath);
+                var file = new FileInfo(filePath);
+                if (!file.Exists)
+                {
+                    result.Success = false;
+                    result.Messages.Add(MessageType.Error, "Input file \"{0}\" does not exist", filePath);
+                    break;
+                }
+                if (firstFileName == null)
+                    firstFileName = file.FullName;
             }
             if (result.Success)
             {
                 try
                 {
 
-                    var outputPath = Path.ChangeExtension(file.FullName, ".dll");
+                    var outputPath = Path.ChangeExtension(firstFileName, ".dll");
                     result.Entity = outputPath;
                     var csc = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
                     var parameters = new CompilerParameters(new[] { "mscorlib.dll", "System.dll", "System.Core.dll", "System.Xml.dll", "WindowsBase.dll", "System.Runtime.Serialization.dll" }, outputPath, true);
                     parameters.GenerateExecutable = false;
-                    CompilerResults results = csc.CompileAssemblyFromFile(parameters, filePath);
+                    CompilerResults results = csc.CompileAssemblyFromFile(parameters, filesPaths);
                     if (results.Errors.HasErrors)
                     {
                         result.Success = false;

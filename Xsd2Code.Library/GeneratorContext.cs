@@ -184,6 +184,16 @@
         /// </summary>
         public const string ENABLEINITIALIZEFIELDSTAG = "EnableInitializeFields";
 
+        /// <summary>
+        /// Tag for enable/disable generation of separate files
+        /// </summary>
+        public const string GENERATESEPARATEFILES = "GenerateSeparateFiles";
+
+        /// <summary>
+        /// Tag for the base file name used for the output file(s)
+        /// </summary>
+        public const string OUTPUTFILEPATH = "OutputFilePath";
+
         #region Fields
 
         /// <summary>

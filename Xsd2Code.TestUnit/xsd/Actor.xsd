@@ -1,6 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<!--Created with Liquid XML Studio (http://www.liquid-technologies.com)-->
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" id="Actor" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns="http://tempuri.org/Movies"
+           targetNamespace="http://tempuri.org/Movies"
+           xmlns:mstns="http://tempuri.org/Gender.xsd"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:import schemaLocation="Gender.xsd" namespace="http://tempuri.org/Gender.xsd"/>
+
+  <xs:complexType name="NameType">
+    <xs:sequence>
+      <xs:element name="firstname" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            Gets or sets the firstname of the actor
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="lastname" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            Gets or sets the lastname of the actor
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:element name="Actor">
     <xs:annotation>
       <xs:documentation>
@@ -9,17 +33,11 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="firstname" type="xs:string">
+        <xs:element name="name" type="NameType"/>
+        <xs:element ref="mstns:Root">
           <xs:annotation>
             <xs:documentation>
-              Gets or sets the firstname of the actor
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element name="lastname" type="xs:string">
-          <xs:annotation>
-            <xs:documentation>
-              Gets or sets the lastname of the actor
+              Represent the gender of the main character
             </xs:documentation>
           </xs:annotation>
         </xs:element>
@@ -32,4 +50,5 @@
       </xs:attribute>
     </xs:complexType>
   </xs:element>
+
 </xs:schema>

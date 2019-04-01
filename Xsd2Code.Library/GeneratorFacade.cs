@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -112,11 +113,11 @@ namespace Xsd2Code.Library
         /// Processes the code generation.
         /// </summary>
         /// <returns>true if success or false.</returns>
-        public Result<string> Generate()
+        public Result<List<string>> Generate()
         {
             var outputFileName = GeneratorContext.GeneratorParams.OutputFilePath;
             var processResult = this.Process(outputFileName);
-            return new Result<string>(outputFileName, processResult.Success, processResult.Messages);
+            return new Result<List<string>>(processResult.Entity, processResult.Success, processResult.Messages);
         }
 
         /// <summary>
@@ -142,8 +143,9 @@ namespace Xsd2Code.Library
         /// </summary>
         /// <param name="outputFilePath">The output file path.</param>
         /// <returns>true if success else false</returns>
-        private Result Process(string outputFilePath)
+        private Result<List<string>> Process(string outputFilePath)
         {
+            List<string> generatedFiles = new List<string>();
             #region Change CurrentDir for include schema resolution.
 
             string savedCurrentDir = Directory.GetCurrentDirectory();
@@ -154,10 +156,11 @@ namespace Xsd2Code.Library
                 var errorMessage = string.Format("XSD File not found at location {0}\n", GeneratorContext.GeneratorParams.InputFilePath);
                 errorMessage += "Exception :\n";
                 errorMessage += string.Format("Input file {0} not exist", GeneratorContext.GeneratorParams.InputFilePath);
-                return new Result(false, MessageType.Error, errorMessage);
+                return new Result<List<string>>(generatedFiles, false, MessageType.Error, errorMessage);
             }
 
-            if (inputFile.Directory != null) Directory.SetCurrentDirectory(inputFile.Directory.FullName);
+            if (inputFile.Directory != null)
+                Directory.SetCurrentDirectory(inputFile.Directory.FullName);
 
             #endregion
 
@@ -166,11 +169,47 @@ namespace Xsd2Code.Library
                 try
                 {
                     var result = Generator.Process(GeneratorContext.GeneratorParams);
-                    if (!result.Success) return result;
+                    if (!result.Success)
+                        return new Result<List<string>>(generatedFiles, result.Success, result.Messages);
+
 
                     var ns = result.Entity;
-                    using (var outputStream = new StreamWriter(outputFilePath + ".tmp", false))
-                        this.providerField.GenerateCodeFromNamespace(ns, outputStream, new CodeGeneratorOptions());
+
+                    if (GeneratorContext.GeneratorParams.GenerateSeparateFiles)
+                    {
+
+                        // we need to create fake namespaces in order to add the namespace and using statements
+                        foreach (CodeTypeDeclaration codeType in ns.Types)
+                        {
+                            // Creating a file name based on the original file name
+                            string typeFileName = Path.Combine(Path.GetDirectoryName(outputFilePath), Path.GetFileNameWithoutExtension(outputFilePath) + "_" + codeType.Name + Path.GetExtension(outputFilePath));
+                            generatedFiles.Add(typeFileName);
+                            string tempFileName = typeFileName + ".tmp";
+
+                            CodeCompileUnit compileUnit = new CodeCompileUnit();
+                            CodeNamespace @namespace = new CodeNamespace(ns.Name);
+                            // Adds the namespace
+                            compileUnit.Namespaces.Add(@namespace);
+                            // Add the imports
+                            foreach (CodeNamespaceImport import in ns.Imports)
+                                @namespace.Imports.Add(import);
+                            // Add the type to export
+                            @namespace.Types.Add(codeType);
+
+                            using (var outputStream = new StreamWriter(tempFileName, false))
+                            {
+                                this.providerField.GenerateCodeFromCompileUnit(compileUnit, outputStream, new CodeGeneratorOptions());
+                            }
+                        }
+                    }
+                    else
+                    {
+                        string fileName = outputFilePath;
+                        generatedFiles.Add(fileName);
+                        string tempFileName = fileName + ".tmp";
+                        using (var outputStream = new StreamWriter(tempFileName, false))
+                            this.providerField.GenerateCodeFromNamespace(ns, outputStream, new CodeGeneratorOptions());
+                    }
                 }
                 catch (Exception e)
                 {
@@ -183,74 +222,82 @@ namespace Xsd2Code.Library
                     Debug.WriteLine("Open Xsd2Code - " + e.Message);
                     Debug.WriteLine("Open Xsd2Code - ----------------------------------------------------------");
                     Debug.WriteLine(string.Empty);
-                    return new Result(false, MessageType.Error, errorMessage);
+                    return new Result<List<string>>(generatedFiles, false, MessageType.Error, errorMessage);
                 }
 
-                var outputFile = new FileInfo(outputFilePath);
-                if (outputFile.Exists)
+                foreach (string filename in generatedFiles)
                 {
-                    if ((outputFile.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                    var outputFile = new FileInfo(filename);
+                    if (outputFile.Exists)
                     {
-                        var errorMessage = "Failed to generate code\n";
-                        errorMessage += outputFilePath + " is write protect";
-                        return new Result(false, MessageType.Error, errorMessage);
-                    }
-                }
-
-                #region Insert tag for future generation
-
-                using (var outputStream = new StreamWriter(outputFilePath, false))
-                {
-
-
-                    string commentStr = GeneratorContext.GeneratorParams.Language == GenerationLanguage.CSharp
-                                            ? "// "
-                                            : "'' ";
-
-                    Assembly currentAssembly = Assembly.GetExecutingAssembly();
-                    AssemblyName currentAssemblyName = currentAssembly.GetName();
-
-                    outputStream.WriteLine(
-                        "{0}------------------------------------------------------------------------------",
-                            commentStr);
-                    outputStream.WriteLine(string.Format("{0} <auto-generated>", commentStr));
-
-                    outputStream.WriteLine(string.Format("{0}   Generated by Open Xsd2Code. Version {1} MIT License (MIT) ", commentStr,
-                                                  currentAssemblyName.Version));
-
-                    string optionsLine = string.Format("{0}   {1}", commentStr,
-                                                       GeneratorContext.GeneratorParams.ToXmlTag());
-                    outputStream.WriteLine(optionsLine);
-
-                    outputStream.WriteLine("{0} </auto-generated>", commentStr);
-
-                    outputStream.WriteLine(
-                            "{0}------------------------------------------------------------------------------",
-                            commentStr);
-
-
-                #endregion
-
-                    using (TextReader streamReader = new StreamReader(outputFilePath + ".tmp"))
-                    {
-                        string line;
-
-                        //DCM TODO Will refract this to Not perform this last loop after verification that it works.
-                        while ((line = streamReader.ReadLine()) != null)
+                        if ((outputFile.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                         {
-                            outputStream.WriteLine(line);
+                            var errorMessage = "Failed to generate code\n";
+                            errorMessage += filename + " is write protect";
+                            return new Result<List<string>>(generatedFiles, false, MessageType.Error, errorMessage);
                         }
                     }
-                    outputStream.Close();
+                }
+                #region Insert tag for future generation
+                foreach (string currentFileName in generatedFiles)
+                {
+                    using (var outputStream = new StreamWriter(currentFileName, false))
+                    {
+
+
+                        string commentStr = GeneratorContext.GeneratorParams.Language == GenerationLanguage.CSharp
+                                                ? "// "
+                                                : "'' ";
+
+                        Assembly currentAssembly = Assembly.GetExecutingAssembly();
+                        AssemblyName currentAssemblyName = currentAssembly.GetName();
+
+                        outputStream.WriteLine(
+                            "{0}------------------------------------------------------------------------------",
+                                commentStr);
+                        outputStream.WriteLine(string.Format("{0} <auto-generated>", commentStr));
+
+                        outputStream.WriteLine(string.Format("{0}   Generated by Open Xsd2Code. Version {1} MIT License (MIT) ", commentStr,
+                                                      currentAssemblyName.Version));
+
+                        string optionsLine = string.Format("{0}   {1}", commentStr,
+                                                           GeneratorContext.GeneratorParams.ToXmlTag());
+                        outputStream.WriteLine(optionsLine);
+
+                        outputStream.WriteLine("{0} </auto-generated>", commentStr);
+
+                        outputStream.WriteLine(
+                                "{0}------------------------------------------------------------------------------",
+                                commentStr);
+
+
+                        #endregion
+
+                        using (TextReader streamReader = new StreamReader(currentFileName + ".tmp"))
+                        {
+                            string line;
+
+                            //DCM TODO Will refactor this to Not perform this last loop after verification that it works.
+                            while ((line = streamReader.ReadLine()) != null)
+                            {
+                                outputStream.WriteLine(line);
+                            }
+                        }
+                        outputStream.Close();
+                    }
                 }
                 try
                 {
-                    var tempFile = new FileInfo(outputFilePath + ".tmp");
-                    tempFile.Delete();
+                    foreach (string fileName in generatedFiles)
+                    {
+                        var tempFile = new FileInfo(fileName + ".tmp");
+                        if (tempFile.Exists)
+                            tempFile.Delete();
+                    }
                 }
                 catch (Exception ex)
                 {
-                    return new Result(false, MessageType.Error, ex.Message);
+                    return new Result<List<string>>(generatedFiles, false, MessageType.Error, ex.Message);
                 }
             }
             finally
@@ -258,7 +305,7 @@ namespace Xsd2Code.Library
                 Directory.SetCurrentDirectory(savedCurrentDir);
             }
 
-            return new Result(true);
+            return new Result<List<string>>(generatedFiles, true);
         }
 
         #endregion
