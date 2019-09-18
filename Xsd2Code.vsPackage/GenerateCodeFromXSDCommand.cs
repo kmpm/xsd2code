@@ -11,12 +11,16 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Xsd2Code.ConfigurationForm;
 using Xsd2Code.Library;
 using Xsd2Code.Library.Helpers;
+using Task = System.Threading.Tasks.Task;
 
 namespace Xsd2Code.vsPackage
 {
@@ -35,33 +39,41 @@ namespace Xsd2Code.vsPackage
         /// </summary>
         public static readonly Guid CommandSet = new Guid("b28b1de2-6cf0-4ff6-8a20-0123954dc58c");
 
-        /// <summary>
-        /// VS Package that provides this command, not null.
-        /// </summary>
-        private readonly Package package;
+        public AsyncPackage Package { get; }
+
+        public DTE Dte { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateCodeFromXSDCommand"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        private GenerateCodeFromXSDCommand(Package package)
+        private GenerateCodeFromXSDCommand(AsyncPackage package)
         {
             if (package == null)
             {
                 throw new ArgumentNullException("package");
             }
 
-            this.package = package;
+            this.Package = package;
 
-            OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+           
+        }
+
+        private async Task RegisterCommand()
+        {
+            IMenuCommandService commandService = await this.Package.GetServiceAsync(typeof(IMenuCommandService)) as IMenuCommandService;
             if (commandService != null)
             {
                 var menuCommandID = new CommandID(CommandSet, CommandId);
                 var menuItem = new OleMenuCommand(this.MenuItemCallback, menuCommandID); // using OleMenuCommand to have access to BeforeQueryStatus
                 menuItem.BeforeQueryStatus += menuCommand_BeforeQueryStatus;
+                // Switch to Main Thread before calling AddCommand which calls GetService() which should
+                // always be called on UI thread.
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 commandService.AddCommand(menuItem);
             }
+            Dte = (DTE) await Package.GetServiceAsync(typeof(DTE));
         }
 
         /// <summary>
@@ -73,24 +85,11 @@ namespace Xsd2Code.vsPackage
             private set;
         }
 
-        /// <summary>
-        /// Gets the service provider from the owner package.
-        /// </summary>
-        private IServiceProvider ServiceProvider
-        {
-            get
-            {
-                return this.package;
-            }
-        }
-
-        /// <summary>
-        /// Initializes the singleton instance of the command.
-        /// </summary>
-        /// <param name="package">Owner package, not null.</param>
-        public static void Initialize(Package package)
+        // Asynchronous initialization
+        public static async Task InitializeAsync(AsyncPackage package)
         {
             Instance = new GenerateCodeFromXSDCommand(package);
+            await Instance.RegisterCommand();
         }
 
         /// <summary>
@@ -110,11 +109,8 @@ namespace Xsd2Code.vsPackage
         /// </summary>
         private void openConfigurationWindow()
         {
-
-
-            DTE dte = (DTE)ServiceProvider.GetService(typeof(DTE));
-
-            ProjectItem proitem = dte.SelectedItems.Item(1).ProjectItem;
+           
+            ProjectItem proitem = Dte.SelectedItems.Item(1).ProjectItem;
             Project proj = proitem.ContainingProject;
             string projectDirectory = Path.GetDirectoryName(proj.FullName);
 
@@ -241,7 +237,7 @@ namespace Xsd2Code.vsPackage
                             try
                             {
                                 // this.applicationObjectField.DTE.ExecuteCommand("Edit.RemoveAndSort", "");
-                                dte.ExecuteCommand("Edit.FormatDocument", string.Empty);
+                                Dte.ExecuteCommand("Edit.FormatDocument", string.Empty);
                             }
                             catch (Exception)
                             {
@@ -296,8 +292,8 @@ namespace Xsd2Code.vsPackage
             itemid = VSConstants.VSITEMID_NIL;
             int hr = VSConstants.S_OK;
 
-            var monitorSelection = Package.GetGlobalService(typeof(SVsShellMonitorSelection)) as IVsMonitorSelection;
-            var solution = Package.GetGlobalService(typeof(SVsSolution)) as IVsSolution;
+            var monitorSelection = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(SVsShellMonitorSelection)) as IVsMonitorSelection;
+            var solution = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(SVsSolution)) as IVsSolution;
             if (monitorSelection == null || solution == null)
             {
                 return false;
