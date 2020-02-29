@@ -2054,13 +2054,14 @@ namespace Xsd2Code.Library.Extensions
                             var property = member as CodeMemberProperty;
                             if (property != null)
                             {
-                                if (property.Type.BaseType != new CodeTypeReference(typeof(long)).BaseType &&
-                                    property.Type.BaseType != new CodeTypeReference(typeof(DateTime)).BaseType &&
-                                    property.Type.BaseType != new CodeTypeReference(typeof(float)).BaseType &&
-                                    property.Type.BaseType != new CodeTypeReference(typeof(double)).BaseType &&
-                                    property.Type.BaseType != new CodeTypeReference(typeof(int)).BaseType &&
-                                    property.Type.BaseType != new CodeTypeReference(typeof(bool)).BaseType &&
-                                    enumListField.IndexOf(property.Type.BaseType) == -1)
+                                if ((property.Type.ArrayRank > 0) ||
+                                        (property.Type.BaseType != new CodeTypeReference(typeof(long)).BaseType &&
+                                        property.Type.BaseType != new CodeTypeReference(typeof(DateTime)).BaseType &&
+                                        property.Type.BaseType != new CodeTypeReference(typeof(float)).BaseType &&
+                                        property.Type.BaseType != new CodeTypeReference(typeof(double)).BaseType &&
+                                        property.Type.BaseType != new CodeTypeReference(typeof(int)).BaseType &&
+                                        property.Type.BaseType != new CodeTypeReference(typeof(bool)).BaseType &&
+                                        enumListField.IndexOf(property.Type.BaseType) == -1))
                                     prop.SetStatements[0] = condStatmentCondNotNull;
                                 else
                                     prop.SetStatements[0] = condStatmentCondEquals;
