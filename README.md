@@ -1,7 +1,7 @@
 Open Xsd2Code
 =============
 Modified fork of http://xsd2code.codeplex.com. 
-Aiming for VS2015 integration using VSIX.
+VSIX Integration in VS2015 to VS2019
 
 
 Goals
