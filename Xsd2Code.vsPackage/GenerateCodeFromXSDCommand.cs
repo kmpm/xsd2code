@@ -178,7 +178,7 @@ namespace Xsd2Code.vsPackage
             }
 
             var frm = new FormOption();
-            frm.Init(xsdFileName, proj.CodeModel.Language, defaultNamespace, framework, outputFile);
+            frm.Init(xsdFileName, proj.CodeModel.Language, defaultNamespace, framework, Path.IsPathRooted(outputFile) ? outputFile : Path.Combine(projectDirectory, outputFile));
 
             DialogResult result = frm.ShowDialog();
 
@@ -213,14 +213,15 @@ namespace Xsd2Code.vsPackage
                         MessageBox.Show(generateResult.Messages.ToString(), "XSD2Code", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     else
                     {
-                        // Save one of the output file path so we can reada the parameters from it the next time
+                        string vsProjectOutputFilePath = outputFileNames[0];
+                        // Save one of the output file path so we can read the parameters from it the next time
                         if (buildPropertyStorage != null)
                         {
-                            buildPropertyStorage.SetItemAttribute(itemid, "Xsd2CodeOutputFile", outputFileNames[0]);
+                            buildPropertyStorage.SetItemAttribute(itemid, "Xsd2CodeOutputFile", GetRelativePath(vsProjectOutputFilePath, projectDirectory));
                         }
 
                         // try again now that the generation occured
-                        string newRootedOutputFile = Path.Combine(projectDirectory, outputFileNames[0]);
+                        string newRootedOutputFile = Path.Combine(projectDirectory, vsProjectOutputFilePath);
                         foundOutputFile = FindInProject(proj.ProjectItems, newRootedOutputFile, out projElmts);
                         if (!foundOutputFile)
                         {
@@ -249,6 +250,18 @@ namespace Xsd2Code.vsPackage
 
             return;
 
+        }
+
+        string GetRelativePath(string filespec, string folder)
+        {
+            Uri pathUri = new Uri(filespec);
+            // Folders must end in a slash
+            if (!folder.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                folder += Path.DirectorySeparatorChar;
+            }
+            Uri folderUri = new Uri(folder);
+            return Uri.UnescapeDataString(folderUri.MakeRelativeUri(pathUri).ToString().Replace('/', Path.DirectorySeparatorChar));
         }
 
         /// <summary>
