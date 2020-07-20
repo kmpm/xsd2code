@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using Xsd2Code.Library;
 using Xsd2Code.Library.Helpers;
-using Xsd2Code2.Properties;
+using Xsd2Code.Properties;
 
 namespace Xsd2Code
 {

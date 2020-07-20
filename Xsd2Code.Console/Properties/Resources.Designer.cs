@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Xsd2Code2.Properties {
+namespace Xsd2Code.Properties {
     using System;
     
     
