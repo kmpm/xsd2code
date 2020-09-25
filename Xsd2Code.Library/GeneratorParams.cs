@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 using Xsd2Code.Library.Helpers;
 
 namespace Xsd2Code.Library
@@ -389,6 +390,7 @@ namespace Xsd2Code.Library
             this.Serialization.DefaultEncoder = DefaultEncoder.UTF8;
             this.GenerateSeparateFiles = false;
             this.OutputFilePath = string.IsNullOrEmpty(inputXsdFile) ? "" : Path.ChangeExtension(inputXsdFile, ".designer.cs");
+            this.CodeGenerationOptions = CodeGenerationOptions.GenerateProperties;
         }
 
         /// <summary>
@@ -690,6 +692,11 @@ namespace Xsd2Code.Library
         {
             get; set;
         }
+
+        [Category("Code")]
+        [DefaultValue(1)]
+        [Description("Specifies various options to use when generating .NET types")]
+        public CodeGenerationOptions CodeGenerationOptions { get; set; }
 
         /// <summary>
         /// Loads from file.

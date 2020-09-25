@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Xml.Serialization;
 using Xsd2Code.Library;
 using Xsd2Code.Library.Helpers;
 using Xsd2Code.Properties;
@@ -337,6 +338,16 @@ namespace Xsd2Code
 
                     case "/ee-":
                         generatorParams.Serialization.EnableEncoding = false;
+                        break;
+                    
+                    case "/co":
+                    case "/codeoptions":
+                        if (i < args.Length - 1)
+                        {
+                            generatorParams.CodeGenerationOptions = (CodeGenerationOptions)Convert.ToInt32(args[i + 1]);
+                            i++;
+                        }
+                        
                         break;
 
                     case "/lic":

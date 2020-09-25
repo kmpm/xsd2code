@@ -61,6 +61,8 @@ Options:
 	/ssp[-]                             - Do not generate ShouldSerilizeProperty method for nullable type (default)
     /hp[+]                              - Hide private fields in IDE
     /hp-                                - Show private fields in IDE (default)
+    /co [codeoptions]                   - Specifies various options to use when generating .NET types (see .net CodeGenerationOptions Enum)
+                        
     /lic[ense]                          - Show license information
     /?, /h[elp]                         - Show this help    
 Example:

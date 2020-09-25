@@ -120,8 +120,8 @@ namespace Xsd2Code.Library
                 {
                     schemas.Add(schema);
                 }
-
-                var exporter = new XmlCodeExporter(ns);
+                
+                var exporter = new XmlCodeExporter(ns, (CodeCompileUnit) null, generatorParams.CodeGenerationOptions);
 
                 var generationOptions = CodeGenerationOptions.None;
                 if (generatorParams.Serialization.GenerateOrderXmlAttributes)
