@@ -25,15 +25,37 @@ namespace Xsd2Code
         [STAThread]
         private static void Main(string[] args)
         {
-            // Display hekp when no parameters have been specified
+
+            DisplayApplicationInfo();
+            // Display help when no parameters have been specified
             if (args.Length < 1)
             {
-                DisplayApplicationInfo();
                 DisplayHelp();
                 return;
             }
 
-            DisplayApplicationInfo();
+            // Process command-line parameter switches for help and license
+            for (int i = 0; i < args.Length; i++)
+            {
+                switch (args[i].Trim().ToLower())
+                {
+
+                    case "/lic":
+                    case "/license":
+                        DisplayLicense();
+                        return;
+
+                    case "/?":
+                    case "/h":
+                    case "/hlp":
+                    case "/help":
+                        DisplayHelp();
+                        return;
+
+                    default:
+                        break;
+                }
+            }
 
             // Create new instance of GeneratorParams, which contains all generation parameters
             var xsdFilePath = args[0];
@@ -339,17 +361,6 @@ namespace Xsd2Code
                         generatorParams.Serialization.EnableEncoding = false;
                         break;
 
-                    case "/lic":
-                    case "/license":
-                        DisplayLicense();
-                        return;
-
-                    case "/?":
-                    case "/h":
-                    case "/hlp":
-                    case "/help":
-                        DisplayHelp();
-                        return;
                 }
             }
 
