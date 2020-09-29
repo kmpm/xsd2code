@@ -194,7 +194,6 @@ namespace Xsd2Code.Library
         [DefaultValue(false)]
         [Description("Indicating whether if generate .NET 2.0 serialization attributes. If false, serialization will use propertyName")]
         public bool GenerateXmlAttributes { get; set; }
-
         private bool _generateOrderXmlAttributes;
 
         /// <summary>
@@ -391,6 +390,7 @@ namespace Xsd2Code.Library
             this.GenerateSeparateFiles = false;
             this.OutputFilePath = string.IsNullOrEmpty(inputXsdFile) ? "" : Path.ChangeExtension(inputXsdFile, ".designer.cs");
             this.CodeGenerationOptions = CodeGenerationOptions.GenerateProperties;
+            this.InputXsdString = "";
         }
 
         /// <summary>
@@ -454,6 +454,11 @@ namespace Xsd2Code.Library
         /// <value>The input file path.</value>
         [Browsable(false)]
         public string InputFilePath { get; set; }
+        
+        
+        [Description("XSD string. Used when no InputFilePath specified.")]
+        public string InputXsdString { get; set; }
+        
 
         /// <summary>
         /// Gets or sets collection type to use for code generation
