@@ -231,6 +231,105 @@ public partial class itemType {
             Assert.AreEqual(expectedCode, resultCode.ToString());
         }
 
+
+
+        [TestMethod]
+        public void WithCodeGenerationOptionDataBinding()
+        {
+            var generatorParams = new GeneratorParams
+            {
+                InputXsdString = @"<?xml version=""1.0"" encoding=""UTF-8"" ?>
+                                    <xs:schema xmlns:xs=""http://www.w3.org/2001/XMLSchema"">
+                                        <xs:element name=""shiporder"" type=""orderType"" />
+                                        
+                                        <xs:complexType name=""orderType"">
+                                            <xs:sequence>
+                                                <xs:element name=""orderperson"" type=""xs:string""/>
+                                                <xs:element name=""item"" maxOccurs=""unbounded"" type=""itemType""/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+
+                                        <xs:complexType name=""itemType"">
+                                            <xs:sequence>
+                                                <xs:element name=""title"" type=""xs:string""/>
+                                                <xs:element name=""note"" type=""xs:string"" minOccurs=""0""/>
+                                                <xs:element name=""quantity"" type=""xs:positiveInteger""/>
+                                                <xs:element name=""price"" type=""xs:decimal""/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+
+                                    </xs:schema>",
+                TargetFramework = TargetFramework.Net20,
+                CollectionObjectType = CollectionType.List,
+                CodeGenerationOptions = CodeGenerationOptions.EnableDataBinding
+            };
+            generatorParams.Miscellaneous.DisableDebug = true;
+            generatorParams.Serialization.Enabled = false;
+
+
+            var xsdGenResult = Generator.Process(generatorParams);
+
+            var codeProvider = CodeDomProviderFactory.GetProvider(GenerationLanguage.CSharp);
+            var resultCode = new StringBuilder();
+
+            using (var outputStream = new StringWriter(resultCode))
+                codeProvider.GenerateCodeFromNamespace(xsdGenResult.Entity, outputStream, new CodeGeneratorOptions());
+
+
+            var expectedCode = @"using System;
+using System.Diagnostics;
+using System.Xml.Serialization;
+using System.Collections;
+using System.Xml.Schema;
+using System.ComponentModel;
+using System.Collections.Generic;
+
+
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+public partial class orderType : object, System.ComponentModel.INotifyPropertyChanged {
+    
+    public string orderperson;
+    
+    public List<itemType> item;
+    
+    public orderType() {
+        this.item = new List<itemType>();
+    }
+    
+    public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+    
+    protected void RaisePropertyChanged(string propertyName) {
+        System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+        if ((propertyChanged != null)) {
+            propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+}
+
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+public partial class itemType : object, System.ComponentModel.INotifyPropertyChanged {
+    
+    public string title;
+    
+    public string note;
+    
+    public string quantity;
+    
+    public decimal price;
+    
+    public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+    
+    protected void RaisePropertyChanged(string propertyName) {
+        System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+        if ((propertyChanged != null)) {
+            propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+}
+";
+
+            Assert.AreEqual(expectedCode, resultCode.ToString());
+        }
     }
 }
 
