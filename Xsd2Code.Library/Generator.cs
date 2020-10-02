@@ -1,6 +1,7 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Schema;
@@ -85,7 +86,7 @@ namespace Xsd2Code.Library
         /// </summary>
         /// <param name="generatorParams">Generator parameters</param>
         /// <returns></returns>
-        internal static Result<CodeNamespace> Process(GeneratorParams generatorParams)
+        public static Result<CodeNamespace> Process(GeneratorParams generatorParams)
         {
             var ns = new CodeNamespace();
 
@@ -104,7 +105,12 @@ namespace Xsd2Code.Library
                 XmlSchema xsd;
                 var schemas = new XmlSchemas();
 
-                reader = XmlReader.Create(generatorParams.InputFilePath);
+                if (!string.IsNullOrEmpty(generatorParams.InputFilePath))
+                    reader = XmlReader.Create(generatorParams.InputFilePath);
+                else
+                    reader = XmlReader.Create(new StringReader(generatorParams.InputXsdString));
+                
+                
                 xsd = XmlSchema.Read(reader, new ValidationEventHandler(Validate));
 
 
@@ -120,8 +126,8 @@ namespace Xsd2Code.Library
                 {
                     schemas.Add(schema);
                 }
-
-                var exporter = new XmlCodeExporter(ns);
+                
+                var exporter = new XmlCodeExporter(ns, (CodeCompileUnit) null, generatorParams.CodeGenerationOptions);
 
                 var generationOptions = CodeGenerationOptions.None;
                 if (generatorParams.Serialization.GenerateOrderXmlAttributes)

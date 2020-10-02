@@ -74,6 +74,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TestsCodeGenerationOptions.cs" />
     <Compile Include="UnitTest.cs" />
     <Compile Include="xsd\ArrayOfArray.Designer.cs" />
     <Compile Include="xsd\CircularClassReference.Designer.cs" />
